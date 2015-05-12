@@ -19,7 +19,7 @@ Create a directory `workspaces` in your home directory.
 mkdir ~/workspaces
 ```
 
-Clone the repository with
+Clone the repository with:
 ```
 git clone https://github.com/theotheu/books.git ~/workspaces/books
 ```
