@@ -5,6 +5,7 @@ exports.config = {
     // The address of a running selenium server. If specified, Protractor will
     // connect to an already running instance of selenium. This usually looks like
     // seleniumAddress: 'http://localhost:4444/wd/hub'
+    directConnect: true,
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
     // ----- Capabilities to be passed to the webdriver instance ----
@@ -14,7 +15,7 @@ exports.config = {
     // and
     // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
     capabilities: {
-        'browserName': 'phantomjs'
+        'browserName': 'chrome'
     },
 
     // ----- What tests to run -----
@@ -27,7 +28,6 @@ exports.config = {
     // See the full list at https://github.com/juliemr/minijasminenode
     jasmineNodeOpts: {
         showColors: true, // Use colors in the command line report.
-        showColors: true,
         isVerbose: true,
         includeStackTrace: true
     }
