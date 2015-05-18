@@ -8,25 +8,19 @@
  * @see https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation
  * @see http://docs.angularjs.org/guide/concepts
  */
-var myApp = angular.module('myApp', ['myApp.services', 'ngRoute'])
+var myApp = angular.module('myApp', ['myApp.services', 'ngRoute','ui.bootstrap'])
     .config(['$routeProvider', function ($routeProvider) {
         "use strict";
 
         // Get all books
-        $routeProvider.when('/books', {
-            templateUrl: 'partials/book-list.html',
-            controller: BookListCtrl
-        });
-
-        // Get 1 book
-        $routeProvider.when('/books/:_id', {
-            templateUrl: 'partials/book-detail.html',
-            controller: BookDetailCtrl
+        $routeProvider.when('/', {
+            templateUrl: 'partials/home.html',
+            controller: HomeCtrl
         });
 
         // When no valid route is provided
         $routeProvider.otherwise({
-            redirectTo: "/books"
+            redirectTo: "/"
         });
 
     }]);

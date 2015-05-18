@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html data-ng-app="myApp">
 <head>
-    <title>Book demo</title>
+    <title>Versatile</title>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css.map" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.css.map" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css" media="screen" title="no title" charset="utf-8">
+
+    <link rel="stylesheet" href="./css/layout.css" media="screen" title="no title" charset="utf-8">
+
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    </script>
 </head>
-<body>
+<body ng-controller="HomeCtrl">
 
-<h1>Book demo</h1>
+<div class="view" ng-view></div>
 
-<a id="homeLink" href="/#/">Home</a> | <a id="newLink" href="/#/books/new">New</a>
-
-<div data-ng-view=""></div>
-
-<hr>
-<div id="myCtrl" data-ng-controller="myCtrl as settings">{{whoami}}</div>
+</div>
 
 <!-- Lib -->
 <script src="./javascripts/lib/angular.min.js"></script>
 <script src="./javascripts/lib/angular-route.min.js"></script>
 <script src="./javascripts/lib/angular-resource.min.js"></script>
+<script src="./bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
 
 <!-- App -->
 <script src="./javascripts/app.js"></script>

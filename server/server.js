@@ -10,9 +10,13 @@
     var fs = require('fs'),                             // Used to read files from the filesystem (__dirname)
         express = require('express'),                   // Fast, unopinionated, minimalist web framework for Node.js
         bodyParser = require("body-parser"),            // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
+        mongodb = require("mongodb"),
+        mongoose = require("mongoose"),
+        session = require('express-session'),
+        cookieParser = require('cookie-parser'),
+        passport = require("passport"),
         env,
         config,
-        mongoose,
         models_path,
         model_files,
         app,
@@ -105,4 +109,3 @@
     module.exports = app;
 
 }());
-
