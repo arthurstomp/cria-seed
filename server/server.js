@@ -13,6 +13,7 @@
         mongodb = require("mongodb"),
         mongoose = require("mongoose"),
         session = require('express-session'),
+        mongooseSession = require('mongoose-session'),
         cookieParser = require('cookie-parser'),
         passport = require("passport"),
         env,
@@ -83,6 +84,11 @@
         });
     }
 
+    app.use(require('express-session')({
+      key: 'session',
+      secret: 'SUPER SECRET SECRET',
+      store: require('mongoose-session')(mongoose)
+    }));
     /**
      * Bootstrap routes
      * @type {string}
