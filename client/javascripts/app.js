@@ -1,5 +1,5 @@
-/*global angular, BookListCtrl, BookDetailCtrl */
-
+/*jslint white: true */
+/*global angular, BookListCtrl, BookDetailCtrl, HomeCtrl */
 
 /**
  *
@@ -8,19 +8,36 @@
  * @see https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation
  * @see http://docs.angularjs.org/guide/concepts
  */
-var myApp = angular.module('myApp', ['myApp.services', 'ngRoute','ui.bootstrap'])
-    .config(['$routeProvider', function ($routeProvider) {
-        "use strict";
+var myApp = angular.module('myApp', ['myApp.services', 'ngRoute', 'ui.bootstrap'])
+ .config(['$routeProvider', function ($routeProvider) {
+   "use strict";
 
-        // Get all books
-        $routeProvider.when('/', {
-            templateUrl: 'partials/home.html',
-            controller: HomeCtrl
-        });
+   // Get all books
+   $routeProvider.when('/', {
+     templateUrl: 'partials/home.html',
+     controller: HomeCtrl
+   });
 
-        // When no valid route is provided
-        $routeProvider.otherwise({
-            redirectTo: "/"
-        });
+   // When no valid route is provided
+   $routeProvider.otherwise({
+     redirectTo: "/"
+   });
 
-    }]);
+}]);
+
+var myApp = angular.module('designApp', ['ngRoute', 'ui.bootstrap'])
+ .config(['$routeProvider', function ($routeProvider) {
+   "use strict";
+
+   // Get all books
+   $routeProvider.when('/', {
+     templateUrl: 'partials/home.html',
+     controller: HomeCtrl
+   });
+
+   // When no valid route is provided
+   $routeProvider.otherwise({
+     redirectTo: "/"
+   });
+
+}]);

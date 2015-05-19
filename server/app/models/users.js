@@ -1,5 +1,6 @@
 /*jslint node:true */
-(function() {
+/*jslint white: true */
+(function () {
   'use strict';
   /**
    * Module dependencies.
@@ -11,14 +12,15 @@
       modelName = "User",
       MAX_LOGIN_ATTEMPTS = 5,
       LOCK_TIME = 2 * 60 * 60 * 1000,
-      SALT_WORK_FACTOR = 10;
+      SALT_WORK_FACTOR = 10,
+      reasons;
 
   userSchema = new Schema({
     name: {type: String, required: true},
     email: {type: String,
             required: true,
             unique: true,
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']},
+            match: [/^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please fill a valid email address']},
     password: {type: String, required: true},
     admin: {type: Boolean, required: true, default: false},
     created_at: {type: Date, required: true, default: Date.now},
@@ -40,11 +42,14 @@
     },
   },{collection: "users"});
 
-  var reasons = userSchema.statics.failedLogin = {
+  userSchema.statics.failedLogin = {
     NOT_FOUND: 0,
     PASSWORD_INCORRECT: 1,
     MAX_ATTEMPTS: 2,
   };
+
+  reasons = userSchema.statics.failedLogin;
+
   userSchema.virtual('isLocked').get(function() {
     // check for a future lockUntil timestamp
     return (this.lockUntil && this.lockUntil > Date.now());
@@ -76,15 +81,21 @@
       var user = this;
 
       // only hash the password if it has been modified (or is new)
-      if (!user.isModified('password')) return next();
+      if (!user.isModified('password')){
+        return next();
+      }
 
       // generate a salt
       bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-          if (err) return next(err);
+          if (err){
+            return next(err);
+          }
 
           // hash the password using our new salt
           bcrypt.hash(user.password, salt, function(err, hash) {
-              if (err) return next(err);
+              if (err){
+                return next(err);
+              }
 
               // override the cleartext password with the hashed one
               user.password = hash;
@@ -95,14 +106,18 @@
 
   userSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
+        if (err){
+          return cb(err);
+        }
         cb(null, isMatch);
     });
   };
 
   userSchema.statics.getAuthenticated = function(username, password, cb) {
     this.findOne({ username: username }, function(err, user) {
-      if (err) return cb(err);
+      if (err){
+        return cb(err);
+      }
 
       // make sure the user exists
       if (!user) {
@@ -113,33 +128,43 @@
       if (user.isLocked) {
         // just increment login attempts if account is already locked
         return user.incLoginAttempts(function(err) {
-          if (err) return cb(err);
+          if (err){
+            return cb(err);
+          }
           return cb(null, null, reasons.MAX_ATTEMPTS);
         });
       }
 
       // test for a matching password
       user.comparePassword(password, function(err, isMatch) {
-        if (err) return cb(err);
+        if (err){
+          return cb(err);
+        }
 
         // check if the password was a match
         if (isMatch) {
           // if there's no lock or failed attempts, just return the user
-          if (!user.loginAttempts && !user.lockUntil) return cb(null, user);
+          if (!user.loginAttempts && !user.lockUntil){
+            return cb(null, user);
+          }
           // reset attempts and lock info
           var updates = {
             $set: { loginAttempts: 0 },
             $unset: { lockUntil: 1 }
           };
           return user.update(updates, function(err) {
-            if (err) return cb(err);
+            if (err){
+              return cb(err);
+            }
             return cb(null, user);
           });
         }
 
         // password is incorrect, so increment login attempts before responding
         user.incLoginAttempts(function(err) {
-          if (err) return cb(err);
+          if (err){
+            return cb(err);
+          }
           return cb(null, null, reasons.PASSWORD_INCORRECT);
         });
       });

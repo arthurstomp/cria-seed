@@ -1,5 +1,6 @@
 /*jslint node:true */
-(function() {
+/*jslint white: true */
+(function () {
   'use strict';
 
   var mongoose = require('mongoose'),
@@ -18,5 +19,5 @@
     categories: [String],
   });
 
-
+  module.exports = mongoose.model(modelName,productSchema);
 }());

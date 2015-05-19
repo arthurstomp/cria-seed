@@ -1,4 +1,5 @@
 /*jslint node:true */
+/*jslint white: true */
 
 (function () {
     "use strict";
@@ -7,15 +8,15 @@
      * Module dependencies.
      * @type {exports}
      */
-    var fs = require('fs'),                             // Used to read files from the filesystem (__dirname)
-        express = require('express'),                   // Fast, unopinionated, minimalist web framework for Node.js
-        bodyParser = require("body-parser"),            // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
-        mongodb = require("mongodb"),
+    var fs = require('fs'),                              // Used to read files from the filesystem (__dirname)
+        express = require('express'),                    // Fast, unopinionated, minimalist web framework for Node.js
+        bodyParser = require("body-parser"),             // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
+        // mongodb = require("mongodb"),                 // Not being used, said JSLint.
         mongoose = require("mongoose"),
-        session = require('express-session'),
-        mongooseSession = require('mongoose-session'),
-        cookieParser = require('cookie-parser'),
-        passport = require("passport"),
+        // session = require('express-session'),         // Not being used, said JSLint.
+        // mongooseSession = require('mongoose-session'),// Not being used, said JSLint.
+        // cookieParser = require('cookie-parser'),      // Not being used, said JSLint.
+        // passport = require("passport"),               // Not being used, said JSLint.
         env,
         config,
         models_path,
