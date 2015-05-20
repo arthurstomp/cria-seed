@@ -1,0 +1,196 @@
+<html>
+<head>
+
+    <title>My first Three.js app</title>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+<body>
+
+<script src="javascript/three.min.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/fonts/helvetiker_regular.typeface.js"></script>
+<script src="javascript/helvetiker_regular.typeface.js"></script>
+<script src="javascript/OrbitControls.js"></script>
+
+
+<input type="file" onchange="previewFile()"><br>
+<list>
+    <li>
+        <button name="textEdit" id="textEdit">TEXT</button>
+    </li>
+    <li>
+        <button name="imageEdit" id="imageEdit">IMAGE</button>
+    </li>
+    <li>
+        <button name="colorEdit" id="colorEdit">COLOR</button>
+    </li>
+    <li>
+        <button name="delete" id="delete">DELETE</button>
+    </li>
+</list>
+
+<div id="editArea">
+    <input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="searchField"/>
+    <input name="fontSize" type="text" maxlength="5" id="fontSize" class="fontsizeField"/>
+</div>
+
+<select id="mySelect" onchange="changeColor()">
+    <option value="white">white</option>
+    <option value="red">red</option>
+    <option value="orange">orange</option>
+    <option value="yellow">yellow</option>
+    <option value="green">green</option>
+    <option value="blue">blue</option>
+    <option value="indigo">indigo</option>
+    <option value="violet">violet</option>
+    <option value="grey">grey</option>
+    <option value="pink">pink</option>
+    <option value="black">black</option>
+    fontSize
+</select>
+
+<input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="searchField"/>
+<input name="fontSize" type="text" maxlength="5" id="fontSize" class="fontsizeField"/>
+
+<script>
+
+    var cubeImageSrc = "";
+    var selectColor = "#ffffff";
+    var scene = new THREE.Scene();
+    var text;
+    var words;
+    var wrapper;
+    var fontsize = 0.15;
+    var texture;
+
+    function changeColor() {
+
+        var x = document.getElementById("mySelect").selectedIndex;
+
+        if (document.getElementsByTagName("option")[x].value == "black") {
+            selectColor = "#000000";
+        } else if (document.getElementsByTagName("option")[x].value == "white") {
+            selectColor = "#ffffff";
+        } else if (document.getElementsByTagName("option")[x].value == "red") {
+            selectColor = "#ff0000";
+        } else if (document.getElementsByTagName("option")[x].value == "orange") {
+            selectColor = "#ff7700";
+        } else if (document.getElementsByTagName("option")[x].value == "yellow") {
+            selectColor = "#ffdd00";
+        } else if (document.getElementsByTagName("option")[x].value == "green") {
+            selectColor = "#00ff00";
+        } else if (document.getElementsByTagName("option")[x].value == "blue") {
+            selectColor = "#0000ff";
+        } else if (document.getElementsByTagName("option")[x].value == "indigo") {
+            selectColor = "#8A2BE2";
+        } else if (document.getElementsByTagName("option")[x].value == "violet") {
+            selectColor = "#C77Df3";
+        } else if (document.getElementsByTagName("option")[x].value == "grey") {
+            selectColor = "#A0A0A0";
+        } else if (document.getElementsByTagName("option")[x].value == "pink") {
+            selectColor = "#FF66B2";
+        }
+    }
+
+
+    function previewFile() {
+        var file = document.querySelector('input[type=file]').files[0]; //sames as here
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            cubeImageSrc = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file); //reads the data as a URL
+        }
+    }
+
+    //    previewFile();  //calls the function named previewFile()
+
+    function removeText() {
+        scene.remove(words);
+    }
+
+
+    function changeText() {
+
+        text = document.getElementById("searchTxt").value;
+        removeText();
+
+        if (document.getElementById("fontSize").value > 0 && document.getElementById("fontSize").value < 1) {
+            fontsize = document.getElementById("fontSize").value;
+        }
+
+        var shape = new THREE.TextGeometry(text,
+                {
+                    size: fontsize,
+                    height: 0.01,
+                    font: 'helvetiker',
+                    weight: 'normal',
+                    overdraw: false
+                });
+
+        wrapper = new THREE.MeshNormalMaterial({color: 0x00ff00, overdraw: false});
+        words = new THREE.Mesh(shape, wrapper);
+
+        scene.add(words);
+
+        words.position.x = cube.position.x - 0.4;
+        words.position.y = cube.position.y;
+        words.position.z = cube.position.z + 0.55;
+
+    }
+
+
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth / 2, window.innerHeight / 1.5);
+    document.body.appendChild(renderer.domElement);
+
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    var cube = new THREE.Mesh(geometry, material);
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    scene.add(cube);
+
+    camera.position.z = 10;
+    camera.position.x = 10;
+
+    function removeTexture() {
+        cube.remove(texture);
+    }
+
+    var render = function () {
+
+        if (cubeImageSrc !== "") {
+            texture = THREE.ImageUtils.loadTexture(cubeImageSrc);
+            cube.material = new THREE.MeshBasicMaterial({map: texture});
+        }
+        else {
+            removeTexture();
+            cube.material = new THREE.MeshBasicMaterial({color: selectColor});
+        }
+        changeText();
+        requestAnimationFrame(render);
+        //cube.rotation.x += 0.1;
+
+        //cube.material = new THREE.MeshBasicMaterial({color: selectColor});
+        //cube.rotation.y += 0.1;
+        renderer.render(scene, camera);
+
+    };
+    render();
+
+</script>
+</body>
+</html>
