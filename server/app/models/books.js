@@ -7,8 +7,20 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
+        schemaUser,
         schemaName,
         modelName;
+
+    schemaUser = new Schema({
+            name: {type: String, required: true, unique: false},
+            email: {type: String, required: true, unique: true},
+            password: {type: String, required: true, unique: false},
+            admin_orNot: {type: Boolean, required: true, unique: false},
+            created_at: {type: Date, "default": Date.now},
+            updated_at: {type: Date, "default": Date.now}
+        },
+        {collection: 'User'});
+
 
     /**
      * Creates a new mongoose schema.
