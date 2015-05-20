@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="myApp">
+<html >
 <head>
     <title>Versatile</title>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css" media="screen" title="no title" charset="utf-8">
@@ -18,23 +18,34 @@
 
     </script>
 </head>
-<body ng-controller="HomeCtrl">
+<body ng-app="VersatileApp">
 
-<div class="view" ng-view></div>
-
+<div id="background">
+  <!-- <img id="background-image" ng-src="./images/wireframe1.jpg" alt="Just to help me building the first prototype" /> -->
 </div>
 
+<!-- <div class="navbar-view" ng-view ng-controller=NavbarCtrl></div> -->
+
+<!-- <div class="common-view" ng-controller="commonApp" ng-view></div> -->
+
+<div id="navbar" ui-view='navbar'></div>
+
+<div id="home-conteiner" ui-view></div>
+
+<div id="common-container" ui-view='commonContainer'></div>
+
+<!-- <div class="build-view" ng-controller="buildApp" ng-view></div> -->
+
 <!-- Lib -->
-<script src="./javascripts/lib/angular.min.js"></script>
-<script src="./javascripts/lib/angular-route.min.js"></script>
-<script src="./javascripts/lib/angular-resource.min.js"></script>
+<script src="./bower_components/angular/angular.min.js"></script>
+<script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="./bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 
 
 <!-- App -->
-<script src="./javascripts/app.js"></script>
 <script src="./javascripts/controllers.js"></script>
-<script src="./javascripts/services.js"></script>
+<script src="./javascripts/app.js"></script>
+<!-- <script src="./javascripts/services.js"></script> -->
 
 
 </body>
