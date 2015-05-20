@@ -1,9 +1,14 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 #background{
+  position: absolute;
+  background-color: #E5E5E5;
+  width : 100%;
+  height : 100%;
   display : block;
   margin-left : auto;
   margin-right : auto;
+  z-index : -50;
 }
 
 #background-image{
@@ -14,6 +19,11 @@
   margin-left : auto;
   margin-right : auto;
   z-index : -50;
+}
+
+#logo-button{
+  position: relative;
+  float: left;
 }
 
 #header{
