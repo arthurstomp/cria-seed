@@ -18,6 +18,10 @@ var myApp = angular.module('myApp', ['myApp.services', 'ngRoute','ui.bootstrap']
             controller: HomeCtrl
         });
 
+        $routeProvider.when('/application', {
+            templateUrl: 'partials/.html'
+        });
+
         // When no valid route is provided
         $routeProvider.otherwise({
             redirectTo: "/"
