@@ -1,4 +1,5 @@
 /*jslint node:true */
+/*jslint white: true */
 
 (function () {
     "use strict";
@@ -7,15 +8,17 @@
      * Module dependencies.
      * @type {exports}
      */
-    var fs = require('fs'),                             // Used to read files from the filesystem (__dirname)
-        express = require('express'),                   // Fast, unopinionated, minimalist web framework for Node.js
-        bodyParser = require("body-parser"),            // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
-        mongodb = require("mongodb"),
+    var fs = require('fs'),                              // Used to read files from the filesystem (__dirname)
+        express = require('express'),                    // Fast, unopinionated, minimalist web framework for Node.js
+        bodyParser = require("body-parser"),             // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
+        // mongodb = require("mongodb"),                 // Not being used, said JSLint.
         mongoose = require("mongoose"),
-        session = require('express-session'),
-        mongooseSession = require('mongoose-session'),
-        cookieParser = require('cookie-parser'),
-        passport = require("passport"),
+        // session = require('express-session'),         // Not being used, said JSLint.
+        // mongooseSession = require('mongoose-session'),// Not being used, said JSLint.
+        cookieParser = require('cookie-parser'),      // Not being used, said JSLint.
+        passport,
+        LocalStrategy,
+        User,
         env,
         config,
         models_path,
@@ -86,7 +89,7 @@
 
     app.use(require('express-session')({
       key: 'session',
-      secret: 'SUPER SECRET SECRET',
+      secret: 'RAWR!!!!',
       store: require('mongoose-session')(mongoose)
     }));
     /**
@@ -110,6 +113,53 @@
      */
     app.all('*', function (req, res) {
         res.sendStatus(404);
+    });
+
+    /**
+    * Middleware to handle authentications
+    */
+    passport = require("passport");
+    LocalStrategy = require('passport-local').Strategy;
+    passport.use(new LocalStrategy(
+      function (username,password,done) {
+        User.getAuthenticated(username,password,function(err,user,reason){
+          if (err) {
+            throw err;
+          }
+
+          if(user){
+            console.log("Successful Login");
+            return done(null,user);
+          }
+
+          var reasons = User.failedLogin;
+          switch (reasons) {
+            case reasons.NOT_FOUND:
+              return done(null, false, {message:'User not found'});
+            case reason.PASSWORD_INCORRECT:
+              return done(null, false, {message:'Incorrect password'});
+            case reasons.MAX_ATTEMPTS:
+              return done(null, false, {message:'You exceded the attempts for login. Try again later'});
+            default:
+              return node(null,false,{message:'We dont know what happened, but your login failed.'});
+
+          }
+        });
+      }
+    ));
+
+    app.use(cookieParser);
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    passport.serializeUser(function(user, done) {
+      done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+      User.findById(id, function(err, user) {
+        done(err, user);
+      });
     });
 
     module.exports = app;

@@ -1,30 +1,56 @@
-/*global angular, BookListCtrl, BookDetailCtrl */
+/*jslint white: true */
+/*global angular, BookListCtrl, BookDetailCtrl, HomeCtrl */
 
+var versatileApp = angular.module("VersatileApp",['ui.router','CommonModule']);
 
-/**
- *
- * Writing AngularJS Documentation
- * change tests
- * @see https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation
- * @see http://docs.angularjs.org/guide/concepts
- */
-var myApp = angular.module('myApp', ['myApp.services', 'ngRoute','ui.bootstrap'])
-    .config(['$routeProvider', function ($routeProvider) {
-        "use strict";
+versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
 
-        // Get all books
-        $routeProvider.when('/', {
-            templateUrl: 'partials/home.html',
-            controller: HomeCtrl
-        });
+    $stateProvider.state('home', {
+      url:'/',
+      templateUrl: 'partials/home.html',
+      controller: 'HomeCtrl'
+    });
 
-        $routeProvider.when('/application', {
-            templateUrl: 'partials/.html'
-        });
+    $stateProvider.state('build',{
+        url:'/build',
+        views:{
+          'navbar':{
+            templateUrl: 'partials/navbar.html',
+            controller: 'NavbarCtrl'
+          },
+          'commonContainer':{
+            templateUrl: 'partials/build.html',
+            controller: 'HomeCtrl',
+          }
+        }
+    });
 
-        // When no valid route is provided
-        $routeProvider.otherwise({
-            redirectTo: "/"
-        });
+    $stateProvider.state('cart',{
+        url:'/cart',
+        views:{
+          'navbar':{
+            templateUrl: 'partials/navbar.html',
+            controller: 'NavbarCtrl'
+          },
+          'commonContainer':{
+            templateUrl: 'partials/cart.html',
+            controller: 'HomeCtrl',
+          }
+        }
+    });
 
-    }]);
+    $stateProvider.state('loginSignup',{
+        url:'/login-signup',
+        views:{
+          'navbar':{
+            templateUrl: 'partials/navbar.html',
+            controller: 'NavbarCtrl'
+          },
+          'commonContainer':{
+            templateUrl: 'partials/login_signup.html',
+            controller: 'HomeCtrl',
+          }
+        }
+    });
+}]);
