@@ -10,11 +10,11 @@ var fs = require('fs')
     ;
 
 // Load configuration
-var env = process.env.NODE_ENV || 'development'
-    , config = require('../server/config/config.js')[env];
+var env = process.env.NODE_ENV || 'development',
+    config = require('../server/config/config.js')[env];
 
 // Bootstrap db connection
-var mongoose = require('../server/node_modules/mongoose')
+var mongoose = require('../server/node_modules/mongoose');
 mongoose.connect(config.db);
 
 // Debugging
@@ -24,11 +24,11 @@ mongoose.connection.on('error', function (err) {
 mongoose.set('debug', config.debug);
 
 // Bootstrap models
-var models_path = __dirname + '/../server/app/models'
-    , model_files = fs.readdirSync(models_path);
+var models_path = __dirname + '/../server/app/models',
+    model_files = fs.readdirSync(models_path);
 model_files.forEach(function (file) {
     require(models_path + '/' + file);
-})
+});
 
 
 var Book = mongoose.model('Book');
@@ -66,7 +66,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
 
         // GET all Books
@@ -77,7 +77,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
 
         // Update Book
@@ -88,7 +88,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
     });
 
@@ -112,7 +112,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
 
         // GET all Books
@@ -123,7 +123,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
 
         // Update Book
@@ -134,7 +134,7 @@ describe('Book', function () {
                         throw err;
                     }
                     done();
-                })
+                });
         });
 
         // DELETE Book

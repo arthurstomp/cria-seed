@@ -1,0 +1,17 @@
+<nav id="top-bar" class="navbar navbar-default" ng-controller="NavbarCtrl">
+  <div class="container-fluid">
+    <div id="logo-button" class="navbar-header">
+      <a class="" ui-sref="home">
+        <img ng-src="./images/{{logoImgName}}" id="logo-image" class="" alt="Versatile ROCKS!!" />
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="{{opt.isActive}}" ng-repeat="opt in navbarOptions">
+          <a ui-sref="{{opt.linkRoute}}">{{opt.text}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
