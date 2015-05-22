@@ -87,22 +87,6 @@
         });
     }
 
-    app.use(require('express-session')({
-      key: 'session',
-      secret: 'RAWR!!!!',
-      store: require('mongoose-session')(mongoose)
-    }));
-    /**
-     * Bootstrap routes
-     * @type {string}
-     */
-    routes_path = __dirname + '/routes';
-    route_files = fs.readdirSync(routes_path);
-    route_files.forEach(function (file) {
-        var route = require(routes_path + '/' + file);                  // Get the route
-        app.use('/api', route);
-    });
-
     /**
      * Middleware to serve static page
      */
@@ -118,10 +102,14 @@
     /**
     * Middleware to handle authentications
     */
+    // User = mongoose.model("User");
     passport = require("passport");
     LocalStrategy = require('passport-local').Strategy;
-    passport.use(new LocalStrategy(
-      function (username,password,done) {
+    passport.use(
+      // {usernameField: 'user.email',
+      // passwordField: 'user.password'},
+      new LocalStrategy(function (username,password,done) {
+        console.log("Local Strategy");
         User.getAuthenticated(username,password,function(err,user,reason){
           if (err) {
             throw err;
@@ -149,8 +137,27 @@
     ));
 
     app.use(cookieParser);
+    app.use(require('express-session')({
+      key: 'session',
+      secret: 'RAWR!!!!',
+      store: require('mongoose-session')(mongoose),
+      cookie: {
+        httpOnly: true, maxAge: 3600000,
+      },
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
+
+    /**
+     * Bootstrap routes
+     * @type {string}
+     */
+    routes_path = __dirname + '/routes';
+    route_files = fs.readdirSync(routes_path);
+    route_files.forEach(function (file) {
+        var route = require(routes_path + '/' + file);                  // Get the route
+        app.use('/api', route);
+    });
 
     passport.serializeUser(function(user, done) {
       done(null, user.id);

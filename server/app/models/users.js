@@ -58,18 +58,23 @@
   userSchema.methods.incLoginAttempts = function(cb) {
     // if we have a previous lock that has expired, restart at 1
     if (this.lockUntil && this.lockUntil < Date.now()) {
-      return this.update({
+      return this.model(modelName).update({
         $set: { loginAttempts: 1 },
         $unset: { lockUntil: 1 }
       }, cb);
     }
+
     // otherwise we're incrementing
-    var updates = { $inc: { loginAttempts: 1 } };
+    // var updates = { $inc: { loginAttempts: 1 } };
+    this.loginAttempts += 1;
     // lock the account if we've reached max attempts and it's not locked already
     if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
-      updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+      // updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+      this.lockUntil = Date.now() + LOCK_TIME;
     }
-    return this.update(updates, cb);
+    // console.log(this.model(modelName));
+    return this.save(cb);
+    // return this.model(modelName).update(updates, cb);
   };
 
   userSchema.pre('update',function(next){
@@ -114,7 +119,7 @@
   };
 
   userSchema.statics.getAuthenticated = function(username, password, cb) {
-    this.findOne({ username: username }, function(err, user) {
+    this.findOne({ email: username }, function(err, user) {
       if (err){
         return cb(err);
       }
@@ -143,16 +148,15 @@
 
         // check if the password was a match
         if (isMatch) {
+          console.log("isMatch");
           // if there's no lock or failed attempts, just return the user
-          if (!user.loginAttempts && !user.lockUntil){
+          if (user.loginAttempts === 0 && user.lockUntil === 0.0){
             return cb(null, user);
           }
           // reset attempts and lock info
-          var updates = {
-            $set: { loginAttempts: 0 },
-            $unset: { lockUntil: 1 }
-          };
-          return user.update(updates, function(err) {
+          user.loginAttempts = 0;
+          user.lockUntil = 0.0;
+          return user.save(function(err) {
             if (err){
               return cb(err);
             }
@@ -162,6 +166,7 @@
 
         // password is incorrect, so increment login attempts before responding
         user.incLoginAttempts(function(err) {
+          console.log("isNotMatch");
           if (err){
             return cb(err);
           }
@@ -172,4 +177,5 @@
   };
 
   module.exports = mongoose.model(modelName, userSchema);
+
 }());
