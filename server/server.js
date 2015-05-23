@@ -88,6 +88,17 @@
     }
 
     /**
+     * Bootstrap routes
+     * @type {string}
+     */
+    routes_path = __dirname + '/routes';
+    route_files = fs.readdirSync(routes_path);
+    route_files.forEach(function (file) {
+        var route = require(routes_path + '/' + file);                  // Get the route
+        console.log("loading route");
+        app.use('/api', route);
+    });
+    /**
      * Middleware to serve static page
      */
     app.use(express.static(__dirname + '/../client/'));
@@ -102,7 +113,7 @@
     /**
     * Middleware to handle authentications
     */
-    // User = mongoose.model("User");
+    User = mongoose.model("User");
     passport = require("passport");
     LocalStrategy = require('passport-local').Strategy;
     passport.use(
@@ -148,16 +159,7 @@
     app.use(passport.initialize());
     app.use(passport.session());
 
-    /**
-     * Bootstrap routes
-     * @type {string}
-     */
-    routes_path = __dirname + '/routes';
-    route_files = fs.readdirSync(routes_path);
-    route_files.forEach(function (file) {
-        var route = require(routes_path + '/' + file);                  // Get the route
-        app.use('/api', route);
-    });
+
 
     passport.serializeUser(function(user, done) {
       done(null, user.id);
