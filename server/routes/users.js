@@ -20,8 +20,11 @@ router
 router
   .post('/users',controller.create)
   .post('/login',
-        // passport.authenticate('local'),
-        controller.login);
+        passport.authenticate('local'),
+        function(req,res){
+          console.log("********called");
+          res.send(res.user);
+        });
 
 
 router.put('/users/:_id',
@@ -31,5 +34,4 @@ router.put('/users/:_id',
 router.delete('/users/:_id',
               //  passport.authenticate('local',{failureRedirect:'/',failureFlash:true}),
                controller.delete);
-
 module.exports = router;

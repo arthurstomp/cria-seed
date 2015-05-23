@@ -5,43 +5,56 @@ var mongoose = require('mongoose'),
     passport = require('passport');
 
 exports.create = function(req,res){
-  var doc = new User(req.body);
-
-  doc.save(function (err) {
+  User.register(new User({ username : req.body.username, password:req.body.password }), req.body.password, function(err, user) {
     var retObj = {
       meta: {
         "action": "create",
         'timestamp': new Date(),
         filename: __filename
       },
-      doc: doc,
+      doc: user,
       err: err
     };
     return res.send(retObj);
-  });
+    });
+  // var doc = new User(req.body);
+  //
+  // doc.save(function (err) {
+  //   var retObj = {
+  //     meta: {
+  //       "action": "create",
+  //       'timestamp': new Date(),
+  //       filename: __filename
+  //     },
+  //     doc: doc,
+  //     err: err
+  //   };
+  //   return res.send(retObj);
+  // });
 };
 
 
 exports.login = function(req,res){
-
-  User.getAuthenticated(req.body.email,req.body.password,function(err,user,reason){
-    if (err || reason) {
-      return res.redirect(401,'/#/login-signup');
-    }
+  console.log("Controller Login");
+  console.log(req.body);
+  // User.getAuthenticated(req.body.email,req.body.password,function(err,user,reason){
+  //   if (err || reason) {
+  //     return res.redirect(401,'/#/login-signup');
+  //   }
     // return res.redirect(200,"/#/users/"+user._id);
-  console.log("******login*****");
-  var retObj = {
-    meta: {
-      "action": "login",
-      'timestamp': new Date(),
-      filename: __filename
-    },
-    body: user,
-    err: err
-  };
-
-  return res.send(retObj);
-  });
+  //   console.log("******login*****");
+  //   var retObj = {
+  //   meta: {
+  //     "action": "login",
+  //     'timestamp': new Date(),
+  //     filename: __filename
+  //   },
+  //   body: req.user,
+  //   err: err
+  // };
+  //
+  //   return res.send(retObj);
+  // });
 };
 
 exports.detail = function(req,res){
