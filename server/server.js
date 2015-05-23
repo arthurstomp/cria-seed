@@ -1,5 +1,4 @@
 /*jslint node:true */
-/*jslint white: true */
 
 (function () {
     "use strict";
@@ -8,37 +7,25 @@
      * Module dependencies.
      * @type {exports}
      */
-    var fs = require('fs'),                              // Used to read files from the filesystem (__dirname)
-        express = require('express'),                    // Fast, unopinionated, minimalist web framework for Node.js
-        bodyParser = require("body-parser"),             // This does not handle multipart bodies, due to their complex and typically large nature. For multipart bodies, you may be interested in the following modules:
-        // mongodb = require("mongodb"),                 // Not being used, said JSLint.
-        mongoose = require("mongoose"),
-        // session = require('express-session'),         // Not being used, said JSLint.
-        // mongooseSession = require('mongoose-session'),// Not being used, said JSLint.
-        cookieParser = require('cookie-parser'),      // Not being used, said JSLint.
-        passport,
-        LocalStrategy,
-        User,
-        env,
-        config,
-        models_path,
+    var fs = require('fs'),
+        express = require('express'),
+        bodyParser = require("body-parser"),
+        env = process.env.NODE_ENV || 'development',
+        config = require('./config/config.js')[env],
+        mongoose = require('mongoose'),
+        models_path = __dirname + '/app/models',
         model_files,
-        app,
-        routes_path,
+        app = express(),
+        passport = require("passport"),
+        LocalStrategy = require('passport-local').Strategy,
+        User,
+        routes_path = __dirname + '/routes',
         route_files;
-
-    /**
-     * Load configuration
-     * @type {*|string}
-     */
-    env = process.env.NODE_ENV || 'development';
-    config = require('./config/config.js')[env];
 
     /**
      * Bootstrap db connection
      * @type {exports}
      */
-    mongoose = require('mongoose');
     mongoose.connect(config.db);
 
     /**
@@ -55,17 +42,11 @@
      * Bootstrap models
      * @type {string}
      */
-    models_path = __dirname + '/app/models';
     model_files = fs.readdirSync(models_path);
     model_files.forEach(function (file) {
         require(models_path + '/' + file);
     });
 
-    /**
-     * Use express
-     * @type {*}
-     */
-    app = express();
     /**
      * Express settings
      */
@@ -87,16 +68,22 @@
         });
     }
 
+    User = mongoose.model("User");
+    passport.use(new LocalStrategy(User.authenticate()));
     app.use(require('express-session')({
-      key: 'session',
-      secret: 'RAWR!!!!',
-      store: require('mongoose-session')(mongoose)
+      secret: "RAWR!!!!",
+      resave: false,
+      saveUninitialized: false
     }));
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     /**
      * Bootstrap routes
      * @type {string}
      */
-    routes_path = __dirname + '/routes';
     route_files = fs.readdirSync(routes_path);
     route_files.forEach(function (file) {
         var route = require(routes_path + '/' + file);                  // Get the route
@@ -113,53 +100,6 @@
      */
     app.all('*', function (req, res) {
         res.sendStatus(404);
-    });
-
-    /**
-    * Middleware to handle authentications
-    */
-    passport = require("passport");
-    LocalStrategy = require('passport-local').Strategy;
-    passport.use(new LocalStrategy(
-      function (username,password,done) {
-        User.getAuthenticated(username,password,function(err,user,reason){
-          if (err) {
-            throw err;
-          }
-
-          if(user){
-            console.log("Successful Login");
-            return done(null,user);
-          }
-
-          var reasons = User.failedLogin;
-          switch (reasons) {
-            case reasons.NOT_FOUND:
-              return done(null, false, {message:'User not found'});
-            case reason.PASSWORD_INCORRECT:
-              return done(null, false, {message:'Incorrect password'});
-            case reasons.MAX_ATTEMPTS:
-              return done(null, false, {message:'You exceded the attempts for login. Try again later'});
-            default:
-              return node(null,false,{message:'We dont know what happened, but your login failed.'});
-
-          }
-        });
-      }
-    ));
-
-    app.use(cookieParser);
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    passport.serializeUser(function(user, done) {
-      done(null, user.id);
-    });
-
-    passport.deserializeUser(function(id, done) {
-      User.findById(id, function(err, user) {
-        done(err, user);
-      });
     });
 
     module.exports = app;
