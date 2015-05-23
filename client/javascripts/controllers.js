@@ -34,6 +34,12 @@ commonModule.controller("NavbarCtrl",function($scope,$state){
       {linkRoute:"cart", text:"Cart", isActive:""},
       {linkRoute:"loginSignup", text:"Login/Signup",isActive:"active"},
     ];
+  }else {
+    $scope.navbarOptions = [
+      {linkRoute:"build", text:"Build", isActive:""},
+      {linkRoute:"cart", text:"Cart", isActive:""},
+      {linkRoute:"loginSignup", text:"Login/Signup",isActive:""},
+    ];
   }
 });
 
@@ -59,12 +65,10 @@ userModule.factory('loginService',['$resource',function($resource){
 }]);
 userModule.controller("LoginSignupCtrl",function($scope,$location,loginService){
   $scope.loginClick = function(user){
-    console.log(user);
-
     loginService.login.post(
       {username: user.email, password: user.password},
       function(res){
-        $location.url('/users/'+res.doc._id);
+        $location.url('/users/'+res.user._id);
       },
       function(err){
         console.log(err);

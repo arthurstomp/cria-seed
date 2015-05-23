@@ -21,10 +21,7 @@ router
   .post('/users',controller.create)
   .post('/login',
         passport.authenticate('local'),
-        function(req,res){
-          console.log("********called");
-          res.send(res.user);
-        });
+        controller.login);
 
 
 router.put('/users/:_id',
