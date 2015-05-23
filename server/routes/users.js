@@ -9,13 +9,26 @@ var router = express.Router();
 var controller = require('../app/controllers/users.js');
 var passport = require('passport');
 
+function ensureAuthenticated(req,res,next){
+  if (req.isAuthenticated())
+    return next();
+  else{
+    res.redirect('/');
+  }
+}
+
 router
 .get('/users/:_id',
-      // passport.authenticate('local',{failureRedirect:'/login-',failureFlash:true}),
+      ensureAuthenticated,
       controller.detail)
 .get('/users',
-      // passport.authenticate('local',{failureRedirect:'/',failureFlash:true}),
-      controller.list);
+      ensureAuthenticated,
+      controller.list)
+.get('/logout',
+      ensureAuthenticated,
+      function(req,res){
+        req.logout();
+      });
 
 router
   .post('/users',controller.create)
@@ -25,10 +38,10 @@ router
 
 
 router.put('/users/:_id',
-            // passport.authenticate('local',{failureRedirect:'/',failureFlash:true}),
+            ensureAuthenticated,
             controller.update);
 
 router.delete('/users/:_id',
-              //  passport.authenticate('local',{failureRedirect:'/',failureFlash:true}),
+               ensureAuthenticated,
                controller.delete);
 module.exports = router;
