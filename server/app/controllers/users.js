@@ -6,14 +6,22 @@ var mongoose = require('mongoose'),
 
 exports.create = function(req,res){
   User.register(new User({ username : req.body.username,
-                           password:req.body.password }),
+                           password:req.body.password,
+                           name: req.body.name || "Little Fucker",
+                           admin: req.body.admin || false}),
                 req.body.password,
                 function(err, user) {
+                  var retObj = {
+                    meta: {"action": "create", "timestamp": new Date(), filename: __filename},
+                    err: err
+                  };
                   if (err) {
-                    res.json(err);
+                    retObj.err = err;
+                    res.json(retObj);
                   }
                   passport.authenticate('local')(req, res, function () {
-                    res.json(user);
+                    retObj.user = req.user;
+                    res.json(retObj);
                   });
                 });
 };
