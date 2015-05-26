@@ -15,7 +15,7 @@
     updatedAt: {type: Date, default: Date.now},
     soloPrice: {type: Number, default: 1000000},
     combinedPrice: {type: Number, default: 1000000},
-    subProducts: {type: Schema.Types.ObjectId},
+    subProducts: [Schema.Types.ObjectId],
     totalPrice: {type:Number},
     specification: Schema.Types.Mixed,
     categories: [String],
