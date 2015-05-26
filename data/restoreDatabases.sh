@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # books-prd keeps its data
-for db in books-dev books-tst books-acc
+for db in versatile-dev versatile-test
 do
     echo "Dropping $db"
     mongo $db --eval "db.dropDatabase()"
     echo "Restoring $db"
-    mongorestore -d $db seed
+    mongorestore -d $db seed/$db
 done
