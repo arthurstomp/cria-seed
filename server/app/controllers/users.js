@@ -17,11 +17,11 @@ exports.create = function(req,res){
                   };
                   if (err) {
                     retObj.err = err;
-                    res.json(retObj);
+                    return res.json(retObj);
                   }
                   passport.authenticate('local')(req, res, function () {
                     retObj.user = req.user;
-                    res.json(retObj);
+                    return res.json(retObj);
                   });
                 });
 };
@@ -29,7 +29,7 @@ exports.create = function(req,res){
 
 exports.login = function(req,res){
   var user = {user: req.user};
-  res.json(user);
+  return res.json(user);
 };
 
 exports.detail = function(req,res){
@@ -110,7 +110,7 @@ exports.update = function(req,res){
 
 exports.delete = function(req,res){
   var conditions, callback, retObj;
-
+  req.logout(); 
   conditions = {_id: req.params._id};
   callback = function (err, doc) {
     retObj = {
