@@ -1,4 +1,6 @@
 /*jslint node:true */
+/*jslint white: true */
+
 
 (function () {
     "use strict";

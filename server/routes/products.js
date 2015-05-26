@@ -1,21 +1,23 @@
 /*jslint node:true */
+/*jslint white: true */
 
-
-/** @module Routes for products*/
-/** @class */
-var express = require('express');
-var router = express.Router();
-
-var controller = require('../app/controllers/products.js');
-
-router
-.get('/products',
-     controller.list
-   );
+(function() {
+  'use strict';
+  /** @module Routes for products*/
+  /** @class */
+  var express = require('express'),
+      router = express.Router(),
+      controller = require('../app/controllers/products.js');
 
 router
-.post('/admin/products',
-      controller.create
-    );
+  .get('/products',
+  controller.list
+  );
+
+router
+  .post('/admin/products',
+  controller.create
+  );
 
 module.exports = router;
+}());

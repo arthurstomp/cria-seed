@@ -1,14 +1,17 @@
 /*jslint white: true */
 /*global angular, BookListCtrl, BookDetailCtrl, HomeCtrl */
 
-var versatileApp = angular.module("VersatileApp",['ui.router','ngResource','CommonModule','UserModule']);
+(function() {
+  'use strict';
 
-versatileApp.config(['$resourceProvider', function($resourceProvider) {
-  // Don't strip trailing slashes from calculated URLs
-  $resourceProvider.defaults.stripTrailingSlashes = false;
-}]);
+  var versatileApp = angular.module("VersatileApp",['ui.router','ngResource','CommonModule','UserModule']);
 
-versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  versatileApp.config(['$resourceProvider', function($resourceProvider) {
+    // Don't strip trailing slashes from calculated URLs
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+  }]);
+
+  versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('home', {
@@ -18,45 +21,45 @@ versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
     });
 
     $stateProvider.state('build',{
-        url:'/build',
-        views:{
-          'navbar':{
-            templateUrl: 'partials/navbar.html',
-            controller: 'NavbarCtrl'
-          },
-          'commonContainer':{
-            templateUrl: 'partials/build.html',
-            controller: 'HomeCtrl',
-          }
+      url:'/build',
+      views:{
+        'navbar':{
+          templateUrl: 'partials/navbar.html',
+          controller: 'NavbarCtrl'
+        },
+        'commonContainer':{
+          templateUrl: 'partials/build.html',
+          controller: 'HomeCtrl',
         }
+      }
     });
 
     $stateProvider.state('cart',{
-        url:'/cart',
-        views:{
-          'navbar':{
-            templateUrl: 'partials/navbar.html',
-            controller: 'NavbarCtrl'
-          },
-          'commonContainer':{
-            templateUrl: 'partials/cart.html',
-            controller: 'HomeCtrl',
-          }
+      url:'/cart',
+      views:{
+        'navbar':{
+          templateUrl: 'partials/navbar.html',
+          controller: 'NavbarCtrl'
+        },
+        'commonContainer':{
+          templateUrl: 'partials/cart.html',
+          controller: 'HomeCtrl',
         }
+      }
     });
 
     $stateProvider.state('loginSignup',{
-        url:'/login-signup',
-        views:{
-          'navbar':{
-            templateUrl: 'partials/navbar.html',
-            controller: 'NavbarCtrl'
-          },
-          'commonContainer':{
-            templateUrl: 'partials/login_signup.html',
-            controller: 'LoginSignupCtrl',
-          }
+      url:'/login-signup',
+      views:{
+        'navbar':{
+          templateUrl: 'partials/navbar.html',
+          controller: 'NavbarCtrl'
+        },
+        'commonContainer':{
+          templateUrl: 'partials/login_signup.html',
+          controller: 'LoginSignupCtrl',
         }
+      }
     });
 
     $stateProvider.state('userDetail',{
@@ -71,4 +74,5 @@ versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
         }
       }
     });
-}]);
+  }]);
+}());
