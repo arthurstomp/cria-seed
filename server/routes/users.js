@@ -10,9 +10,11 @@ var controller = require('../app/controllers/users.js');
 var passport = require('passport');
 
 function ensureAuthenticated(req,res,next){
-  if (req.isAuthenticated())
+  if (req.isAuthenticated()){
+    console.log("Logged in");
     return next();
-  else{
+  }else{
+    console.log("not logged in");
     res.redirect('/');
   }
 }
