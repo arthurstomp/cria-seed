@@ -6,7 +6,8 @@
   'use strict';
 
   var commonModule = angular.module("CommonModule",[]),
-  userModule = angular.module("UserModule",['ngResource','ui.router']);
+  userModule = angular.module("UserModule",['ngResource','ui.router']),
+  productModule = angular.module("ProductModule",['ngResource','ui.router']);
 
   commonModule.controller("HomeCtrl",function($scope,$state){
     $scope.introTxt = "merda";
@@ -57,6 +58,7 @@
     db.users = $resource('/api/users/:_id',{},usersActions);
     return db;
   }]);
+
   userModule.factory('loginService',['$resource',function($resource){
     var loginActions = {
       'post':{method:'post'}
@@ -65,6 +67,7 @@
     db.login = $resource('/api/login',{},loginActions);
     return db;
   }]);
+
   userModule.controller("LoginSignupCtrl",function($scope,$location,loginService){
     $scope.loginClick = function(user){
       loginService.login.post(
@@ -77,7 +80,29 @@
         });
       };
     });
-    userModule.controller("userDetailCtrl",function ($scope,usersService) {
-      console.log("userDetailCtrl");
-    });
+
+  userModule.controller("userDetailCtrl",function ($scope,usersService) {
+    console.log("userDetailCtrl");
+  });
+
+  productModule.factory('productService',['$resource',function($scope,$location,productsService){
+    var db, productUserActions, productAdminActions;
+
+    productUserActions = {
+      'get':{method: 'GET'},
+      'query':{method: 'GET'},
+      'query_categories':{method: 'GET'},
+    };
+
+    productAdminActions = {
+      'save':{method: 'POST'},
+      'delete':{method: 'DELETE'},
+      'update':{method: 'PUT'},
+    };
+
+    db = {};
+    db.userActions = $resource('/api/:param',{},productUserActions);
+    db.adminActions = $resource('/api/admin/:id',{},productAdminActions);
+    return db;
+  }]);
   }());
