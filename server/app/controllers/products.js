@@ -31,7 +31,7 @@
     var conditions, sort, fields;
     conditions = {};
     fields = {};
-    sort = {'modificationDate': -1};
+    sort = {'updatedAt': -1};
     Product
     .find(conditions,fields)
     .sort(sort)
@@ -133,6 +133,23 @@
   };
 
   exports.listByCategories = function (req,res) {
-    // body...
+    var categories;
+    categories = req.params.categories.split(",");
+    Product
+      .find()
+      .where('categories', {$elemMatch: {$in:categories}})
+      .sort({'updatedAt':-1})
+      .exec(function(err,products){
+        var retObj = {
+          meta: {
+            'action': 'find_by_category',
+            'timestamp': Date.now(),
+            filename: __filename,
+          },
+          err: err,
+          product: products,
+        };
+        return res.json(retObj);
+      });
   };
 }());

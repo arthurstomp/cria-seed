@@ -16,7 +16,7 @@
     .get('/products/:_id',
          controller.detail
     )
-    .get('products/categories/:categories',
+    .get('/products/categories/:categories',
          controller.listByCategories
     );
 
