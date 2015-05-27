@@ -1,0 +1,60 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+#background{
+  position: absolute;
+  background-color: #E5E5E5;
+  width : 100%;
+  height : 100%;
+  display : block;
+  margin-left : auto;
+  margin-right : auto;
+  z-index : -50;
+}
+
+#background-image{
+  position: absolute;
+  width : 100%;
+  height : 100%;
+  display : block;
+  margin-left : auto;
+  margin-right : auto;
+  z-index : -50;
+}
+
+#logo-button{
+  position: relative;
+  float: left;
+}
+
+#header{
+  display : block;
+  margin-left : auto;
+  margin-right : auto;
+  z-index : 1;
+}
+
+#header-image{
+  display : block;
+  margin-left : auto;
+  margin-right : auto;
+  z-index : 1;
+}
+
+.start-button{
+  display : block;
+  font-size : 40px;
+  margin-top: 35%;
+  margin-left : auto;
+  margin-right : auto;
+}
+
+#intro-txt{
+  width: 50%;
+  display : block;
+  margin-left : auto;
+  margin-right : auto;
+}
+
+#intro-txt p{
+  color: #DDD;
+}

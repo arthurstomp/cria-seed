@@ -6,18 +6,19 @@
    * Module dependencies.
    */
   var mongoose = require('mongoose'),
+      passportLocalMongoose = require('passport-local-mongoose'),
       Schema = mongoose.Schema,
       userSchema,
-      bcrypt = require('bcrypt'),
       modelName = "User",
+      bcrypt = require('bcrypt'),
       MAX_LOGIN_ATTEMPTS = 5,
       LOCK_TIME = 2 * 60 * 60 * 1000,
       SALT_WORK_FACTOR = 10,
       reasons;
 
   userSchema = new Schema({
-    name: {type: String, required: true},
-    email: {type: String,
+    name: {type: String},
+    username: {type: String,
             required: true,
             unique: true,
             match: [/^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please fill a valid email address']},
@@ -42,6 +43,8 @@
     },
   },{collection: "users"});
 
+  userSchema.plugin(passportLocalMongoose);
+
   userSchema.statics.failedLogin = {
     NOT_FOUND: 0,
     PASSWORD_INCORRECT: 1,
@@ -58,18 +61,23 @@
   userSchema.methods.incLoginAttempts = function(cb) {
     // if we have a previous lock that has expired, restart at 1
     if (this.lockUntil && this.lockUntil < Date.now()) {
-      return this.update({
+      return this.model(modelName).update({
         $set: { loginAttempts: 1 },
         $unset: { lockUntil: 1 }
       }, cb);
     }
+
     // otherwise we're incrementing
-    var updates = { $inc: { loginAttempts: 1 } };
+    // var updates = { $inc: { loginAttempts: 1 } };
+    this.loginAttempts += 1;
     // lock the account if we've reached max attempts and it's not locked already
     if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
-      updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+      // updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+      this.lockUntil = Date.now() + LOCK_TIME;
     }
-    return this.update(updates, cb);
+    // console.log(this.model(modelName));
+    return this.save(cb);
+    // return this.model(modelName).update(updates, cb);
   };
 
   userSchema.pre('update',function(next){
@@ -143,16 +151,15 @@
 
         // check if the password was a match
         if (isMatch) {
+          console.log("isMatch");
           // if there's no lock or failed attempts, just return the user
-          if (!user.loginAttempts && !user.lockUntil){
+          if (user.loginAttempts === 0 && user.lockUntil === 0.0){
             return cb(null, user);
           }
           // reset attempts and lock info
-          var updates = {
-            $set: { loginAttempts: 0 },
-            $unset: { lockUntil: 1 }
-          };
-          return user.update(updates, function(err) {
+          user.loginAttempts = 0;
+          user.lockUntil = 0.0;
+          return user.save(function(err) {
             if (err){
               return cb(err);
             }
@@ -162,6 +169,7 @@
 
         // password is incorrect, so increment login attempts before responding
         user.incLoginAttempts(function(err) {
+          console.log("isNotMatch");
           if (err){
             return cb(err);
           }
@@ -171,5 +179,38 @@
     });
   };
 
+  // userSchema.statics.localAuthenticate = function (username,password,done) {
+  //   console.log("Local Strategy");
+  //   console.log(username);
+  //   console.log(password);
+  //   console.log(done);
+  //   return done(null,false);
+  //   // this.getAuthenticated(username,password,function(err,user,reason){
+  //     // console.log("authentication callback");
+  //     // if (err) {
+  //     //   return done(err);
+  //     // }else{
+  //     //   if(user){
+  //     //     console.log("Successful Login");
+  //     //     return done(null,user);
+  //     //   }
+  //     //   var reasons = user.failedLogin;
+  //     //
+  //     //   switch (reasons) {
+  //     //     case reasons.NOT_FOUND:
+  //     //     return done(null, false, {message:'User not found'});
+  //     //     case reason.PASSWORD_INCORRECT:
+  //     //     return done(null, false, {message:'Incorrect password'});
+  //     //     case reasons.MAX_ATTEMPTS:
+  //     //     return done(null, false, {message:'You exceded the attempts for login. Try again later'});
+  //     //     default:
+  //     //     return done(null,false,{message:'We dont know what happened, but your login failed.'});
+  //     //
+  //     //   }
+  //     // }
+  //   // });
+  // };
+
   module.exports = mongoose.model(modelName, userSchema);
+
 }());
