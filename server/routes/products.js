@@ -9,15 +9,30 @@
       router = express.Router(),
       controller = require('../app/controllers/products.js');
 
-router
-  .get('/products',
-  controller.list
-  );
+  router
+    .get('/products',
+         controller.list
+    )
+    .get('/products/:_id',
+         controller.detail
+    )
+    .get('/products/categories/:categories',
+         controller.listByCategories
+    );
 
-router
-  .post('/admin/products',
-  controller.create
-  );
+  router
+    .post('/admin/products',
+          controller.create
+    );
+  router
+    .put('/admin/products/:_id',
+         controller.update
+    );
 
-module.exports = router;
+  router
+    .delete('/admin/products/:_id',
+            controller.delete
+    );
+
+  module.exports = router;
 }());
