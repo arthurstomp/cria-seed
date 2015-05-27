@@ -80,6 +80,13 @@
 
     update = {};
 
+    /**
+    * Note : This update will overwrite subProducts and categories.
+    */
+    /*
+    * TODO : Find a nice way to write specifications and update them into product.
+    * maybe use text area and write the specifications in json?
+    */
     if(req.body.name){ update.name = req.body.name;}
     if(req.body.description){ update.description = req.body.description;}
     if(req.body.soloPrice){ update.soloPrice = req.body.soloPrice;}
@@ -108,7 +115,21 @@
   };
 
   exports.delete = function (req,res) {
-    // body...
+    var conditions;
+
+    conditions = {_id: req.params._id};
+    Product.remove(conditions,function(err,product){
+      var retObj = {
+        meta: {
+          'action': 'delete',
+          'timestamp': Date.now(),
+          filename: __filename,
+        },
+        err: err,
+        product: product,
+      };
+      return res.json(retObj);
+    });
   };
 
   exports.listByCategories = function (req,res) {
