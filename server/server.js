@@ -74,8 +74,7 @@
     passport.use(new LocalStrategy(User.authenticate()));
     app.use(require('express-session')({
       secret: "RAWR!!!!",
-      resave: false,
-      saveUninitialized: false
+      cookie: { maxAge: 3600000},
     }));
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());

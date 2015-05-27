@@ -31,6 +31,7 @@
 
 
     exports.login = function(req,res){
+      console.log(req);
       var user = {user: req.user};
       return res.json(user);
     };
