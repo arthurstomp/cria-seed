@@ -17,25 +17,25 @@
     return res.redirect('/');
   }
 
-router
-  .get('/users/:_id',
-       ensureAuthenticated,
-       controller.detail)
-  .get('/users',
-       ensureAuthenticated,
-  controller.list)
-  .get('/logout',
-       ensureAuthenticated,
-       function(req,res){
-         req.logout();
-       }
-  );
+  router
+    .get('/users/:_id',
+         ensureAuthenticated,
+         controller.detail)
+    .get('/users',
+         ensureAuthenticated,
+    controller.list)
+    .get('/logout',
+         ensureAuthenticated,
+         function(req,res){
+           req.logout();
+         }
+    );
 
-router
-  .post('/users',controller.create)
-  .post('/login',
-        passport.authenticate('local'),
-        controller.login);
+  router
+    .post('/users',controller.create)
+    .post('/login',
+          passport.authenticate('local'),
+          controller.login);
 
 
   router.put('/users/:_id',
