@@ -30,6 +30,9 @@
         'commonContainer':{
           templateUrl: 'partials/build.html',
           controller: 'HomeCtrl',
+        },
+        'leftMenuContainer':{
+
         }
       }
     });
