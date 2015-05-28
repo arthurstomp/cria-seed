@@ -31,7 +31,9 @@
 
 
     exports.login = function(req,res){
-      console.log(req);
+      console.log('************LOGIN********');
+      req.session.passport.user_id = req.user._id;
+      console.log(req.session);
       var user = {user: req.user};
       return res.json(user);
     };

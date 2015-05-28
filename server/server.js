@@ -75,6 +75,7 @@
     app.use(require('express-session')({
       secret: "RAWR!!!!",
       cookie: { maxAge: 3600000},
+      store: require('mongoose-session')(mongoose)
     }));
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());

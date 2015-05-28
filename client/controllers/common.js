@@ -1,10 +1,9 @@
 (function() {
   'use strict';
 
-  var commonModule = angular.module("CommonModule",[]);
+  var commonModule = angular.module("CommonModule",['ngResource','ui.router']);
 
   commonModule.controller("HomeCtrl",function($scope,$state){
-    $scope.introTxt = "merda";
     $scope.startClick = function() {
       console.log("start clicked");
       $state.go('build');
@@ -39,4 +38,22 @@
       ];
     }
   });
+
+  commonModule.controller('SessionCtrl',['$scope','$state','sessionService',function($scope,$state,sessionService){
+    console.log($state.current);
+    if ($state.current.name === "build") {
+      console.log("In build state");
+      if (!$scope.session) {
+        console.log('No session');
+        sessionService.get(function(session){
+          console.log('callback session service get');
+          $scope.session = session;
+          if (!$scope.session.cart) {
+            $scope.session.cart = {};
+          }
+        });
+      }
+    }
+  }]);
+
 }());
