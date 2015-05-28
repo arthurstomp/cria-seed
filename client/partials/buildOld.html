@@ -2,8 +2,7 @@
 <head>
 
     <title>My first Three.js app</title>
-
-    <link rel="stylesheet" type="text/css" href="../assets/css/tooltip.css">
+    <link rel="stylesheet" type="text/css" href="../css/tooltip.css">
 
     <style>
         body {
@@ -16,21 +15,54 @@
             height: 100%
         }
 
+<<<<<<< HEAD:client/partials/FileUpload.html
         body {
             padding: 20px;
             margin: 20px;
         }
 
+=======
+>>>>>>> c49ab369:client/partials/buildOld.html
         .main {
             margin: 0 auto;
             width: 740px;
             color: #AAA;
             float: left;
+<<<<<<< HEAD:client/partials/FileUpload.html
             visibility: hidden;
         }
 
         .main a {
             color: #C3D4DE;
+=======
+        }
+
+        .main a {
+            color: #C3D4DE;
+        }
+
+        #vWrapper {
+            margin-top: 100px;
+            padding: 6px;
+            width: 140px;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            background: #666;
+        }
+
+        #vWrapper a {
+            color: #EEEEEE;
+            text-decoration: none;
+            display: block;
+            padding: 6px 20px;
+            background: #021e2f;
+        }
+
+        #vWrapper a:hover {
+            color: #FFF;
+            text-decoration: underline;
+            background: #333;
+>>>>>>> c49ab369:client/partials/buildOld.html
         }
 
         #vWrapper {
@@ -60,6 +92,87 @@
             float: left;
             padding: 0 20px;
         }
+<<<<<<< HEAD:client/partials/FileUpload.html
+=======
+
+        .column {
+            float: left;
+            padding: 0 20px;
+        }
+>>>>>>> c49ab369:client/partials/buildOld.html
+
+        div.custom_file_upload {
+            width: 230px;
+            height: 20px;
+            margin: 40px auto;
+        }
+
+        input.file {
+            width: 150px;
+            height: 20px;
+            border: 1px solid #BBB;
+            border-right: 0;
+            color: #888;
+            padding: 5px;
+
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            outline: none;
+        }
+
+        div.file_upload {
+            width: 80px;
+            height: 24px;
+            background: #7abcff;
+            background: -moz-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7abcff), color-stop(44%, #60abf8), color-stop(100%, #4096ee));
+            background: -webkit-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+            background: -o-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+            background: -ms-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+            background: linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7abcff', endColorstr='#4096ee', GradientType=0);
+
+            display: inline;
+            position: absolute;
+            overflow: hidden;
+            cursor: pointer;
+
+            -webkit-border-top-right-radius: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            -moz-border-radius-topright: 5px;
+            -moz-border-radius-bottomright: 5px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            font-weight: bold;
+            color: #FFF;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        div.file_upload:before {
+            content: 'UPLOAD';
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+
+            cursor: pointer;
+        }
+
+        div.file_upload input {
+            position: relative;
+            height: 30px;
+            width: 250px;
+            display: inline;
+            cursor: pointer;
+            opacity: 0;
+        }
 
         #phone {
             height: 700px;
@@ -67,21 +180,7 @@
             background-color: red;
             float: left;
         }
-
-        .delete {
-            color: deepskyblue;
-        }
-
-        #deletePreviewDiv {
-            height: 200px;
-            width: 350px;
-            background-color: white;
-        }
-
-        .selectTile {
-            display: block;
-            margin: 0 auto;
-        }
+        #div1 {width:0px;height:0px;padding:0px;border:0px solid #aaaaaa;}
 
     </style>
 
@@ -89,13 +188,7 @@
 
 <body>
 
-<script src="../bower_components/three/three.min.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/fonts/helvetiker_regular.typeface.js"></script>
-<script src="../bower_components/three/helvetiker_regular.typeface.js"></script>
-<script src="../bower_components/three/OrbitControls.js"></script>
 <script src="tooltip.js" type="text/javascript"></script>
-<script src="../javascripts/interact.min.js"></script>
-<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 
 <div class="main">
     <div id="vWrapper">
@@ -109,8 +202,6 @@
 <div id="phone">
 </div>
 
-<div ui-view="leftMenuContainer"></div>
-
 <!--Menu Data-->
 
 <div id="menu" style="display:none;">
@@ -118,11 +209,10 @@
     <div id="sub1">
         <h2>Edit Text</h2>
 
-        <form id="addTxtForm" name="addTxtForm">
-            <label>TEXT:</label><br>
-            <input id="addTxt" name="txt" type="text">
-            <input align="middle" id="button" onclick="addText()" type="button" value="Add">
-        </form>
+        <h3>Add Text: </h3>
+<<<<<<< HEAD:client/partials/FileUpload.html
+        <input name="searchTxt" type="text" maxlength="512" id="searchTxt" onchange="addText()" class="searchField"/>
+        <br>
 
         <h3>font type: </h3>
         <select id="fontType" onchange="changeFontType()">
@@ -162,6 +252,12 @@
             <option value="underline">underline</option>
         </select>
 
+=======
+        <input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="searchField"/> <br>
+
+        <h3>Font Size: </h3>
+        <input name="fontSize" type="text" maxlength="5" id="fontSize" class="fontsizeField"/> <br><br>
+>>>>>>> c49ab369:client/partials/buildOld.html
     </div>
 
 
@@ -169,18 +265,34 @@
         <div class="column">
             <h2>Upload Image</h2> <br>
 
+<<<<<<< HEAD:client/partials/FileUpload.html
+            <!--<div class="custom_file_upload">-->
+
+            <!--<input type="file" class="file">-->
+
+            <!--<div class="file_upload">-->
+            <!--<input type="file" id="file_upload" name="file_upload" onchange="previewFile()">-->
+            <!--</div>-->
+
+            <!--</div>-->
+
             <input type="file" onchange="previewFile()"><br>
+=======
+            <div class="custom_file_upload">
+                <input type="text" class="file" name="file_info">
+
+                <div class="file_upload">
+                    <input type="file" id="file_upload" name="file_upload" onchange="previewFile()">
+                </div>
+            </div>
+>>>>>>> c49ab369:client/partials/buildOld.html
 
             <h4>Preview: </h4>
 
-            <!--<div id="previewDiv"></div>-->
-            <!--<br>-->
+            <div id="previewDiv"></div>
+            <br>
 
-            <!--<h3>Transform</h3>-->
-
-            <input align="middle" id="rotateButton" onclick="rotateTile()" type="button" value="Rotate">
-            <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
-
+            <h3>Transform</h3>
 
         </div>
     </div>
@@ -217,27 +329,23 @@
             <option selected>pattern</option>
         </select>
 
-        <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
+        <h3>Transform</h3>
 
     </div>
 
     <div id="sub4">
-        <h2>Remove Tiles</h2> <br>
-        <h4>Preview:</h4>
-
-        <div id="deletePreviewDiv"></div>
-
-        <h4 class="delete">Are you sure you want to remove this tile?</h4>
-        <input type="button" value="Remove" onClick="deleteTile()">
+        <h2>Delete Tile</h2> <br>
 
     </div>
 
 </div>
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
-<div id="drag1"><img src="../images/click.png" draggable="true"
-                     ondragstart="drag(event)" width="150" height="150"></div>
-<div id="drag2"><img src="../images/cat.jpg" draggable="true"
-                     ondragstart="drag(event)" width="150" height="150"></div>
+
+<img id="drag1" src="../images/logo.jpg" draggable="true"
+         ondragstart="drag(event)" width="336" height="69">
+<img id="drag2" src="../images/logo.jpg" draggable="true"
+     ondragstart="drag(event)" width="150" height="150">
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
 
 <script>
 
@@ -248,14 +356,7 @@
     var selectedTile;
     var originalColor = "red";
     var textColor;
-    var selectedObject;
     var tempCloneOfSkeleton;
-    var draggingTilePosition;
-    var currentDraggingTile;
-    var targetedDiv;
-    var resetTile;
-    var skeletonSize;
-
 
     /*
      this function create skeleton with tiles.
@@ -268,80 +369,83 @@
         var skeleton = document.getElementById("phone");
         skeleton.style.height = tileHeight * y;
         skeleton.style.width = tileWidth * x;
-        skeletonSize = x * y;
-
-        for (i = 0; i < skeletonSize; i++) {
+        for (i = 0; i < x * y; i++) {
             var tile = document.createElement("div");
             tile.id = "tile" + i;
-            tile.className = 'containerTIle';
             tile.style.width = tileWidth;
             tile.style.height = tileHeight;
             tile.style.float = "left";
-            tile.style.backgroundColor = 'red';
-            tile.empty = true;
-            //tile.addEventListener("click", selectTile, false);
+            tile.style.backgroundColor='red';
+            tile.addEventListener("click", selectTile, false);
 
-            //var imageDiv = document.getElementById("drag1");
-            //var imgResize = imageDiv.getElementsByTagName("img")[0];
-            //imgResize.width = tileWidth;
-            //imgResize.height = tileHeight;
-
+            var imgResize = document.getElementById("drag1");
+            imgResize.width = tileWidth;
+            imgResize.height = tileHeight;
             var clickContainer = document.getElementById("div1");
             clickContainer.style.width = tileWidth;
             clickContainer.style.height = tileHeight;
             //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
-
             var cln = clickContainer.cloneNode(true);
-            cln.addEventListener("click", selectTile, false);
-            cln.name = 'selectTile';
-            cln.id = "div" + i;
-            cln.style.zIndex = "2";
-            cln.className = 'selectTile';
             tile.appendChild(cln);
             skeleton.appendChild(tile);
         }
     }
 
     function selectTile(evt) {
-        if(evt.target.parentNode.empty == false) {
-            console.log("opening menu");
-            var menu = document.getElementById("vWrapper");
-            menu.style.visibility = "visible";
-            console.log(menu);
 
+// var x = document.getElementById("tileColor");
+// var res = x.options[x.selectedIndex].value;
+//
+// if (selectedTile != null) {
+// originalColor = document.getElementById(selectedTile).style.backgroundColor;
+// deselectTile();
+// }
+//
+// selectedTile = evt.target.id;
+// document.getElementById(selectedTile).style.backgroundColor = "white";
+//
+// var menu = document.getElementById("vWrapper");
+// menu.style.visibility = "visible";
+        console.log("selected" + evt.target)
+        var menu = document.getElementById("vWrapper");
+        menu.style.visibility = "visible";
 
-            selectedObject = evt.target;
-            console.log(evt.target.parentNode.empty);
-            selectedTile = evt.target.parentNode.id;
-            AddDeletePreview();
+        selectedTile = evt.target.id;
+        originalColor = document.getElementById(selectedTile).style.backgroundColor;
+        document.getElementById(selectedTile).style.backgroundColor = "white";
 
-            originalColor = document.getElementById(selectedTile).style.backgroundColor;
-            //document.getElementById(selectedTile).style.backgroundColor = "white";
-            document.getElementById(selectedTile).style.borderStyle = "solid";
-            document.getElementById(selectedTile).style.borderWidth = "1px";
-        }
-        else if(selectedTile != null){
+        if (selectedTile != null) {
             deselectTile();
-            console.log("closing menu");
         }
+
+
+
     }
 
     function deselectTile() {
 
+// var tile = document.getElementById(selectedTile);
+//
+// var x = document.getElementById("tileColor");
+// var res = x.options[x.selectedIndex].value;
+//
+// if (res != originalColor) {
+// document.getElementById(selectedTile).style.backgroundColor = res;
+// }
+// else {
+// tile.style.backgroundColor = originalColor;
+// }
+
         var x = document.getElementById("tileColor");
         var res = x.options[x.selectedIndex].value;
 
-        if (res != "color") {
+        if(res!=null) {
             document.getElementById(selectedTile).style.backgroundColor = res;
-            document.getElementById("tileColor").value = "color";
+            document.getElementById("tileColor").value="color";
         } else {
             document.getElementById(selectedTile).style.backgroundColor = originalColor;
         }
 
-        document.getElementById(selectedTile).style.borderStyle = "";
-        document.getElementById(selectedTile).style.borderWidth = "";
-        var menu = document.getElementById("vWrapper");
-        menu.style.visibility = "hidden";
     }
 
     createSkeleton(3, 5);
@@ -357,19 +461,28 @@
 
     function addText() {
 
-        document.getElementById(selectedTile).innerText = document.getElementById("addTxt").value;
-        //document.getElementById(selectedTile).style.zIndex = "2";
+        document.getElementById(selectedTile).innerText = document.getElementById("searchTxt").value;
         document.getElementById(selectedTile).style.textAlign = 'center';
         document.getElementById(selectedTile).style.lineHeight = document.getElementById(selectedTile).style.height;
-        document.getElementById("addTxtForm").reset();
 
     }
 
     function changeFontColor() {
 
+<<<<<<< HEAD:client/partials/FileUpload.html
         var x = document.getElementById("fontColor");
         var res = x.options[x.selectedIndex].value;
         document.getElementById(selectedTile).style.color = res;
+=======
+        var shape = new THREE.TextGeometry(text,
+            {
+                size: fontsize,
+                height: 0.01,
+                font: 'helvetiker',
+                weight: 'normal',
+                overdraw: false
+            });
+>>>>>>> c49ab369:client/partials/buildOld.html
 
     }
 
@@ -380,6 +493,7 @@
 
     }
 
+<<<<<<< HEAD:client/partials/FileUpload.html
     function changeFontStyle() {
 
         var x = document.getElementById("fontStyle");
@@ -405,161 +519,58 @@
         reader.onloadend = function () {
             var img = document.createElement("img");
             img.src = reader.result;
-            img.style.height = tileWidth;
-            img.style.width = tileHeight;
+            img.style.height = document.getElementById(selectedTile).style.height;
+            img.style.width = document.getElementById(selectedTile).style.width;
 
-            //preview
-//            document.getElementById("previewDiv").appendChild(img);
-//            console.log(img.src);
-
-            document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
-            document.getElementById(selectedTile).style.backgroundSize = 'cover';
+            document.getElementById("previewDiv").appendChild(img);
+            console.log(img.src);
+            document.getElementById(selectedTile).style.backgroundImage = "url("+img.src+")";
+=======
+//
+//    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+//    var renderer = new THREE.WebGLRenderer();
+//    renderer.setSize(window.innerWidth / 2, window.innerHeight / 1.5);
+//    document.body.appendChild(renderer.domElement);
+//
+//    var geometry = new THREE.BoxGeometry(1, 1, 1);
+//    var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+//    var cube = new THREE.Mesh(geometry, material);
+//    controls = new THREE.OrbitControls(camera, renderer.domElement);
+//    scene.add(cube);
+>>>>>>> c49ab369:client/partials/buildOld.html
 
         }
 
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
         }
-
     }
-
-    function AddDeletePreview() {
-
-        var preview = document.getElementById("deletePreviewDiv");
-        var previewClone = selectedObject.cloneNode(true);
-        previewClone.style.margin = "0 auto";
-
-        if (selectedTile != null) {
-
-            preview.innerHTML = "";
-            preview.appendChild(previewClone);
-        }
-
-    }
-
-    function deleteTile() {
-
-        originalColor = "red";
-        document.getElementById(selectedTile).style.background = null;
-        document.getElementById(selectedTile).innerText = "";
-        deselectTile();
-
-    }
-
-    function rotateTile() {
-        document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
-    }
-
-    function resizeTile() {
-
-        var x = 0, y = 0;
-        var element = document.getElementById(selectedTile);
-
-        interact(element)
-
-            .draggable({
-                snap: {
-                    targets: [
-                        interact.createSnapGrid({x: 20, y: 20})
-                    ],
-                    range: Infinity,
-                    relativePoints: [{x: 0, y: 0}]
-                },
-
-                inertia: true,
-
-                restrict: {
-                    restriction: element.parentNode,
-                    elementRect: {top: 0, left: 0, bottom: 1, right: 1},
-                    endOnly: true
-                }
-
-            })
-
-            .on('dragmove', function (event) {
-                x += event.dx;
-                y += event.dy;
-
-                event.target.style.webkitTransform =
-                    event.target.style.transform =
-                        'translate(' + x + 'px, ' + y + 'px)';
-            })
-
-            .resizable({
-                edges: {left: true, right: true, bottom: true, top: true}
-            })
-
-            .on('resizemove', function (event) {
-
-                var target = event.target,
-                    x = (parseFloat(target.getAttribute('data-x')) || 0),
-                    y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-                if (target.style.width <= '150px' && target.style.height <= '150px') {
-
-                    // update the element's style
-
-                    target.style.width = event.rect.width + 'px';
-                    target.style.height = event.rect.height + 'px';
-
-                    // translate when resizing from top or left edges
-                    x += event.deltaRect.left;
-                    y += event.deltaRect.top;
-
-                    target.style.webkitTransform = target.style.transform =
-                        'translate(' + x + 'px,' + y + 'px)';
-
-                    target.setAttribute('data-x', x);
-                    target.setAttribute('data-y', y);
-
-                    //target.textContent = event.rect.width + 'x' + event.rect.height;
-
-                }
-
-            });
-    }
-
 
     function allowDrop(ev) {
-       // console.log(ev.target.parentNode);
-        //console.log(hasTile(ev));
-        if(hasTile) {
-            ev.preventDefault();
-        }
-    }
-
-    //
-    function hasTile(element) {
-        if(element.empty == true){
-            return false;
-        }
-        else{
-            return true;
-        }
+        ev.preventDefault();
+        console.log("can drop");
     }
 
     function drag(ev) {
-       // console.log("dragging");
-       // console.log(ev.toElement.parentNode);
-        currentDraggingTile = ev.toElement.parentNode;
-
+        console.log("dragging");
+        ev.dataTransfer.setData("text", ev.target.id);
         showAvalaibleTileSpace();
     }
 
+    //Get maximum tiles instead of 15
     function showAvalaibleTileSpace(){
         var i;
         var skeleton = document.getElementById("phone");
         tempCloneOfSkeleton = skeleton.cloneNode(true);
-        for (i = 0; i < skeletonSize; i++) {
+        for (i = 0; i < 15; i++) {
             var tile = document.getElementById("tile" + i);
-            //tile.style.backgroundColor = "#0000FF";
             tile.style.backgroundColor = "#0000FF";
         }
     }
 
     function resetColorOfAvailableTiles(){
         var i;
-        for (i = 0; i < skeletonSize; i++) {
+        for (i = 0; i < 15; i++) {
             var tile = document.getElementById("tile" + i);
             tile.style.backgroundColor = tempCloneOfSkeleton.children[i].style.backgroundColor;
         }
@@ -569,20 +580,11 @@
         //console.log(ev.target);
         resetColorOfAvailableTiles();
         ev.preventDefault();
-       // console.log("dropping");
-        //console.log(ev.toElement.id);
-
-        targetedDiv = document.getElementById(ev.toElement.id);
-        //console.log(targetedDiv);
-
-
-        targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
-        targetedDiv.empty = false;
-        currentDraggingTile.innerHTML = "";
-
-        selectTile(ev);
-
+        console.log("dropping");
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
     }
+
 
 </script>
 </body>

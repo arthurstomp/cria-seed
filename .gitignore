@@ -134,3 +134,5 @@ crashlytics-build.properties
 config.js
 
 pid
+
+data/*

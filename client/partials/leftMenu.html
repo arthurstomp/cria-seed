@@ -1,0 +1,120 @@
+<!--Add controller so that the code can be simplified-->
+<div id="menu" style="display:none;">
+
+    <div id="sub1">
+        <h2>Edit Text</h2>
+
+        <form id="addTxtForm" name="addTxtForm">
+            <label>TEXT:</label><br>
+            <input id="addTxt" name="txt" type="text">
+            <input align="middle" id="button" onclick="addText()" type="button" value="Add">
+        </form>
+
+        <h3>font type: </h3>
+        <select id="fontType" onchange="changeFontType()">
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+        </select>
+
+
+        <h3>Color: </h3>
+        <select id="fontColor" onchange="changeFontColor()">
+            <option selected value="color">color</option>
+            <option value="red">red</option>
+            <option value="orange">orange</option>
+            <option value="yellow">yellow</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="indigo">indigo</option>
+            <option value="violet">violet</option>
+            <option value="grey">grey</option>
+            <option value="pink">pink</option>
+            <option value="black">black</option>
+        </select>
+
+        <h3>font Size: </h3>
+        <select id="fontSize" onchange="changeFontSize()">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+        </select>
+
+        <h3>font style: </h3>
+        <select id="fontStyle" onchange="changeFontStyle()">
+            <option value="normal">normal</option>
+            <option value="bold">bold</option>
+            <option value="italic">italic</option>
+            <option value="underline">underline</option>
+        </select>
+
+    </div>
+
+
+    <div id="sub2">
+        <div class="column">
+            <h2>Upload Image</h2> <br>
+
+            <input type="file" onchange="previewFile()"><br>
+
+            <h4>Preview: </h4>
+
+            <!--<div id="previewDiv"></div>-->
+            <!--<br>-->
+
+            <!--<h3>Transform</h3>-->
+
+            <input align="middle" id="rotateButton" onclick="rotateTile()" type="button" value="Rotate">
+            <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
+
+
+        </div>
+    </div>
+
+    <div id="sub3">
+        <h2>Add Design</h2> <br>
+
+        <select id="border">
+            <option selected>border</option>
+        </select>
+
+        <select id="tileColor" onchange="changeTileColor()">
+            <option selected value="color">color</option>
+            <option value="white">white</option>
+            <option value="red">red</option>
+            <option value="orange">orange</option>
+            <option value="yellow">yellow</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="indigo">indigo</option>
+            <option value="violet">violet</option>
+            <option value="grey">grey</option>
+            <option value="pink">pink</option>
+            <option value="black">black</option>
+        </select>
+
+        <br><br>
+
+        <select id="shape">
+            <option selected>shape</option>
+        </select>
+
+        <select id="pattern">
+            <option selected>pattern</option>
+        </select>
+
+        <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
+
+    </div>
+
+    <div id="sub4">
+        <h2>Remove Tiles</h2> <br>
+        <h4>Preview:</h4>
+
+        <div id="deletePreviewDiv"></div>
+
+        <h4 class="delete">Are you sure you want to remove this tile?</h4>
+        <input type="button" value="Remove" onClick="deleteTile()">
+
+    </div>
+</div>
