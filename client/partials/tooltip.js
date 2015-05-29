@@ -1,5 +1,5 @@
 /**
- * Created by LG on 2015-05-20.
+ * Created by Daye on 2015-05-20.
  */
 
 var tooltipOptions=
@@ -13,7 +13,8 @@ var tooltipOptions=
     smartPosition: true,
     offsetX: 0,
     offsetY: 0,
-    maxWidth: 600,
+    marginTop:100,
+    maxWidth: 450,
     calloutSize: 5,
     calloutPosition: 0.5,
     cssClass: "",

@@ -1,0 +1,235 @@
+/*#00bcd4  ----blue color
+
+#424242 -----grey
+
+#8ae5f0 ------- light blue*/
+
+html, body {
+    height: 100%;
+}
+
+.productNav ul {
+    position: fixed;
+    width: 100%;
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+}
+
+.productNav li {
+    float: left;
+    border-right: 10px solid white;
+}
+
+.productNav a {
+    display: block;
+    width: 100%;
+    color: white;
+    font-family: Roboto;
+    background-color: grey;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+}
+
+
+.iconNav li{
+    align-content: center;
+    border: 0;
+    height: 20px;
+}
+
+.iconNav ul {
+    position: fixed;
+    bottom: 244px;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url(../fonts/Roboto-Medium.ttf);
+}
+
+.wrapper {
+    position: relative;
+    width: auto;
+    height: 200px;
+    left: 0;
+    overflow: hidden;
+    bottom: 5px;
+}
+
+.scroller{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.container {
+    position: absolute;
+    height: 200px;
+    bottom: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.contentContainer {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+;
+}
+.red {
+    background-color: red;
+}
+.blue {
+    background-color: blue;
+}
+.orange {
+    background-color: orange;
+}
+
+.green {
+    background-color: green;
+}
+.black {
+    background-color: black;
+}
+.light-grey {
+    background-color: #bcbcbc;
+    margin-bottom: 20px;
+}
+
+.grey{
+    background-color: #989898;
+    margin-bottom: 20px;
+}
+
+.navcontainer {
+    width: 12%;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+.navcontainer img{
+    height: 130%;
+    margin: -9px auto 0 auto;
+}
+
+/* Visit http://www.menucool.com/horizontal/javascript-menu for source code and other menu CSS templates */
+
+
+#sses1
+{
+    margin:0 auto;/*This will make the menu center-aligned. Removing this line will make the menu align left.*/
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+#sses1 ul
+{
+    position: relative;
+    list-style-type: none;
+    float:left;
+    border-bottom:solid 1px #00bcd4;
+}
+
+/*CSS for background bubble*/
+.grey:hover
+{
+    background-color: #fbbc24;
+    border-bottom:solid 1px #00bcd4;
+
+
+}
+.light-grey:hover
+{
+    background-color: #fbbc24;
+    border-bottom:solid 1px #00bcd4;
+
+}
+
+.left {
+    float:left;
+    position:fixed;
+    bottom:2px;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg); /* IE 9 */
+    -webkit-transform:rotate(180deg); /* Safari and Chrome */
+    cursor: pointer;
+    color: white;
+    padding-bottom: 90px;
+    padding-top: 90px;
+    background-color: #424242;
+    z-index: 1;
+}
+
+.right {
+    position: fixed;
+    float:right;
+    cursor: pointer;
+    bottom: 2px;
+    right: 10px;
+    padding-bottom: 90px;
+    padding-top: 90px;
+    color: white;
+    background-color: #424242;
+    z-index: 1;
+}
+
+.header{
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:right;
+    border-bottom: solid lightgrey;
+}
+.header li{
+    display:inline;
+    font-family: 'Roboto-Medium';
+    color: #424242;
+    margin: 0;
+}
+
+.navBar li{
+    border-left: solid 1px lightgrey;
+    font-size: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 100px;
+    padding-right: 100px;
+    z-index: 0;
+}
+.header li:hover{
+    background-color: #00bcd4;
+    color: white;
+}
+a:link{
+    text-decoration: none;
+    color: #424242;
+}
+.logo{
+    text-align: left;
+    top: 10px;
+    bottom: 10px;
+    z-index: -1;
+    position: absolute;
+}
+
+.logo img{
+    height: 40px;
+    text-align: center;
+}
+

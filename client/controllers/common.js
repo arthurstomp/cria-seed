@@ -57,3 +57,12 @@
   }]);
 
 }());
+
+commonModule.controller("leftMenuCtrl",function($scope,$state){
+    $scope.introTxt = "merda";
+    $scope.startClick = function() {
+        console.log("start clicked");
+        $state.go('build');
+    };
+});
+
