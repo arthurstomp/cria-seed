@@ -29,7 +29,7 @@
     .get('/logout',
          ensureAuthenticated,
          function(req,res){
-
+           req.session.cookie.expire = false;
            req.logout();
            res.send();
          }

@@ -15,6 +15,8 @@
         env = process.env.NODE_ENV || 'development',
         config = require('./config/config.js')[env],
         mongoose = require('mongoose'),
+        session = require('express-session'),
+        MongoStore = require('connect-mongo')(session),
         models_path = __dirname + '/app/models',
         model_files,
         app = express(),
@@ -70,12 +72,17 @@
         });
     }
 
+    /**
+     * Middleware to handle session
+     */
     User = mongoose.model("User");
     passport.use(new LocalStrategy(User.authenticate()));
-    app.use(require('express-session')({
-      secret: "RAWR!!!!",
-      cookie: { maxAge: 3600000},
-      store: require('mongoose-session')(mongoose)
+    app.use(session({
+      secret: 'RAWR!!!!',
+      store: new MongoStore({ mongooseConnection: mongoose.connection,
+                              autoRemove: 'native',
+                              ttl: 24 * 60 * 60,
+                            })
     }));
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());

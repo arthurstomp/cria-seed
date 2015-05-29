@@ -4,17 +4,11 @@
 (function() {
   'use strict';
 
-  function isUserAuthenticated(req,res){
-    if (req.isUserAuthenticated()) {
-      
-    }else{
-
-    }
-  }
-
   exports.detail = function(req,res){
-    console.log("***********DETAIL SESSION*************");
-    console.log(req.session);
+    if(!req.session.passport.cart){
+      req.session.passport.cart = {totalPrice:0};
+    }
+    res.json(req.session);
 
   };
 
