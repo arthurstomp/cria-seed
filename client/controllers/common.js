@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var commonModule = angular.module("CommonModule",['ngResource','ui.router']);
+  var commonModule = angular.module("CommonModule",['ngResource','ui.router','ngCookies']);
 
   commonModule.controller("HomeCtrl",function($scope,$state){
     $scope.startClick = function() {
@@ -38,14 +38,13 @@
     }
   });
 
-  commonModule.controller('SessionCtrl',['$scope','$state','sessionService',function($scope,$state,sessionService){
-    if ($state.current.name === "build") {
-      if (!$scope.session) {
+  commonModule.controller('SessionCtrl',['$scope','$state','$cookies','sessionService',function($scope,$state,$cookies,sessionService){
+    if ($state.current.name !== "home" && $state.current.name !== '') {
+      if (!$cookies.getObject('cart')) {
         sessionService.get(function(session){
-          $scope.session = session;
-          if (!$scope.session.cart) {
-            $scope.session.cart = {};
-          }
+          var now = new Date(),
+              expireDate = now.setHours(now.getHours()+24);
+          $cookies.putObject('cart',session.passport.cart,{'expires': new Date(expireDate)});
         });
       }
     }
