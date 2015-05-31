@@ -8,6 +8,9 @@
 
   userModule.controller("LoginSignupCtrl",function($scope,$location,$cookieStore,loginService){
 
+    $scope.user = {};
+    $scope.newUser = {};
+
     $scope.stringfyArray = function(array,separator){
       var retStr = "";
       separator = separator ? separator : " ";
@@ -18,8 +21,11 @@
       return retStr;
     };
 
+    $scope.model = 'user.email';
+
     $scope.loginForm = [
       {
+        model : 'email',
         label : {
           id: 'login-email-label',
           class: ['pull-right'],
@@ -33,6 +39,7 @@
         },
       },
       {
+        model : 'password',
         label : {
           id: 'login-password-label',
           class: ['pull-right'],
@@ -43,12 +50,14 @@
           type : 'password',
           class : ['form-control'],
           placeholder : 'Enter your password',
+          ngModel : 'user.password',
         },
       },
     ];
 
     $scope.signupForm = [
       {
+        model : 'name',
         label : {
           id : 'signup-name-label',
           class : ['pull-left'],
@@ -59,9 +68,11 @@
           type : 'text',
           class : ['form-control'],
           placeholder : 'Enter your name',
+          ngModel : 'newUser.name',
         },
       },
       {
+        model : 'email',
         label : {
           id : 'signup-email-label',
           class : ['pull-left'],
@@ -72,10 +83,12 @@
           type : 'email',
           class : ['form-control'],
           placeholder : 'Enter you email',
+          ngModel : 'newUser.email',
         },
       },
 
       {
+        model : 'password',
         label : {
           id : 'signup-password-label',
           class : ['pull-left'],
@@ -86,10 +99,12 @@
           type : 'password',
           class : ['form-control'],
           placeholder : 'Enter you password',
+          ngModel : 'newUser.password',
         },
       },
 
       {
+        model : 'confirmPassword',
         label : {
           id : 'signup-confirm-password-label',
           class : ['pull-left'],
@@ -100,12 +115,14 @@
           type : 'password',
           class : ['form-control'],
           placeholder : 'Confirm you password',
+          ngModel : 'newUser.confirmPassword',
         },
       },
     ];
 
-    $scope.clickRegister = function(user){
+    $scope.signupClick = function(newUser){
       console.log("register user");
+      console.log(newUser) ;
     };
 
     $scope.loginClick = function(user){
@@ -118,8 +135,8 @@
         function(err){
           console.log(err);
         });
-      };
-    });
+    };
+  });
 
   userModule.controller("userDetailCtrl",function ($scope,usersService) {
     console.log("userDetailCtrl");

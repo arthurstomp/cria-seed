@@ -10,25 +10,31 @@
       passport = require('passport');
 
   exports.create = function(req,res){
-    User.register(new User({ username : req.body.username,
-      password:req.body.password,
-      name: req.body.name || "Little Fucker",
-      admin: req.body.admin || false}),
-      req.body.password,
-      function(err, user) {
-        var retObj = {
-          meta: {"action": "create", "timestamp": new Date(), filename: __filename},
-          err: err
-        };
-        if (err) {
-          retObj.err = err;
-          return res.json(retObj);
-        }
-        passport.authenticate('local')(req, res,next, function () {
-          retObj.user = req.user;
-          return res.json(retObj);
+    if (req.body.password === req.body.confirmPassword) {
+      User.register(new User({ username : req.body.username,
+        password:req.body.password,
+        name: req.body.name || "Little Fucker",
+        admin: req.body.admin || false}),
+        req.body.password,
+        function(err, user) {
+          var retObj = {
+            meta: {"action": "create", "timestamp": new Date(), filename: __filename},
+            err: err
+          };
+          if (err) {
+            retObj.err = err;
+            res.status(400);
+            return res.json(retObj);
+          }
+          passport.authenticate('local')(req, res,next, function () {
+            retObj.user = req.user;
+            return res.json(retObj);
+          });
         });
-      });
+    }else{
+      res.status(400);
+      return res.send('Passwords don\'t match');
+    }
     };
 
 

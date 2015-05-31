@@ -6,7 +6,7 @@
     <form onsubmit="" class='pull-right' ng-controller="LoginSignupCtrl">
         <div class='form-group' ng-repeat='field in loginForm'>
           <label id='{{field.label.id}}' class='{{stringfyArray(field.label.class)}}'>{{field.label.value}}</label>
-          <input id='{{field.input.id}}' type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}' ng-model='user.email'></input>
+          <input id='{{field.input.id}}' ng-model="user[field.model]" type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}'></input>
         </div>
         <div>
             <input type="submit" class='btn btn-default pull-right' ng-click="loginClick(user)" value="Log In"/>
@@ -16,16 +16,16 @@
 
   <div class="signup-form col-md-6">
     <h3 class='pull-left'>Sign-Up</h3>
-    
+
     <div class="clearfix"></div>
 
     <form class='pull-left' ng-controller="LoginSignupCtrl">
         <div class='form-group' ng-repeat='field in signupForm'>
           <label id='{{field.label.id}}' class='{{stringfyArray(field.label.class)}}'>{{field.label.value}}</label>
-          <input id='{{field.input.id}}' type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}' ng-model='user.email'></input>
+          <input ng-model='newUser[field.model]' id='{{field.input.id}}' type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}'></input>
         </div>
         <div>
-            <input type="submit" class='btn btn-default pull-left' ng-click="loginClick(user)" value="Sign Up"/>
+            <input type="submit" class='btn btn-default pull-left' ng-click="signupClick(newUser)" value="Sign Up"/>
         </div>
     </form>
   </div>
