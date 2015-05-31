@@ -1,14 +1,36 @@
-<h1>Login</h1>
-<form onsubmit="" ng-controller="LoginSignupCtrl">
-    <div>
-        <label>E-mail:</label>
-        <input type="text" name="email" ng-model="user.email"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password" ng-model="user.password"/>
-    </div>
-    <div>
-        <input type="submit" ng-click="loginClick(user)" value="Log In"/>
-    </div>
-</form>
+<div class="container-fluid">
+  <div class="login-form col-md-6">
+    <h3 class='pull-right'>Login</h3>
+    <div class="clearfix"></div>
+    <form onsubmit="" class='pull-right' ng-controller="LoginSignupCtrl">
+        <div class='form-group'>
+            <label id='login-email-label' class='pull-right'>E-mail:</label>
+            <input type="email" class="form-control" placeholder='Enter Email' ng-model="user.email"/>
+        </div>
+        <div class='form-group'>
+            <label id='login-password-label' class='pull-right'>Password:</label>
+            <input type="password" class="form-control" placeholder="Enter Password" ng-model="user.password"/>
+        </div>
+        <div>
+            <input type="submit" class='btn btn-default pull-right' ng-click="loginClick(user)" value="Log In"/>
+        </div>
+    </form>
+  </div>
+  <div class="signup-form col-md-6">
+    <h3 class='pull-left'>Sign-Up</h3>
+    <div class="clearfix"></div>
+    <form class='pull-left' ng-controller="LoginSignupCtrl">
+        <div class='form-group'>
+            <label class='pull-left'>E-mail:</label>
+            <input type="email" class="form-control" placeholder='Enter Email' ng-model="user.email"/>
+        </div>
+        <div class='form-group'>
+            <label class='pull-left'>Password:</label>
+            <input type="password" class="form-control" placeholder="Enter Password" ng-model="user.password"/>
+        </div>
+        <div>
+            <input type="submit" class='btn btn-default pull-left' ng-click="loginClick(user)" value="Log In"/>
+        </div>
+    </form>
+  </div>
+</div>
