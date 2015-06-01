@@ -36,13 +36,33 @@
         #vWrapper {
             margin-top: 100px;
             padding: 6px;
+            width: 50px;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            background: #00BCD4;
+            float: left;
+        }
+
+        #vWrapper2 {
+            margin-top: 100px;
+            padding: 6px;
+            margin-left: 100%;
             width: 140px;
             opacity: 0.5;
             filter: alpha(opacity=50);
             background: #666;
+            float: left;
         }
 
         #vWrapper a {
+            color: #3abff0;
+            text-decoration: none;
+            display: block;
+            padding: 10px 10px 10px 10px;
+            background: #00BCD4;
+        }
+
+        #vWrapper2 a {
             color: #EEEEEE;
             text-decoration: none;
             display: block;
@@ -51,6 +71,11 @@
         }
 
         #vWrapper a:hover {
+            color: #8AE5F0;
+            background: #8AE5F0;
+        }
+
+        #vWrapper2 a:hover {
             color: #FFF;
             text-decoration: underline;
             background: #333;
@@ -99,10 +124,19 @@
 
 <div class="main">
     <div id="vWrapper">
-        <a href="#" onmouseover="tooltip.pop(this, '#sub1', {position:1, offsetX:-30, effect:'slide'})">TEXT</a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub2', {position:1, offsetX:-20, effect:'slide', sticky: true})">IMAGE</a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub3', {position:1, offsetX:-20, effect:'slide'})">COLOR</a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub4', {position:1, offsetX:-20, effect:'slide'})">DELETE</a>
+
+        <a href="#" onmouseover="tooltip.pop(this, '#sub1', {position:1, offsetX:-30, effect:'slide'})">
+            <img src="../assets/images/text.png">
+        </a>
+        <a href="#" onmouseover="tooltip.pop(this, '#sub2', {position:1, offsetX:-20, effect:'slide', sticky: true})">
+            <img src="../assets/images/picture.png">
+        </a>
+        <a href="#" onmouseover="tooltip.pop(this, '#sub3', {position:1, offsetX:-20, effect:'slide'})">
+            <img src="../assets/images/design.png">
+        </a>
+        <a href="#" onmouseover="tooltip.pop(this, '#sub4', {position:1, offsetX:-20, effect:'slide'})">
+            <img src="../assets/images/trash.png">
+        </a>
     </div>
 </div>
 
