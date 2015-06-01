@@ -3,11 +3,49 @@
     <h3 class='pull-right'>Login</h3>
     <div class="clearfix"></div>
 
-    <form onsubmit="" class='pull-right' ng-controller="LoginSignupCtrl">
-        <div class='form-group' ng-repeat='field in loginForm'>
-          <label id='{{field.label.id}}' class='{{stringfyArray(field.label.class)}}'>{{field.label.value}}</label>
-          <input id='{{field.input.id}}' ng-model="user[field.model]" type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}'></input>
+    <form name='loginForm' class='pull-right' ng-controller="LoginSignupCtrl">
+        <div class='form-group'>
+          <label id='login-email-label'
+                 class='pull-right'>Email</label>
+          <input id='login-email-input'
+                 name='email'
+                 ng-model="user.email" required type='email'
+                 class='form-control'
+                 placeholder='Enter your e-mail'></input>
+          <div class="error-container"
+               ng-show='loginForm.email.$dirty && loginForm.email.$invalid'>
+            <small class='error'
+                   ng-show='loginForm.email.$error.required'>
+              Your e-mail is required.
+            </small>
+            <small class='error'
+                   ng-show='loginForm.email.$error.email'>
+              Your e-mail doesn't look like an e-mail.
+            </small>
+
+          </div>
         </div>
+        <div class='form-group'>
+          <label id='login-password-label' class='pull-right'>Password</label>
+          <input id='login-password-input'
+                 name="password"
+                 type='password'
+                 ng-model="user.password" required ng-minlength=8
+                 class='form-control'
+                 placeholder='Enter your password'></input>
+          <div class="error-container"
+               ng-show='loginForm.password.$dirty && loginForm.password.$invalid'>
+            <small class="error"
+                   ng-show='loginForm.password.$error.required'>
+              Your password is required.
+            </small>
+            <small class="error"
+                   ng-show='loginForm.password.$error.minlength'>
+              Your password must have at least 8 characters.
+            </small>
+          </div>
+        </div>
+
         <div>
             <input type="submit" class='btn btn-default pull-right' ng-click="loginClick(user)" value="Log In"/>
         </div>
@@ -19,11 +57,96 @@
 
     <div class="clearfix"></div>
 
-    <form class='pull-left' ng-controller="LoginSignupCtrl">
-        <div class='form-group' ng-repeat='field in signupForm'>
-          <label id='{{field.label.id}}' class='{{stringfyArray(field.label.class)}}'>{{field.label.value}}</label>
-          <input ng-model='newUser[field.model]' id='{{field.input.id}}' type='{{field.input.type}}' class='{{stringfyArray(field.input.class)}}' placeholder='{{field.input.placeholder}}'></input>
+    <form name='signupForm' class='pull-left' ng-controller="LoginSignupCtrl">
+        <div class='form-group'>
+          <label id='signup-name-label'
+                 class='pull-left'>Name</label>
+          <input id='signup-name-input'
+                 ng-model='newUser.name' required
+                 name='name'
+                 class='form-control'
+                 placeholder='Enter your name'></input>
+          <div class="error-container"
+               ng-show='signupForm.name.$dirty && signupForm.name.$invalid'>
+            <small class='error'
+                   ng-show='signupForm.name.$error.required'>
+              Your name is required.
+            </small>
+         </div>
         </div>
+        <div class='form-group'>
+          <label id='signup-email-label'
+                 class='pull-left'>E-mail</label>
+          <input id='signup-email-input'
+                 ng-model='newUser.email' required
+                 type='email'
+                 name='email'
+                 class='form-control'
+                 placeholder='Enter your e-mail'></input>
+          <div class="error-container"
+               ng-show='signupForm.email.$dirty && signupForm.email.$invalid'>
+            <small class='error'
+                   ng-show='signupForm.email.$error.required'>
+              Your e-mail is required.
+            </small>
+            <small class='error'
+                   ng-show='signupForm.email.$error.email'>
+              This doesn't look like an e-mail.
+            </small>
+         </div>
+        </div>
+        <div class='form-group'>
+          <label id='signup-password-label'
+                 class='pull-left'>Password</label>
+          <input id='signup-password-input'
+                 ng-model='newUser.password' required ng-minlength=8
+                 type='password'
+                 name='password'
+                 class='form-control'
+                 placeholder='Enter your password'></input>
+          <div class="error-container"
+               ng-show='signupForm.password.$dirty && signupForm.password.$invalid'>
+            <small class='error'
+                   ng-show='signupForm.password.$error.required'>
+              Your password is required.
+              </br>
+            </small>
+            <small class='error'
+                   ng-show='signupForm.password.$error.minlength'>
+              Your password must have at least 8 characters.
+              </br>
+            </small>
+          </div>
+        </div>
+        <div class='form-group'>
+          <label id='signup-confirm-password-label'
+                 class='pull-left'>Confirm Password</label>
+          <input id='signup-confirm-password-input'
+                 ng-model='newUser.confirmPassword' required ng-minlength=8 confirmPassword
+                 type='password'
+                 name='confirmPassword'
+                 class='form-control'
+                 placeholder='Confirm your password'></input>
+          <div class="error-container"
+               ng-show='signupForm.password.$dirty && signupForm.password.$invalid'>
+            <small class='error'
+                   ng-show='signupForm.confirmPassword.$error.required'>
+              Your password confirmation is required.
+              </br>
+            </small>
+            <small class='error'
+                   ng-show='signupForm.confirmPassword.$error.minlength'>
+              Your password confirmation must have at least 8 characters.
+              </br>
+            </small>
+            <small class='error'
+                   ng-show='signupForm.confirmPassword.$error.confirmpassword'>
+              Your password confirmation must be equal to your password.
+              </br>
+            </small>
+         </div>
+        </div>
+
         <div>
             <input type="submit" class='btn btn-default pull-left' ng-click="signupClick(newUser)" value="Sign Up"/>
         </div>
