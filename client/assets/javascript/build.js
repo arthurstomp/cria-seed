@@ -1,4 +1,3 @@
-
   var selectedImg = "";
   var selectColor = "#ffffff";
   var tileWidth = 150;
@@ -15,6 +14,10 @@
   var skeletonSize;
   var previousTile;
   var canSwap;
+  /* TODO: Add explanation and author to every function
+     TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+  */
+
 
   /*
    this function create skeleton with tiles.
@@ -65,14 +68,10 @@
       selectedTile = evt.target.parentNode.id;
       if(evt.target.parentNode.empty == false) {
           if (previousTile != null) {
-              console.log("closing menu");
               deselectTile();
           } else if (selectedTile != previousTile) {
-              console.log("opening menu");
 
-              var menu = document.getElementById("vWrapper");
-              menu.style.visibility = "visible";
-              console.log(menu);
+              openLeftMenu();
 
 
               selectedObject = evt.target;
@@ -80,10 +79,22 @@
               AddDeletePreview();
 
               originalColor = document.getElementById(selectedTile).style.backgroundColor;
-              document.getElementById(selectedTile).style.backgroundColor = "white";
+              //document.getElementById(selectedTile).style.backgroundColor = "white";
               previousTile = selectedTile;
           }
       }
+  }
+
+  function openLeftMenu(){
+      console.log("opening menu");
+      var menu = document.getElementById("vWrapper");
+      menu.style.visibility = "visible";
+      console.log(menu);
+  }
+
+  function closeLeftMenu(){
+      var menu = document.getElementById("vWrapper");
+      menu.style.visibility = "hidden";
   }
 
   function deselectTile() {
@@ -97,9 +108,7 @@
       } else {
           document.getElementById(previousTile).style.backgroundColor = originalColor;
       }
-
-      var menu = document.getElementById("vWrapper");
-      menu.style.visibility = "hidden";
+      closeLeftMenu();
       previousTile = null;
   }
 
@@ -309,7 +318,7 @@
      // console.log("dragging");
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
-
+      closeLeftMenu();
       showAvalaibleTileSpace();
   }
 
@@ -320,7 +329,10 @@
       for (i = 0; i < skeletonSize; i++) {
           var tile = document.getElementById("tile" + i);
           //tile.style.backgroundColor = "#0000FF";
-          tile.style.backgroundColor = "#0000FF";
+          if(tile.empty == true){
+              tile.style.backgroundColor = "#0000FF";
+          }
+
       }
   }
 
@@ -341,21 +353,16 @@
 
       if(canSwap == false) {
           targetedDiv = document.getElementById(ev.toElement.id);
-          //console.log(targetedDiv);
-
 
           targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
           targetedDiv.parentNode.empty = false;
           targetedDiv.empty = false;
           currentDraggingTile.innerHTML = "";
-
-
           selectTile(ev);
       }
       else{
           swapTiles(ev);
       }
-
   }
 
 window.addEventListener("load", createSkeleton(3, 5));
