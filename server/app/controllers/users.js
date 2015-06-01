@@ -26,13 +26,13 @@
             return res.json(retObj);
           }
           console.log('*********User created without troubles**********');
-          passport.authenticate('local')(req, res,next, function () {
+          passport.authenticate('local',function (err,user,info) {
             console.log('*********User authenticated without troubles**********');
             retObj.user = user;
             req.session.passport.user_id = user._id;
             req.session.passport.cart = {user_id:user._id};
             return res.json(retObj);
-          });
+          })(req,res,next);
         });
     }else{
       res.status(400);
