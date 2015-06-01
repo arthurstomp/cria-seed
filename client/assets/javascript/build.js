@@ -60,26 +60,28 @@
   }
 
   function selectTile(evt) {
-      console.log(evt.target.parentNode.empty);
+      //console.log(evt.target.parentNode.empty);
       selectedTile = evt.target.parentNode.id;
-      if(previousTile != null){
-          console.log("closing menu");
-          deselectTile();
-      }else if(selectedTile != previousTile){
-          console.log("opening menu");
+      if(evt.target.parentNode.empty == false) {
+          if (previousTile != null) {
+              console.log("closing menu");
+              deselectTile();
+          } else if (selectedTile != previousTile) {
+              console.log("opening menu");
 
-          var menu = document.getElementById("vWrapper");
-          menu.style.visibility = "visible";
-          console.log(menu);
+              var menu = document.getElementById("vWrapper");
+              menu.style.visibility = "visible";
+              console.log(menu);
 
 
-          selectedObject = evt.target;
-          console.log(evt.target.parentNode.empty);
-          AddDeletePreview();
+              selectedObject = evt.target;
+              console.log(evt.target.parentNode.empty);
+              AddDeletePreview();
 
-          originalColor = document.getElementById(selectedTile).style.backgroundColor;
-          document.getElementById(selectedTile).style.backgroundColor = "white";
-          previousTile = selectedTile;
+              originalColor = document.getElementById(selectedTile).style.backgroundColor;
+              document.getElementById(selectedTile).style.backgroundColor = "white";
+              previousTile = selectedTile;
+          }
       }
   }
 
