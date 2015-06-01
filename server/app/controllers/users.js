@@ -9,7 +9,7 @@
       User = mongoose.model('User'),
       passport = require('passport');
 
-  exports.create = function(req,res){
+  exports.create = function(req,res,next){
     if (req.body.password === req.body.confirmPassword) {
       User.register(new User({ username : req.body.username,
         password:req.body.password,
@@ -22,27 +22,29 @@
             err: err
           };
           if (err) {
-            retObj.err = err;
             res.status(400);
             return res.json(retObj);
           }
+          console.log('*********User created without troubles**********');
           passport.authenticate('local')(req, res,next, function () {
-            retObj.user = req.user;
+            console.log('*********User authenticated without troubles**********');
+            retObj.user = user;
+            req.session.passport.user_id = user._id;
+            req.session.passport.cart = {user_id:user._id};
             return res.json(retObj);
           });
         });
     }else{
       res.status(400);
+      console.log('*********Passwords dont match**********');
       return res.send('Passwords don\'t match');
     }
     };
 
 
     exports.login = function(req,res){
-      console.log('************LOGIN********');
-      req.session.passport.user_id = req.user._id;
-      console.log(req.session);
       var user = {user: req.user};
+      req.session.passport.user_id = user._id;
       req.session.passport.cart = {user_id:user._id};
       return res.json(user);
     };
