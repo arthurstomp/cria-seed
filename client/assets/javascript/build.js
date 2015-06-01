@@ -62,7 +62,10 @@
   function selectTile(evt) {
       console.log(evt.target.parentNode.empty);
       selectedTile = evt.target.parentNode.id;
-      if(selectedTile != previousTile){
+      if(previousTile != null){
+          console.log("closing menu");
+          deselectTile();
+      }else if(selectedTile != previousTile){
           console.log("opening menu");
 
           var menu = document.getElementById("vWrapper");
@@ -77,10 +80,6 @@
           originalColor = document.getElementById(selectedTile).style.backgroundColor;
           document.getElementById(selectedTile).style.backgroundColor = "white";
           previousTile = selectedTile;
-      }
-      else {
-          console.log("closing menu");
-          deselectTile();
       }
   }
 
@@ -98,7 +97,7 @@
 
       var menu = document.getElementById("vWrapper");
       menu.style.visibility = "hidden";
-      previousTile = 0;
+      previousTile = null;
   }
 
 
