@@ -14,6 +14,7 @@
   var resetTile;
   var skeletonSize;
   var previousTile;
+  var canSwap;
 
   /*
    this function create skeleton with tiles.
@@ -167,9 +168,6 @@
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
-          var selectedTileContent = document.getElementById(selectedTile);
-          selectedTileContent.innerHTML = "";
-          selectedTileContent.appendChild(img);
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
@@ -280,18 +278,30 @@
   function allowDrop(ev) {
       // console.log(ev.target.parentNode);
       //console.log(hasTile(ev));
-      if(hasTile) {
-          ev.preventDefault();
+      ev.preventDefault();
+      if(hasTile(ev)) {
+          console.log("thou may pass");
+          canSwap = false;
+      }
+      else{
+          console.log("thou shall not pass!");
+          canSwap = true;
       }
   }
 
-  //
+  function swapTiles(ev){
+      console.log("commence switching procedure");
+      var dummmy =  ev.target.parentNode.innerHTML;
+     ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      currentDraggingTile.innerHTML = dummmy;
+  }
+
   function hasTile(element) {
-      if(element.empty === true){
-          return false;
+      if(element.target.parentNode.empty === true){
+          return true;
       }
       else{
-          return true;
+          return false;
       }
   }
 
@@ -329,15 +339,22 @@
      // console.log("dropping");
       //console.log(ev.toElement.id);
 
-      targetedDiv = document.getElementById(ev.toElement.id);
-      //console.log(targetedDiv);
+      if(canSwap == false) {
+          targetedDiv = document.getElementById(ev.toElement.id);
+          //console.log(targetedDiv);
 
 
-      targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
-      targetedDiv.empty = false;
-      currentDraggingTile.innerHTML = "";
+          targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+          targetedDiv.parentNode.empty = false;
+          targetedDiv.empty = false;
+          currentDraggingTile.innerHTML = "";
 
-      selectTile(ev);
+
+          selectTile(ev);
+      }
+      else{
+          swapTiles(ev);
+      }
 
   }
 
