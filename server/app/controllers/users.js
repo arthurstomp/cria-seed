@@ -1,11 +1,13 @@
 /*jslint node: true */
 /*jslint white: true */
 
+
+
 (function() {
   'use strict';
   var mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  passport = require('passport');
+      User = mongoose.model('User'),
+      passport = require('passport');
 
   exports.create = function(req,res){
     User.register(new User({ username : req.body.username,
@@ -22,7 +24,7 @@
           retObj.err = err;
           return res.json(retObj);
         }
-        passport.authenticate('local')(req, res, function () {
+        passport.authenticate('local')(req, res,next, function () {
           retObj.user = req.user;
           return res.json(retObj);
         });
@@ -31,7 +33,11 @@
 
 
     exports.login = function(req,res){
+      console.log('************LOGIN********');
+      req.session.passport.user_id = req.user._id;
+      console.log(req.session);
       var user = {user: req.user};
+      req.session.passport.cart = {user_id:user._id};
       return res.json(user);
     };
 

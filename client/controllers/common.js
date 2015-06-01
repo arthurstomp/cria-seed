@@ -1,12 +1,10 @@
 (function() {
   'use strict';
 
-  var commonModule = angular.module("CommonModule",[]);
+  var commonModule = angular.module("CommonModule",['ngResource','ui.router','ngCookies']);
 
   commonModule.controller("HomeCtrl",function($scope,$state){
-    $scope.introTxt = "merda";
     $scope.startClick = function() {
-      console.log("start clicked");
       $state.go('build');
     };
   });
@@ -39,13 +37,17 @@
       ];
     }
   });
+
+  commonModule.controller('SessionCtrl',['$scope','$state','$cookies','sessionService',function($scope,$state,$cookies,sessionService){
+    if ($state.current.name !== "home" && $state.current.name !== '') {
+      if (!$cookies.getObject('cart')) {
+        sessionService.get(function(session){
+          var now = new Date(),
+              expireDate = now.setHours(now.getHours()+24);
+          $cookies.putObject('cart',session.passport.cart,{'expires': new Date(expireDate)});
+        });
+      }
+    }
+  }]);
+
 }());
-
-commonModule.controller("leftMenuCtrl",function($scope,$state){
-    $scope.introTxt = "merda";
-    $scope.startClick = function() {
-        console.log("start clicked");
-        $state.go('build');
-    };
-});
-

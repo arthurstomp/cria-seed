@@ -31,8 +31,8 @@
           templateUrl: 'partials/build.html',
           controller: 'HomeCtrl',
         },
-        'leftMenuContainer':{
-
+        'sessionContainer':{
+          controller: 'SessionCtrl'
         }
       }
     });

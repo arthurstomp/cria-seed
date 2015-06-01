@@ -12,8 +12,10 @@
 
   function ensureAuthenticated(req,res,next){
     if (req.isAuthenticated()){
+      console.log('logged in');
       return next();
     }
+    console.log('not logged in');
     return res.redirect('/');
   }
 
@@ -27,7 +29,9 @@
     .get('/logout',
          ensureAuthenticated,
          function(req,res){
+           req.session.cookie.expire = false;
            req.logout();
+           res.send();
          }
     );
 
