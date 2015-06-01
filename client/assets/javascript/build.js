@@ -165,7 +165,9 @@
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
-
+          var selectedTileContent = document.getElementById(selectedTile);
+          selectedTileContent.innerHTML = "";
+          selectedTileContent.appendChild(img);
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
@@ -174,7 +176,6 @@
       if (file) {
           reader.readAsDataURL(file); //reads the data as a URL
       }
-
   }
 
   function AddDeletePreview() {
@@ -275,7 +276,7 @@
 
 
   function allowDrop(ev) {
-     // console.log(ev.target.parentNode);
+      // console.log(ev.target.parentNode);
       //console.log(hasTile(ev));
       if(hasTile) {
           ev.preventDefault();
