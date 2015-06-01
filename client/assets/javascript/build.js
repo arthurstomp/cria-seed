@@ -1,5 +1,4 @@
-(function() {
-  'use strict';
+
   var selectedImg = "";
   var selectColor = "#ffffff";
   var tileWidth = 150;
@@ -14,12 +13,11 @@
   var targetedDiv;
   var resetTile;
   var skeletonSize;
-
+  var previousTile;
 
   /*
    this function create skeleton with tiles.
    */
-
   function createSkeleton(x, y) {
 
       var i;
@@ -62,8 +60,11 @@
   }
 
   function selectTile(evt) {
-      if(evt.target.parentNode.empty === false) {
+      console.log(evt.target.parentNode.empty);
+      selectedTile = evt.target.parentNode.id;
+      if(selectedTile != previousTile){
           console.log("opening menu");
+
           var menu = document.getElementById("vWrapper");
           menu.style.visibility = "visible";
           console.log(menu);
@@ -71,17 +72,15 @@
 
           selectedObject = evt.target;
           console.log(evt.target.parentNode.empty);
-          selectedTile = evt.target.parentNode.id;
           AddDeletePreview();
 
           originalColor = document.getElementById(selectedTile).style.backgroundColor;
-          //document.getElementById(selectedTile).style.backgroundColor = "white";
-          document.getElementById(selectedTile).style.borderStyle = "solid";
-          document.getElementById(selectedTile).style.borderWidth = "1px";
+          document.getElementById(selectedTile).style.backgroundColor = "white";
+          previousTile = selectedTile;
       }
-      else if(selectedTile !== null){
-          deselectTile();
+      else {
           console.log("closing menu");
+          deselectTile();
       }
   }
 
@@ -91,19 +90,16 @@
       var res = x.options[x.selectedIndex].value;
 
       if (res != "color") {
-          document.getElementById(selectedTile).style.backgroundColor = res;
+          document.getElementById(previousTile).style.backgroundColor = res;
           document.getElementById("tileColor").value = "color";
       } else {
-          document.getElementById(selectedTile).style.backgroundColor = originalColor;
+          document.getElementById(previousTile).style.backgroundColor = originalColor;
       }
 
-      document.getElementById(selectedTile).style.borderStyle = "";
-      document.getElementById(selectedTile).style.borderWidth = "";
       var menu = document.getElementById("vWrapper");
       menu.style.visibility = "hidden";
+      previousTile = 0;
   }
-
-  createSkeleton(3, 5);
 
 
   function changeTileColor() {
@@ -342,4 +338,5 @@
       selectTile(ev);
 
   }
-}());
+
+window.addEventListener("load", createSkeleton(3, 5));
