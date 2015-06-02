@@ -25,22 +25,20 @@
     </div>
 </div>
 
-    <div id="f1_container">
-        <div id="f1_card" class="shadow">
-            <div id="front" class="front face">
-            </div>
-            <div id="back" class="back face center">
-            </div>
+<div id="f1_container">
+    <div id="f1_card" class="shadow">
+        <div id="front" class="front face">
+        </div>
+        <div id="back" class="back face center">
         </div>
     </div>
-
-<br>
-<br>
-    <button class="btn btn-primary" id="flip_content">Flip</button>
-
 </div>
 
-<div ui-view="leftMenuContainer"></div>
+
+<!--<div ui-view="leftMenuContainer"></div>-->
+
+
+
 
 <!--Menu Data-->
 
@@ -164,8 +162,12 @@
 
 </div>
 <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
-<script src="../assets/javascript/build.js"></script>
 <div id="drag1"><img src="../assets/images/click.png" draggable="true"
                      ondragstart="drag(event)" width="150" height="150"></div>
 <div id="drag2"><img src="../assets/images/cat.jpg" draggable="true"
                      ondragstart="drag(event)" width="150" height="150"></div>
+<button class="btn btn-primary" id="flip_content">
+    <img src="../assets/images/rotate.png">
+</button>
+
+<script src="../assets/javascript/build.js"></script>

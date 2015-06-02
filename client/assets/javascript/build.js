@@ -65,6 +65,7 @@
           skeleton.appendChild(tile);
       }
   }
+
   function createFrontSkeleton(x, y) {
 
       var frontSkeleton = document.getElementById("front");
@@ -78,7 +79,7 @@
       tile.style.width = tileWidth*x;
       tile.style.height = tileHeight*y;
       tile.style.float = "left";
-      tile.style.backgroundColor = 'yellow';
+      tile.style.backgroundColor = 'hotpink';
       tile.empty = true;
 
       var clickContainer = document.getElementById("div1");
@@ -428,7 +429,7 @@
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
       closeLeftMenu();
-      showAvalaibleTileSpace();
+      //showAvalaibleTileSpace();
   }
 
   /*
@@ -466,7 +467,7 @@
    */
   function drop(ev) {
       //console.log(ev.target);
-      resetColorOfAvailableTiles();
+      //resetColorOfAvailableTiles();
       ev.preventDefault();
      // console.log("dropping");
       //console.log(ev.toElement.id);
@@ -485,9 +486,23 @@
       }
   }
 
+  function confirmDelete () {
+
+      if (confirm("Are you sure deleting a tile?")==true) {
+          deleteTile();
+      }
+
+  }
+
+  function changePattern () {
+
+
+  }
+
 var btn = document.getElementById('flip_content');
 var content = document.getElementById('f1_card');
 var c = 0;
+
 btn.onclick = function () {
     content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
 };
