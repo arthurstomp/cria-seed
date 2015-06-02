@@ -75,21 +75,21 @@
       var tile = document.createElement("div");
       tile.id = "tile1";
       tile.className = 'containerTIle';
-      tile.style.width = tileWidth;
-      tile.style.height = tileHeight;
+      tile.style.width = tileWidth*x;
+      tile.style.height = tileHeight*y;
       tile.style.float = "left";
       tile.style.backgroundColor = 'yellow';
       tile.empty = true;
 
       var clickContainer = document.getElementById("div1");
-      clickContainer.style.width = tileWidth;
-      clickContainer.style.height = tileHeight;
+      clickContainer.style.width = tileWidth*x;
+      clickContainer.style.height = tileHeight*y;
       //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
 
       var cln = clickContainer.cloneNode(true);
       cln.addEventListener("click", selectTile, false);
       cln.name = 'selectTile';
-      cln.id = "div" + i;
+      cln.id = "div1";
       cln.style.zIndex = "2";
       cln.className = 'selectTile';
       tile.appendChild(cln);
