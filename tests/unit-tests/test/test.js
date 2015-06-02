@@ -1,28 +1,30 @@
 describe("build.js", function () {
-    it('Should verify the correct skeleton height for the back skeleton.', function() {
-        var actualValue = app.createBackSkeleton(3 ,5).skeletonSize;
+    it('Should verify the correct tile height for the back skeleton.', function() {
+        var actualValue = tileHeight;
 
-        expect(actualValue).toBe(15);
+        expect(actualValue).toBe(150);
     });
 
     it('Should verify the color of the background of the skeleton.', function() {
         var expectedValue = 'red';
-        var actualValue = tile.style.backgroundColor;
+        var actualValue = originalColor;
 
         expect(actualValue).toBe(expectedValue);
     });
 
-    it('Should verify the correct skeleton size for the front skeleton.', function() {
-        var actualValue = app.createFrontSkeleton(3 ,5).skeletonSize;
+    it('Should verify the correct skeleton size for the back skeleton.', function() {
+        var div = document.createElement(div);
+        div.id = "back";
+        var actualValue = createSkeleton(3, 5);
 
         expect(actualValue).toBe(15);
     });
 
     it('Should verify the color of the background of the front skeleton.', function() {
-        var expectedValue = 'yellow';
+        /*var expectedValue = 'yellow';
         var actualValue = title.style.backgroundColor;
 
-        expect(actualValue).toBe(expectedValue);
+        expect(actualValue).toBe(expectedValue);*/
     });
 
     it('Should verify that the left menu is visible.', function() {
