@@ -226,6 +226,23 @@ describe('API Routing for CRUD operations on books', function () {
 
     });
 
+    it('Should verify that the tile color changes.', function() {
 
+    });
 
+    it('Should verify that text has been added to a tile', function() {
+
+    });
+
+    it('Should verify that the font color has changed.', function() {
+
+    });
+
+    it ('Should verify that the font style has changed.', function(){
+
+    });
+
+    it('Should verify that the font type has changed.', function() {
+
+    });
 
