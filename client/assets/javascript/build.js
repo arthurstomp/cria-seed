@@ -16,11 +16,13 @@
   var canSwap;
   /* TODO: Add explanation and author to every function
      TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+     TODO: Clean up code (remove console.logs and less global variables)
   */
 
 
   /*
-   this function create skeleton with tiles.
+   This function creates a skeleton with tiles
+   @Author: Daye & Abdellatif
    */
   function createSkeleton(x, y) {
 
@@ -63,6 +65,10 @@
       }
   }
 
+  /*
+   This function hanldes the selection of a tile
+   @Author: Daye & Abdellatif
+   */
   function selectTile(evt) {
       //console.log(evt.target.parentNode.empty);
       selectedTile = evt.target.parentNode.id;
@@ -85,18 +91,10 @@
       }
   }
 
-  function openLeftMenu(){
-      console.log("opening menu");
-      var menu = document.getElementById("vWrapper");
-      menu.style.visibility = "visible";
-      console.log(menu);
-  }
-
-  function closeLeftMenu(){
-      var menu = document.getElementById("vWrapper");
-      menu.style.visibility = "hidden";
-  }
-
+  /*
+   This function handles the deselection of a tile
+   @Author: Daye & Abdellatif
+   */
   function deselectTile() {
 
       var x = document.getElementById("tileColor");
@@ -113,6 +111,31 @@
   }
 
 
+  /*
+   This function opens the menu at the left
+   @Author: Daye & Abdellatif
+   */
+  function openLeftMenu(){
+      console.log("opening menu");
+      var menu = document.getElementById("vWrapper");
+      menu.style.visibility = "visible";
+      console.log(menu);
+  }
+
+  /*
+   This function closes the menu at the left
+   @Author: Daye & Abdellatif
+   */
+  function closeLeftMenu(){
+      var menu = document.getElementById("vWrapper");
+      menu.style.visibility = "hidden";
+  }
+
+
+  /*
+   This function changes the color of the tile
+   @Author: Daye & Abdellatif
+   */
   function changeTileColor() {
 
       var x = document.getElementById("tileColor");
@@ -121,6 +144,10 @@
 
   }
 
+  /*
+   This function adds text to a tile
+   @Author: Daye & Abdellatif
+   */
   function addText() {
 
       document.getElementById(selectedTile).innerText = document.getElementById("addTxt").value;
@@ -131,6 +158,10 @@
 
   }
 
+  /*
+   This function changes the color of the text
+   @Author: Daye & Abdellatif
+   */
   function changeFontColor() {
 
       var x = document.getElementById("fontColor");
@@ -139,6 +170,10 @@
 
   }
 
+  /*
+   This function changes the size of the font
+   @Author: Daye
+   */
   function changeFontSize() {
 
       var x = document.getElementById("fontSize");
@@ -146,6 +181,10 @@
 
   }
 
+  /*
+   This function changes the style of the font
+   @Author: Daye
+   */
   function changeFontStyle() {
 
       var x = document.getElementById("fontStyle");
@@ -158,11 +197,19 @@
       }
   }
 
+  /*
+   This function changes the type of the font
+   @Author: Daye
+   */
   function changeFontType() {
       var x = document.getElementById("fontType");
       document.getElementById(selectedTile).style.fontFamily = x.options[x.selectedIndex].value;
   }
 
+  /*
+   This function handles the uploading of ta picture
+   @Author: Daye & Abdellatif
+   */
   function previewFile() {
 
       var file = document.querySelector('input[type=file]').files[0]; //sames as here
@@ -187,6 +234,10 @@
       }
   }
 
+  /*
+   This function adds a preview of the selected tile when you are on the delete page
+   @Author: Daye
+   */
   function AddDeletePreview() {
 
       var preview = document.getElementById("deletePreviewDiv");
@@ -201,6 +252,10 @@
 
   }
 
+  /*
+   This function handles the deletion of a tile
+   @Author: Daye
+   */
   function deleteTile() {
 
       originalColor = "red";
@@ -210,10 +265,18 @@
 
   }
 
+  /*
+   This function handles the rotation of an image
+   @Author: Daye
+   */
   function rotateTile() {
       document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
   }
 
+  /*
+   This function handles the dynamic resizing of a tile
+   @Author: Daye
+   */
   function resizeTile() {
 
       var x = 0, y = 0;
@@ -283,7 +346,10 @@
           });
   }
 
-
+  /*
+   This function checks if a tile can be dropped in a spot
+   @Author: Abdellatif
+   */
   function allowDrop(ev) {
       // console.log(ev.target.parentNode);
       //console.log(hasTile(ev));
@@ -298,6 +364,10 @@
       }
   }
 
+  /*
+   This function handles the swapping of two tiles
+   @Author: Abdellatif
+   */
   function swapTiles(ev){
       console.log("commence switching procedure");
       var dummmy =  ev.target.parentNode.innerHTML;
@@ -305,6 +375,10 @@
       currentDraggingTile.innerHTML = dummmy;
   }
 
+  /*
+   This function checks if there is a tile at the location where you want to drop a tile
+   @Author: Abdellatif
+   */
   function hasTile(element) {
       if(element.target.parentNode.empty === true){
           return true;
@@ -314,6 +388,10 @@
       }
   }
 
+  /*
+   This function handles the dragging of a tile
+   @Author: Abdellatif
+   */
   function drag(ev) {
      // console.log("dragging");
      // console.log(ev.toElement.parentNode);
@@ -322,6 +400,10 @@
       showAvalaibleTileSpace();
   }
 
+  /*
+   This function shows the user where a tile can be placed
+   @Author: Abdellatif
+   */
   function showAvalaibleTileSpace(){
       var i;
       var skeleton = document.getElementById("phone");
@@ -329,13 +411,16 @@
       for (i = 0; i < skeletonSize; i++) {
           var tile = document.getElementById("tile" + i);
           //tile.style.backgroundColor = "#0000FF";
-          if(tile.empty == true){
+          //if(tile.empty == true){
               tile.style.backgroundColor = "#0000FF";
-          }
-
+          //}
       }
   }
 
+  /*
+   This function resets the color back to the original color
+   @Author: Abdellatif
+   */
   function resetColorOfAvailableTiles(){
       var i;
       for (i = 0; i < skeletonSize; i++) {
@@ -344,6 +429,10 @@
       }
   }
 
+  /*
+   This function handles the dropping of a tile
+   @Author: Abdellatif
+   */
   function drop(ev) {
       //console.log(ev.target);
       resetColorOfAvailableTiles();
