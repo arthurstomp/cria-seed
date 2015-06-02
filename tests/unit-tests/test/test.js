@@ -192,3 +192,40 @@ describe('API Routing for CRUD operations on books', function () {
     });
 
 });
+    it('Should verify the correct skeleton height for the back skeleton.', function() {
+        var actualValue = app.createBackSkeleton(3 ,5).skeletonSize;
+
+        expect(actualValue).toBe(15);
+    });
+
+    it('Should verify the color of the background of the skeleton.', function() {
+        var expectedValue = 'red';
+        var actualValue = tile.style.backgroundColor;
+
+        expect(actualValue).toBe(expectedValue);
+    });
+
+    it('Should verify the correct skeleton size for the front skeleton.', function() {
+        var actualValue = app.createFrontSkeleton(3 ,5).skeletonSize;
+
+        expect(actualValue).toBe(15);
+    });
+
+    it('Should verify the color of the background of the front skeleton.', function() {
+        var expectedValue = 'yellow';
+        var actualValue = title.style.backgroundColor;
+
+        expect(actualValue).toBe(expectedValue);
+    });
+
+    it('Should verify that the left menu is visible.', function() {
+
+    });
+
+    it('Should verify that the left menu closes.', function() {
+
+    });
+
+
+
+
