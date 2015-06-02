@@ -387,7 +387,6 @@ btn.onclick = function () {
     content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
 };
 
-
 window.addEventListener("load", createSkeleton(3, 5));
 window.addEventListener("load", createFrontSkeleton(3, 5));
 

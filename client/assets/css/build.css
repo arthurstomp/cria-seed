@@ -27,23 +27,21 @@ body {
 
 #vWrapper {
     margin-top: 100px;
-    padding: 6px;
-    width: 140px;
+    padding: 10px 10px 10px 10px;
+    width: 50px;
     opacity: 0.5;
     filter: alpha(opacity=50);
-    background: #666;
+    background: deepskyblue;
 }
 
 #vWrapper a {
-    color: #EEEEEE;
     text-decoration: none;
     display: block;
-    padding: 6px 20px;
-    background: #021e2f;
+    padding: 10px 10px 10px 10px;
+    background: deepskyblue;
 }
 
 #vWrapper a:hover {
-    color: #FFF;
     text-decoration: underline;
     background: #333;
 }
