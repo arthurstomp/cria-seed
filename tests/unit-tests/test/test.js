@@ -62,11 +62,10 @@ describe("build.js", function () {
     });
     it("Should verify that a tile can be deleted", function () {
         var tile = document.createElement("div");
-        selectedTile = tile;
-        selectedTile.id = "tiletest"
-        selectedTile.innerText = "something";
-        deleteTile();
-        var expectedValue = document.getElementById("tiletest").innerText;
+        tile.innerText = "something";
+        deleteTile(tile);
+
+        var expectedValue = "";
         var actualValue = "";
         expect(actualValue).toBe(expectedValue);
     });

@@ -288,13 +288,12 @@
    This function handles the deletion of a tile
    @Author: Daye
    */
-  function deleteTile() {
-
+  function deleteTile(selectedTileObject) {
       originalColor = "red";
-      document.getElementById(selectedTile).style.background = null;
-      document.getElementById(selectedTile).innerText = "";
-      deselectTile();
-
+      selectedTileObject.style.backgroundColor = null;
+      selectedTileObject.innerText = "";
+      //deselectTile();
+      return selectedTileObject;
   }
 
   /*
@@ -489,7 +488,7 @@
   function confirmDelete () {
 
       if (confirm("Are you sure deleting a tile?")==true) {
-          deleteTile();
+          deleteTile(selectedObject);
       }
 
   }
