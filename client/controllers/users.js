@@ -4,31 +4,18 @@
 
 (function() {
   'use strict';
-  var userModule = angular.module("UserModule",['ngResource','ui.router','ngCookies']);
 
-  userModule.controller("LoginSignupCtrl",function($scope,$location,$cookieStore,loginService,usersService){
+  /**
+  * UserModule : Angular module to deal with user views
+  *
+  * Dependencies : ngResource , ui.router
+  */
+  var userModule = angular.module("UserModule",['ngResource','ui.router']);
 
-    $scope.user = {};
-    $scope.newUser = {};
-
-    $scope.signupClick = function(newUser){
-      console.log("register user");
-      console.log(newUser);
-      usersService.users.save(
-        {name: newUser.name,
-         username: newUser.email,
-         password: newUser.password,
-         confirmPassword: newUser.confirmPassword,
-        },
-        function(res){
-          console.log(res.user);
-        },
-        function(err){
-          console.log(err);
-        }
-      );
-    };
-
+  /**
+  * LoginSignupCtrl :
+  */
+  userModule.controller("LoginSignupCtrl",function($scope,$location,loginService){
     $scope.loginClick = function(user){
       loginService.login.post(
         {username: user.email, password: user.password},
