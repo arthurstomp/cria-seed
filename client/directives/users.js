@@ -13,9 +13,8 @@
         ctrl.$validators.confirmpassword = function(modelValue, viewValue){
           if (scope.signupForm.password.$viewValue === scope.signupForm.confirmPassword.$viewValue) {
             return true;
-          }else{
-            return false;
           }
+          return false;
         };
       }
     };

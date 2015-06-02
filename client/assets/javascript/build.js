@@ -1,19 +1,21 @@
+/*jslint white: true */
+
 (function() {
   'use strict';
-  var selectedImg = "";
-  var selectColor = "#ffffff";
-  var tileWidth = 150;
-  var tileHeight = 150;
-  var selectedTile;
-  var originalColor = "red";
-  var textColor;
-  var selectedObject;
-  var tempCloneOfSkeleton;
-  var draggingTilePosition;
-  var currentDraggingTile;
-  var targetedDiv;
-  var resetTile;
-  var skeletonSize;
+  var selectedImg = "",
+      selectColor = "#ffffff",
+      tileWidth = 150,
+      tileHeight = 150,
+      selectedTile,
+      originalColor = "red",
+      textColor,
+      selectedObject,
+      tempCloneOfSkeleton,
+      draggingTilePosition,
+      currentDraggingTile,
+      targetedDiv,
+      resetTile,
+      skeletonSize;
 
 
   /*
@@ -22,15 +24,16 @@
 
   function createSkeleton(x, y) {
 
-      var i;
+      var i,
+      skeleton = document.getElementById("phone");
 
-      var skeleton = document.getElementById("phone");
       skeleton.style.height = tileHeight * y;
       skeleton.style.width = tileWidth * x;
       skeletonSize = x * y;
 
       for (i = 0; i < skeletonSize; i++) {
-          var tile = document.createElement("div");
+          var tile, clickContainer, cln;
+          tile = document.createElement("div");
           tile.id = "tile" + i;
           tile.className = 'containerTIle';
           tile.style.width = tileWidth;
@@ -45,12 +48,12 @@
           //imgResize.width = tileWidth;
           //imgResize.height = tileHeight;
 
-          var clickContainer = document.getElementById("div1");
+          clickContainer = document.getElementById("div1");
           clickContainer.style.width = tileWidth;
           clickContainer.style.height = tileHeight;
           //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
 
-          var cln = clickContainer.cloneNode(true);
+          cln = clickContainer.cloneNode(true);
           cln.addEventListener("click", selectTile, false);
           cln.name = 'selectTile';
           cln.id = "div" + i;
@@ -87,8 +90,9 @@
 
   function deselectTile() {
 
-      var x = document.getElementById("tileColor");
-      var res = x.options[x.selectedIndex].value;
+      var x, res, menu;
+      x = document.getElementById("tileColor");
+      res = x.options[x.selectedIndex].value;
 
       if (res != "color") {
           document.getElementById(selectedTile).style.backgroundColor = res;
@@ -99,7 +103,7 @@
 
       document.getElementById(selectedTile).style.borderStyle = "";
       document.getElementById(selectedTile).style.borderWidth = "";
-      var menu = document.getElementById("vWrapper");
+      menu = document.getElementById("vWrapper");
       menu.style.visibility = "hidden";
   }
 
@@ -107,9 +111,10 @@
 
 
   function changeTileColor() {
+      var x, res;
 
-      var x = document.getElementById("tileColor");
-      var res = x.options[x.selectedIndex].value;
+      x = document.getElementById("tileColor");
+      res = x.options[x.selectedIndex].value;
       document.getElementById(selectedTile).style.backgroundColor = res;
 
   }
@@ -125,9 +130,10 @@
   }
 
   function changeFontColor() {
+      var x,res;
 
-      var x = document.getElementById("fontColor");
-      var res = x.options[x.selectedIndex].value;
+      x = document.getElementById("fontColor");
+      res = x.options[x.selectedIndex].value;
       document.getElementById(selectedTile).style.color = res;
 
   }
@@ -157,9 +163,10 @@
   }
 
   function previewFile() {
+      var file,reader;
 
-      var file = document.querySelector('input[type=file]').files[0]; //sames as here
-      var reader = new FileReader();
+      file = document.querySelector('input[type=file]').files[0]; //sames as here
+      reader = new FileReader();
 
       reader.onloadend = function () {
           var img = document.createElement("img");
@@ -183,9 +190,10 @@
   }
 
   function AddDeletePreview() {
+      var preview, previewClone;
 
-      var preview = document.getElementById("deletePreviewDiv");
-      var previewClone = selectedObject.cloneNode(true);
+      preview = document.getElementById("deletePreviewDiv");
+      previewClone = selectedObject.cloneNode(true);
       previewClone.style.margin = "0 auto";
 
       if (selectedTile !== null) {
@@ -211,8 +219,8 @@
 
   function resizeTile() {
 
-      var x = 0, y = 0;
-      var element = document.getElementById(selectedTile);
+      var x = 0, y = 0, element;
+      element = document.getElementById(selectedTile);
 
       interact(element)
 

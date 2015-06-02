@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 (function() {
   'use strict';
   var commonModule = angular.module('CommonModule');
