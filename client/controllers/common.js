@@ -26,7 +26,7 @@
    */
   commonModule.controller("HomeCtrl",function($scope,$state){
     $scope.startClick = function() {
-      $state.go('build');
+      $state.go('build.default');
     };
   });
 

@@ -16,10 +16,13 @@
       targetedDiv,
       resetTile,
       skeletonSize;
-  /* TODO: Add explanation and author to every function
-  *   TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
-  *   TODO: Clean up code (remove console.logs and less global variables)
-  */
+
+  /*
+   * TODO: Add explanation and author to every function
+   * TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+   * TODO: Clean up code (remove console.logs and less global variables)
+   *
+   */
 
 
   /*
@@ -105,8 +108,8 @@
   function selectTile(evt) {
       //console.log(evt.target.parentNode.empty);
       selectedTile = evt.target.parentNode.id;
-      if(evt.target.parentNode.empty == false) {
-          if (previousTile != null) {
+      if(evt.target.parentNode.empty === false) {
+          if (previousTile !== null) {
               deselectTile();
           } else if (selectedTile != previousTile) {
 
@@ -492,7 +495,7 @@
 
   function confirmDelete () {
 
-      if (confirm("Are you sure deleting a tile?")==true) {
+      if (confirm("Are you sure deleting a tile?")===true) {
           deleteTile(selectedObject);
       }
 
@@ -503,13 +506,16 @@
 
   }
 
-var btn = document.getElementById('flip_content');
-var content = document.getElementById('f1_card');
-var c = 0;
-
-btn.onclick = function () {
-    content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
-};
 
 window.addEventListener("load", createSkeleton(3, 5));
 window.addEventListener("load", createFrontSkeleton(3, 5));
+window.addEventListener("load",function(){
+  var btn = document.getElementById('flip_content');
+  var content = document.getElementById('f1_card');
+  var c = 0;
+
+  btn.onclick = function () {
+      content.className = (c++ % 2 === 0) ? content.className + ' flip' : content.className.split(' ')[0];
+  };
+});
+})();

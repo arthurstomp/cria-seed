@@ -40,19 +40,28 @@
     });
 
     $stateProvider.state('build',{
-      url:'/build',
-      views:{
-        'navbar':{
-          templateUrl: 'partials/navbar.html',
-          controller: 'NavbarCtrl'
+      abstract : true,
+      views : {
+        '' : {
+          templateUrl : 'partials/build.html',
         },
-        'commonContainer':{
-          templateUrl: 'partials/build.html',
-          controller: 'HomeCtrl',
+        'navbar' : {
+           templateUrl : 'partials/navbar.html',
+           controller : 'NavbarCtrl'
         },
-        'sessionContainer':{
-          controller: 'SessionCtrl'
-        }
+      }
+    }).state('build.root',{
+      url: '/build',
+      views: {
+        'leftMenu' : {
+          templateUrl : '/partials/leftMenu.html',
+        },
+        // 'rightMenu' : {
+        //   templateUrl : ''
+        // },
+        // 'bottomMenu' : {
+        //   templateUrl : ''
+        // }
       }
     });
 
