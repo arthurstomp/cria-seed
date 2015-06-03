@@ -6,14 +6,25 @@
   'use strict';
 
   /**
-  * UserModule : Angular module to deal with user views
+  * @module UserModule
+  * @description Angular module to deal with user views
   *
-  * Dependencies : ngResource , ui.router
+  * @requires ngResource
+  * @requires ui.router
   */
+
+  /** Create module*/
   var userModule = angular.module("UserModule",['ngResource','ui.router']);
 
   /**
-  * LoginSignupCtrl :
+  * @name LoginSignupCtrl
+  * @description Handle the login and signup submit actions.
+  * @memberof UserModule
+  *
+  * @function
+  * @param $scope {object} -
+  * @param $location {object} -
+  * @param loginService {object} -
   */
   userModule.controller("LoginSignupCtrl",function($scope,$location,loginService){
     $scope.loginClick = function(user){
@@ -29,6 +40,15 @@
     };
   });
 
+  /**
+  * @name userDetailCtrl
+  * @description Populate users detail view with user information
+  * @memberof UserModule
+  *
+  * @function
+  * @param $scope {object} -
+  * @param usersService {object} -
+  */
   userModule.controller("userDetailCtrl",function ($scope,usersService) {
     console.log("userDetailCtrl");
   });

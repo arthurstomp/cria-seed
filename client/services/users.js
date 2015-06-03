@@ -5,6 +5,12 @@
 
   var userModule = angular.module('UserModule');
 
+  /**
+  * usersService : Provide all request
+  * @constructor
+  *
+  * @param {object} $resource
+  */
   userModule.factory('usersService',['$resource',function($resource){
     var usersActions = {
       'get':{method:'GET'},
@@ -18,6 +24,12 @@
     return db;
   }]);
 
+  /**
+  * loginService :
+  * @constructor
+  *
+  * @param {object} $resource
+  */
   userModule.factory('loginService',['$resource',function($resource){
     var loginActions = {
       'post':{method:'post'}

@@ -4,14 +4,26 @@
 (function() {
   'use strict';
 
-  var versatileApp = angular.module("VersatileApp",['ui.router','ngResource','CommonModule','UserModule']);
+  /**
+  * versatileApp - Main app module
+  * @constructor
+  *
+  * @param {module} ui.router -
+  * @param {module} ngResource -
+  */
+  var versatileApp = angular.module("VersatileApp",['ui.router','ngResource']);
 
-  versatileApp.config(['$resourceProvider', function($resourceProvider) {
-    // Don't strip trailing slashes from calculated URLs
-    $resourceProvider.defaults.stripTrailingSlashes = false;
-  }]);
-
+  /**
+  * Configuration blocks - get executed during the provider registrations and
+  *configuration phase. Only providers and constants can be injected into
+  *configuration blocks. This is to prevent accidental instantiation of services
+  *before they have been fully configured.
+  *
+  * @param {object} $stateProvider -
+  * @param {object} $urlRouterProvider -
+  */
   versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('home', {

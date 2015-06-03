@@ -5,7 +5,15 @@
 
   var productModule = angular.module('ProductModule');
 
-  productModule.factory('productService',['$resource',function($scope,$location,productsService){
+  /**
+  * productService : Provide all request actions related to products.
+  * @constructor
+  *
+  * @param {object} $resource
+  * @param {object} $scope
+  * @param {object} $location
+  */
+  productModule.factory('productService',['$resource',function($scope,$location){
     var db, productUserActions, productAdminActions;
 
     productUserActions = {

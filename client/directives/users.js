@@ -5,6 +5,12 @@
   'use strict';
   var userModule = angular.module('UserModule');
 
+  /**
+  * @name confirmpassword
+  * @description Directive to validate password.
+  * @memberof UserModule
+  * @instance
+  */
   userModule.directive('confirmpassword',function(){
     return {
       restrict: 'A',

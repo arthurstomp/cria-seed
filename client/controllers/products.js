@@ -5,9 +5,18 @@
   'use strict';
 
   /**
-  * ProductModule : Angular module to deal with product views
+  * ProductModule :
+  * @constructor
   *
-  * Dependencies : ngResource , ui.router
+  * @param {module} ngResource
+  * @param {module} ui.router
+  */
+
+  /**
+  * @module ProductModule
+  * @requires ngResource
+  * @requires ui.router
+  * @description Module to deal with product views
   */
   var productModule = angular.module("ProductModule",['ngResource','ui.router']);
 
