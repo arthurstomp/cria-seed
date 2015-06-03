@@ -1,5 +1,5 @@
 /*jslint white: true */
-/*global angular, BookListCtrl, BookDetailCtrl, HomeCtrl */
+/*global angular */
 
 (function() {
   'use strict';
@@ -11,7 +11,11 @@
   * @param {module} ui.router -
   * @param {module} ngResource -
   */
-  var versatileApp = angular.module("VersatileApp",['ui.router','ngResource']);
+  var versatileApp = angular.module("VersatileApp",['ui.router',
+                                                    'ngResource',
+                                                    'CommonModule',
+                                                    'UserModule',
+                                                    'ProductModule']);
 
   /**
   * Configuration blocks - get executed during the provider registrations and
@@ -22,7 +26,10 @@
   * @param {object} $stateProvider -
   * @param {object} $urlRouterProvider -
   */
-  versatileApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  versatileApp.config(['$stateProvider',
+                       '$urlRouterProvider',
+                       '$resourceProvider',
+                       function($stateProvider, $urlRouterProvider, $resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
     $urlRouterProvider.otherwise('/');
 
