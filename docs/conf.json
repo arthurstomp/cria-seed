@@ -7,16 +7,17 @@
         ]
     },
     "source": {
-        "include": [
-            "../client",
-            "../server"
-        ],
-        "exclude": [
-            "../client/javascripts/lib",
-            "../server/node_modules"
-        ],
-        "includePattern": ".+\\.js(doc)?$",
-        "excludePattern": "(^|\\/|\\\\)_"
+      "include" : ["../server/server.js",
+                   "../server/app/controllers",
+                   "../server/app/models",
+                   "../client/assets/javascript",
+                   "../client/controllers",
+                   "../client/directives",
+                   "../client/services",
+                   "../client/app.js"],
+      "exclude" : ["server/node_modules","client/bower_components"],
+      "includePattern": ".+\\.js(doc)?$",
+      "excludePattern": "(^|\\/|\\\\)_"
     },
     "plugins": [],
     "templates": {
