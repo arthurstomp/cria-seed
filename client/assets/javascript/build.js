@@ -261,6 +261,7 @@
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
+          document.getElementById(selectedTile).innerHTML = "";
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
