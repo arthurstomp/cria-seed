@@ -311,7 +311,9 @@
           selectedTileObject.style.webkitTransform += 'rotate(45deg)';
       }
       else{
-          document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+          //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).style.overflow="hidden";
       }
   }
 
