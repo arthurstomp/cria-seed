@@ -1,4 +1,3 @@
-
   var selectedImg = "";
   var selectColor = "#ffffff";
   var tileWidth = 150;
@@ -15,7 +14,7 @@
   var skeletonSize;
   var previousTile;
   var canSwap;
-  /* TODO: Add explanation and author to every function
+  /* TODO: Add API documentation
      TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
      TODO: Clean up code (remove console.logs and less global variables)
   */
@@ -25,7 +24,7 @@
    This function creates a skeleton with tiles
    @Author: Daye & Abdellatif
    */
-  function createSkeleton(x, y) {
+  function createBackSkeleton(x, y) {
 
       var i;
 
@@ -103,23 +102,29 @@
    */
   function selectTile(evt) {
       //console.log(evt.target.parentNode.empty);
-      selectedTile = evt.target.parentNode.id;
-      if(evt.target.parentNode.empty == false) {
-          if (previousTile != null) {
-              deselectTile();
-          } else if (selectedTile != previousTile) {
+      console.log(selectedTile);
+      if(evt.target.parentNode.parentElement.id == "front") {
+          console.log("dont open");
+      }
+      else{
+          selectedTile = evt.target.parentNode.id;
+          if (evt.target.parentNode.empty == false) {
+              if (previousTile != null) {
+                  deselectTile();
+                  console.log("hey ur deselecting man");
+              } else if (selectedTile != previousTile) {
 
-              openLeftMenu();
 
+                  selectedObject = evt.target;
+                  console.log(evt.target.parentNode.empty);
+                  AddDeletePreview();
 
-              selectedObject = evt.target;
-              console.log(evt.target.parentNode.empty);
-              AddDeletePreview();
-
-              originalColor = document.getElementById(selectedTile).style.backgroundColor;
-              //document.getElementById(selectedTile).style.backgroundColor = "white";
-              previousTile = selectedTile;
+                  originalColor = document.getElementById(selectedTile).style.backgroundColor;
+                  //document.getElementById(selectedTile).style.backgroundColor = "white";
+                  previousTile = selectedTile;
+              }
           }
+          openLeftMenu();
       }
   }
 
@@ -483,6 +488,12 @@
           targetedDiv = document.getElementById(ev.toElement.id);
 
           targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+          //console.log(targetedDiv.style.width);
+          //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
+          //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
+
+          targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
+          targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
           targetedDiv.parentNode.empty = false;
           targetedDiv.empty = false;
           currentDraggingTile.innerHTML = "";
@@ -511,8 +522,9 @@ var content = document.getElementById('f1_card');
 var c = 0;
 
 btn.onclick = function () {
+    closeLeftMenu();
     content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
 };
 
-window.addEventListener("load", createSkeleton(3, 5));
+window.addEventListener("load", createBackSkeleton(3, 5));
 window.addEventListener("load", createFrontSkeleton(3, 5));
