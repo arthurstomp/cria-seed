@@ -1,0 +1,45 @@
+.header{
+  list-style:none;
+  margin-top:1%;
+  padding:0;
+  text-align:right;
+  border-bottom: solid lightgrey;
+}
+
+.navBar a{
+  display:inline;
+  font-family: 'Roboto-Medium';
+  color: #424242;
+  margin: 0;
+}
+
+
+.logo{
+  text-align: left;
+  top: 1%;
+  bottom: 10px;
+  z-index: 0;
+  position: absolute;
+}
+
+.logo img{
+    height: 40px;
+    text-align: center;
+}
+
+.navBar a{
+    border-left: solid 1px lightgrey;
+    font-size: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    padding-left: 100px;
+    padding-right: 100px;
+    z-index: 0;
+    text-decoration: none;
+    color: #424242;
+}
+
+.navBar a:hover{
+    background-color: #00bcd4;
+    color: white;
+}

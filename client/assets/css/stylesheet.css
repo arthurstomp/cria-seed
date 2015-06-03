@@ -222,7 +222,7 @@ a:link{
 }
 .logo{
     text-align: left;
-    top: 10px;
+    top: 7%;
     bottom: 10px;
     z-index: -1;
     position: absolute;
@@ -232,4 +232,3 @@ a:link{
     height: 40px;
     text-align: center;
 }
-
