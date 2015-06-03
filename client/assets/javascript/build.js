@@ -300,8 +300,13 @@
    This function handles the rotation of an image
    @Author: Daye
    */
-  function rotateTile() {
-      document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+  function rotateTile(selectedTileObject) {
+      if(selectedTileObject != null) {
+          selectedTileObject.style.webkitTransform += 'rotate(45deg)';
+      }
+      else{
+          document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+      }
   }
 
   /*
@@ -393,6 +398,7 @@
           console.log("thou shall not pass!");
           canSwap = true;
       }
+      return ev;
   }
 
   /*
@@ -411,11 +417,13 @@
    @Author: Abdellatif
    */
   function hasTile(element) {
-      if(element.target.parentNode.empty === true){
-          return true;
-      }
-      else{
-          return false;
+      if(element.target.parentNode != null) {
+          if (element.target.parentNode.empty === true) {
+              return true;
+          }
+          else {
+              return false;
+          }
       }
   }
 
