@@ -53,15 +53,15 @@
     }).state('build.root',{
       url: '/build',
       views: {
-        'leftMenu' : {
-          templateUrl : '/partials/leftMenu.html',
-        },
+        // 'leftMenu' : {
+        //   templateUrl : '/partials/leftMenu.html',
+        // },
         // 'rightMenu' : {
         //   templateUrl : ''
         // },
-        // 'bottomMenu' : {
-        //   templateUrl : ''
-        // }
+        'bottomMenu' : {
+          templateUrl : '/partials/bottomMenu.html'
+         }
       }
     });
 
@@ -72,7 +72,7 @@
           templateUrl: 'partials/navbar.html',
           controller: 'NavbarCtrl'
         },
-        'commonContainer':{
+        '':{
           templateUrl: 'partials/cart.html',
           controller: 'HomeCtrl',
         }
@@ -86,7 +86,7 @@
           templateUrl: 'partials/navbar.html',
           controller: 'NavbarCtrl'
         },
-        'commonContainer':{
+        '':{
           templateUrl: 'partials/login_signup.html',
           controller: 'LoginSignupCtrl',
         }
@@ -100,7 +100,7 @@
           templateUrl: 'partials/navbar.html',
           controller: 'NavbarCtrl',
         },
-        'commonContainer':{
+        '':{
           templateUrl: 'partials/user_detail.html',
         }
       }

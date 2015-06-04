@@ -41,14 +41,14 @@
     height: 20px;
 }
 
-.iconNav ul {
+/*.iconNav ul {
     position: fixed;
     bottom: 244px;
     width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
-}
+}*/
 
 
 @font-face {
@@ -113,7 +113,7 @@
     margin-bottom: 20px;
 }*/
 
-.navcontainer {
+/*.navcontainer {
     width: 12%;
     height: 50px;
     display: inline-block;
@@ -125,7 +125,7 @@
 .navcontainer img{
     height: 130%;
     margin: -9px auto 0 auto;
-}
+}*/
 
 /* Visit http://www.menucool.com/horizontal/javascript-menu for source code and other menu CSS templates */
 
