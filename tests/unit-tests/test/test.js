@@ -72,8 +72,11 @@ describe("build.js", function () {
         expect(actualValue).toBe(expectedValue);
     });
     it("Should verify that a tile can be rotated", function () {
-        var expectedValue = 0;
-        var actualValue = 1;
+        var tile = document.createElement("div");
+        rotateTile(tile);
+
+        var expectedValue = 'rotate(45deg)';
+        var actualValue = tile.style.webkitTransform;
         expect(actualValue).toBe(expectedValue);
     });
     it("Should verify that a tile can be resized", function () {
@@ -81,9 +84,16 @@ describe("build.js", function () {
         var actualValue = 1;
         expect(actualValue).toBe(expectedValue);
     });
+
     it("Should verify that a tile can be dropped", function () {
-        var expectedValue = 0;
-        var actualValue = 1;
+        var div = document.createElement("div");
+        var testEvent;
+        div.addEventListener("click", function(event){
+            testEvent = allowDrop(event)});
+        div.click();
+
+        var expectedValue = true;
+        var actualValue = testEvent.defaultPrevented;
         expect(actualValue).toBe(expectedValue);
     });
     it("Should verify that a tile can not be dropped", function () {

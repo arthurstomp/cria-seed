@@ -2,34 +2,33 @@
 
 (function() {
   'use strict';
-  var selectedImg = "",
-      selectColor = "#ffffff",
-      tileWidth = 150,
-      tileHeight = 150,
-      selectedTile,
-      originalColor = "red",
-      textColor,
-      selectedObject,
-      tempCloneOfSkeleton,
-      draggingTilePosition,
-      currentDraggingTile,
-      targetedDiv,
-      resetTile,
-      skeletonSize;
-
-  /*
-   * TODO: Add explanation and author to every function
-   * TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
-   * TODO: Clean up code (remove console.logs and less global variables)
-   *
-   */
+  var selectedImg = "";
+  var selectColor = "#ffffff";
+  var tileWidth = 150;
+  var tileHeight = 150;
+  var selectedTile;
+  var originalColor = "red";
+  var textColor;
+  var selectedObject;
+  var tempCloneOfSkeleton;
+  var draggingTilePosition;
+  var currentDraggingTile;
+  var targetedDiv;
+  var resetTile;
+  var skeletonSize;
+  var previousTile;
+  var canSwap;
+  /* TODO: Add API documentation
+     TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+     TODO: Clean up code (remove console.logs and less global variables)
+  */
 
 
   /*
    This function creates a skeleton with tiles
    @Author: Daye & Abdellatif
    */
-  function createSkeleton(x, y) {
+  function createBackSkeleton(x, y) {
 
       var i, skeleton;
       skeleton = document.getElementById("back");
@@ -47,27 +46,16 @@
           tile.style.float = "left";
           tile.style.backgroundColor = 'red';
           tile.empty = true;
-          //tile.addEventListener("click", selectTile, false);
 
-          //var imageDiv = document.getElementById("drag1");
-          //var imgResize = imageDiv.getElementsByTagName("img")[0];
-          //imgResize.width = tileWidth;
-          //imgResize.height = tileHeight;
+          tile.ondrop=function(){drop(event);};
+          tile.ondragover=function(){allowDrop(event);};
+          tile.draggable = true;
+          tile.ondragstart=function(){drag(event);};
+          tile.click=function(){selectTile;};
 
-          clickContainer = document.getElementById("div1");
-          clickContainer.style.width = tileWidth;
-          clickContainer.style.height = tileHeight;
-          //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
-
-          cln = clickContainer.cloneNode(true);
-          cln.addEventListener("click", selectTile, false);
-          cln.name = 'selectTile';
-          cln.id = "div" + i;
-          cln.style.zIndex = "2";
-          cln.className = 'selectTile';
-          tile.appendChild(cln);
           skeleton.appendChild(tile);
       }
+      return sketelonSize;
   }
 
   function createFrontSkeleton(x, y) {
@@ -86,18 +74,12 @@
       tile.style.backgroundColor = 'hotpink';
       tile.empty = true;
 
-      var clickContainer = document.getElementById("div1");
-      clickContainer.style.width = tileWidth*x;
-      clickContainer.style.height = tileHeight*y;
-      //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
+      tile.ondrop=function(){drop(event)};
+      tile.ondragover=function(){allowDrop(event)};
+      tile.draggable = true;
+      tile.ondragstart=function(){drag(event)};
+      tile.click=function(){selectTile};
 
-      var cln = clickContainer.cloneNode(true);
-      cln.addEventListener("click", selectTile, false);
-      cln.name = 'selectTile';
-      cln.id = "div1";
-      cln.style.zIndex = "2";
-      cln.className = 'selectTile';
-      tile.appendChild(cln);
       frontSkeleton.appendChild(tile);
 
   }
@@ -107,23 +89,30 @@
    */
   function selectTile(evt) {
       //console.log(evt.target.parentNode.empty);
-      selectedTile = evt.target.parentNode.id;
-      if(evt.target.parentNode.empty === false) {
-          if (previousTile !== null) {
-              deselectTile();
-          } else if (selectedTile != previousTile) {
 
-              openLeftMenu();
+      console.log(selectedTile);
+      if(evt.target.parentNode.parentElement.id == "front") {
+          console.log("dont open");
+      }
+      else{
+          selectedTile = evt.target.parentNode.id;
+          if (evt.target.parentNode.empty === false) {
+              if (previousTile !== null) {
+                  deselectTile();
+                  console.log("hey ur deselecting man");
+              } else if (selectedTile != previousTile) {
 
 
-              selectedObject = evt.target;
-              console.log(evt.target.parentNode.empty);
-              AddDeletePreview();
+                  selectedObject = evt.target;
+                  console.log(evt.target.parentNode.empty);
+                  AddDeletePreview();
 
-              originalColor = document.getElementById(selectedTile).style.backgroundColor;
-              //document.getElementById(selectedTile).style.backgroundColor = "white";
-              previousTile = selectedTile;
+                  originalColor = document.getElementById(selectedTile).style.backgroundColor;
+                  //document.getElementById(selectedTile).style.backgroundColor = "white";
+                  previousTile = selectedTile;
+              }
           }
+          openLeftMenu();
       }
   }
 
@@ -263,6 +252,7 @@
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
+          document.getElementById(selectedTile).innerHTML = "";
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
@@ -308,8 +298,15 @@
    This function handles the rotation of an image
    @Author: Daye
    */
-  function rotateTile() {
-      document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+  function rotateTile(selectedTileObject) {
+      if(selectedTileObject != null) {
+          selectedTileObject.style.webkitTransform += 'rotate(45deg)';
+      }
+      else{
+          //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).style.overflow="hidden";
+      }
   }
 
   /*
@@ -401,6 +398,7 @@
           console.log("thou shall not pass!");
           canSwap = true;
       }
+      return ev;
   }
 
   /*
@@ -409,8 +407,10 @@
    */
   function swapTiles(ev){
       console.log("commence switching procedure");
+      console.log(ev.target.parentNode.id);
       var dummmy =  ev.target.parentNode.innerHTML;
-     ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      console.log(currentDraggingTile.id);
       currentDraggingTile.innerHTML = dummmy;
   }
 
@@ -419,11 +419,13 @@
    @Author: Abdellatif
    */
   function hasTile(element) {
-      if(element.target.parentNode.empty === true){
-          return true;
-      }
-      else{
-          return false;
+      if(element.target != null) {
+          if (element.target.empty === true) {
+              return true;
+          }
+          else {
+              return false;
+          }
       }
   }
 
@@ -483,6 +485,12 @@
           targetedDiv = document.getElementById(ev.toElement.id);
 
           targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+          //console.log(targetedDiv.style.width);
+          //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
+          //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
+
+          targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
+          targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
           targetedDiv.parentNode.empty = false;
           targetedDiv.empty = false;
           currentDraggingTile.innerHTML = "";
@@ -506,8 +514,7 @@
 
   }
 
-
-window.addEventListener("load", createSkeleton(3, 5));
+window.addEventListener("load", createBackSkeleton(3, 5));
 window.addEventListener("load", createFrontSkeleton(3, 5));
 window.addEventListener("load",function(){
   var btn = document.getElementById('flip_content');
