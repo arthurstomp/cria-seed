@@ -64,6 +64,7 @@
           tile.appendChild(cln);
           skeleton.appendChild(tile);
       }
+      return sketelonSize;
   }
 
   function createFrontSkeleton(x, y) {
