@@ -42,25 +42,13 @@
           tile.style.float = "left";
           tile.style.backgroundColor = 'red';
           tile.empty = true;
-          //tile.addEventListener("click", selectTile, false);
 
-          //var imageDiv = document.getElementById("drag1");
-          //var imgResize = imageDiv.getElementsByTagName("img")[0];
-          //imgResize.width = tileWidth;
-          //imgResize.height = tileHeight;
+          tile.ondrop=function(){drop(event)};
+          tile.ondragover=function(){allowDrop(event)};
+          tile.draggable = true;
+          tile.ondragstart=function(){drag(event)};
+          tile.click=function(){selectTile};
 
-          var clickContainer = document.getElementById("div1");
-          clickContainer.style.width = tileWidth;
-          clickContainer.style.height = tileHeight;
-          //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
-
-          var cln = clickContainer.cloneNode(true);
-          cln.addEventListener("click", selectTile, false);
-          cln.name = 'selectTile';
-          cln.id = "div" + i;
-          cln.style.zIndex = "2";
-          cln.className = 'selectTile';
-          tile.appendChild(cln);
           skeleton.appendChild(tile);
       }
   }
@@ -81,18 +69,12 @@
       tile.style.backgroundColor = 'hotpink';
       tile.empty = true;
 
-      var clickContainer = document.getElementById("div1");
-      clickContainer.style.width = tileWidth*x;
-      clickContainer.style.height = tileHeight*y;
-      //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
+      tile.ondrop=function(){drop(event)};
+      tile.ondragover=function(){allowDrop(event)};
+      tile.draggable = true;
+      tile.ondragstart=function(){drag(event)};
+      tile.click=function(){selectTile};
 
-      var cln = clickContainer.cloneNode(true);
-      cln.addEventListener("click", selectTile, false);
-      cln.name = 'selectTile';
-      cln.id = "div1";
-      cln.style.zIndex = "2";
-      cln.className = 'selectTile';
-      tile.appendChild(cln);
       frontSkeleton.appendChild(tile);
 
   }
@@ -415,8 +397,10 @@
    */
   function swapTiles(ev){
       console.log("commence switching procedure");
+      console.log(ev.target.parentNode.id);
       var dummmy =  ev.target.parentNode.innerHTML;
-     ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      console.log(currentDraggingTile.id);
       currentDraggingTile.innerHTML = dummmy;
   }
 
@@ -425,8 +409,8 @@
    @Author: Abdellatif
    */
   function hasTile(element) {
-      if(element.target.parentNode != null) {
-          if (element.target.parentNode.empty === true) {
+      if(element.target != null) {
+          if (element.target.empty === true) {
               return true;
           }
           else {
