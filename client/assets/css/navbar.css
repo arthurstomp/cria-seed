@@ -6,7 +6,7 @@
   border-bottom: solid lightgrey;
 }
 
-.navBar a{
+.header li{
   display:inline;
   font-family: 'Roboto-Medium';
   color: #424242;
@@ -18,7 +18,7 @@
   text-align: left;
   top: 1%;
   bottom: 10px;
-  z-index: 0;
+  z-index: -1;
   position: absolute;
 }
 

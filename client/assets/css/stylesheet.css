@@ -4,9 +4,9 @@
 
 #8ae5f0 ------- light blue*/
 
-html, body {
+/*html, body {
     height: 100%;
-}
+}*/
 
 .productNav ul {
     position: fixed;
@@ -61,7 +61,7 @@ html, body {
     src: url(../fonts/Roboto-Medium.ttf);
 }
 
-.wrapper {
+/*.wrapper {
     position: relative;
     width: auto;
     height: 200px;
@@ -86,7 +86,6 @@ html, body {
     width: 200px;
     height: 200px;
     display: inline-block;
-;
 }
 .red {
     background-color: red;
@@ -112,7 +111,7 @@ html, body {
 .grey{
     background-color: #989898;
     margin-bottom: 20px;
-}
+}*/
 
 .navcontainer {
     width: 12%;
@@ -131,9 +130,9 @@ html, body {
 /* Visit http://www.menucool.com/horizontal/javascript-menu for source code and other menu CSS templates */
 
 
-#sses1
+/*#sses1
 {
-    margin:0 auto;/*This will make the menu center-aligned. Removing this line will make the menu align left.*/
+    margin:0 auto;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -146,7 +145,7 @@ html, body {
     border-bottom:solid 1px #00bcd4;
 }
 
-/*CSS for background bubble*/
+CSS for background bubble
 .grey:hover
 {
     background-color: #fbbc24;
@@ -166,8 +165,8 @@ html, body {
     position:fixed;
     bottom:2px;
     transform:rotate(180deg);
-    -ms-transform:rotate(180deg); /* IE 9 */
-    -webkit-transform:rotate(180deg); /* Safari and Chrome */
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
     cursor: pointer;
     color: white;
     padding-bottom: 90px;
@@ -187,9 +186,9 @@ html, body {
     color: white;
     background-color: #424242;
     z-index: 1;
-}
+}*/
 
-.header{
+/*.header{
     list-style:none;
     margin:0;
     padding:0;
@@ -231,4 +230,4 @@ a:link{
 .logo img{
     height: 40px;
     text-align: center;
-}
+}*/
