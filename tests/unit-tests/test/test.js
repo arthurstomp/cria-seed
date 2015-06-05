@@ -1,79 +1,86 @@
 describe("build.js", function () {
-    //TODO: use variables instead of values
-    it('Should verify the correct tile height for the back skeleton.', function() {
-        var actualValue = tileHeight;
+    it('Should verify the correct tile dimensions for the back skeleton.', function() {
+        var width = 3;
+        var height = 5;
+        var skeleton = createBackSkeleton(width, height);
+        var actualValue = skeleton.skeletonSize;
+        var expectedValue = width*height;
 
-        //expect(actualValue).toBe(150);
-        expect(0).toBe(1);
+        expect(actualValue).toBe(expectedValue);
     });
 
-    //TODO: use variables instead of values
-    it('Should verify the color of the background of the skeleton.', function() {
-        var expectedValue = 'red';
-        var actualValue = originalColor;
+    it('Should verify the correct tile dimensions for the front skeleton.', function() {
+        var width = 3;
+        var height = 5;
+        var skeleton = createFrontSkeleton(width, height);
+        var actualValue = skeleton.skeletonSize;
+        var expectedValue = width*height;
 
-        //expect(actualValue).toBe(expectedValue);
-        expect(0).toBe(1);
+        expect(actualValue).toBe(expectedValue);
     });
 
-    it('Should verify the correct skeleton size for the back skeleton.', function() {
+    it('Should verify that the left menu opens correctly.', function() {
+        var target = document.createElement("div");
+        var expectedValue = "visible";
+        var actualValue =  openMenu(target).style.visibility;
+        expect(actualValue).toBe(expectedValue);
+    });
+
+    it('Should verify that the left menu closes correctly.', function() {
+        var target = document.createElement("div");
+        var expectedValue = "hidden";
+        var actualValue =  closeMenu(target).style.visibility;
+        expect(actualValue).toBe(expectedValue);
+    });
+
+    it('Should verify that a tile is selected.', function() {
         var div = document.createElement("div");
-        div.id = "back";
-        var actualValue = createBackSkeleton(3, 5);
+        div.id = "testid";
+        var testEvent;
+        div.addEventListener("click", function(event){
+            testEvent = event});
+        div.click();
 
-        expect(actualValue).toBe(15);
-    });
-    it('Should verify the correct skeleton size for the front skeleton.', function() {
-        var div = document.createElement("div");
-        div.id = "back";
-        var actualValue = createFrontSkeleton(3, 5);
-
-        expect(actualValue).toBe(15);
-    });
-
-    it('Should verify the color of the background of the front skeleton.', function() {
-        /*var expectedValue = 'yellow';
-        var actualValue = title.style.backgroundColor;
-
-        expect(actualValue).toBe(expectedValue);*/
-        var expectedValue = 0;
-        var actualValue = 1;
+        var expectedValue = div.id;
+        var actualValue = selectTile(testEvent);
         expect(actualValue).toBe(expectedValue);
     });
 
-    it('Should verify that the left menu is visible.', function() {
-        var expectedValue = 0;
-        var actualValue = 1;
+    //TODO: change parameter in html
+    it('Should verify that a tile color has been changed', function() {
+        var tile = document.createElement("div");
+        var color = "purple";
+
+        var expectedValue = color;
+        var actualValue = changeTileColor(tile, color).style.backgroundColor;
         expect(actualValue).toBe(expectedValue);
     });
 
-    it('Should verify that the left menu closes.', function() {
-        var expectedValue = 0;
-        var actualValue = 1;
-        expect(actualValue).toBe(expectedValue);
-    });
-
-    it('Should verify that the tile color changes.', function() {
-        var expectedValue = 0;
-        var actualValue = 1;
-        expect(actualValue).toBe(expectedValue);
-    });
 
     it('Should verify that text has been added to a tile', function() {
-        var expectedValue = 0;
-        var actualValue = 1;
+        var tile = document.createElement("div");
+        var text = "cool";
+
+        var expectedValue = text;
+        var actualValue = addText(tile, text).innerText;;
         expect(actualValue).toBe(expectedValue);
     });
 
     it('Should verify that the font color has changed.', function() {
-        var expectedValue = 0;
-        var actualValue = 1;
+        var tile = document.createElement("div");
+        var color = "purple";
+
+        var expectedValue = color;
+        var actualValue = changeFontColor(tile, color).style.color;
         expect(actualValue).toBe(expectedValue);
     });
 
     it ('Should verify that the font style has changed.', function(){
-        var expectedValue = 0;
-        var actualValue = 1;
+        var tile = document.createElement("div");
+        var fontSize = "13";
+
+        var expectedValue = fontSize;
+        var actualValue = changeFontSize(tile, fontSize).style.fontSize;
         expect(actualValue).toBe(expectedValue);
     });
 
@@ -220,3 +227,5 @@ describe("build.js", function () {
         expect(actualValue).toBe(expectedValue);
     });
 });
+
+//TODO: test server
