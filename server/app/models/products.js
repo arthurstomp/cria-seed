@@ -22,4 +22,16 @@
   });
 
   module.exports = mongoose.model(modelName,productSchema);
+
+  productSchema.pre('save', function(next){
+    var product = this;
+    if(!product.isModified('subProducts')){
+      return next();
+    }
+    product.subProducts.forEach(function(subProdId){
+      var subProd = productSchema.find(subProdId);
+      
+    });
+  });
+
 }());

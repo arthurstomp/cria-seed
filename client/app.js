@@ -55,12 +55,19 @@
       views: {
         // 'leftMenu' : {
         //   templateUrl : '/partials/leftMenu.html',
+        //   controller : 'LeftMenuBuildCtrl',
         // },
         // 'rightMenu' : {
-        //   templateUrl : ''
+        //   templateUrl : '/partials/rightMenu.html',
+        //   controller : 'RightMenuBuildCtrl',
+        // },
+        // 'main':{
+        //   templateUrl : '/partials/main.html',
+        //   controller : 'MainBuildCtrl',
         // },
         'bottomMenu' : {
-          templateUrl : '/partials/bottomMenu.html'
+          templateUrl : '/partials/bottomMenu.html',
+          controller : 'BottomMenuBuildCtrl',
          }
       }
     });
