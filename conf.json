@@ -1,0 +1,24 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "include" : ["server/server.js",
+                     "server/app/controllers",
+                     "server/app/models",
+                     "client/assets/javascript",
+                     "client/controllers",
+                     "client/directives",
+                     "client/services",
+                     "client/app.js"],
+        "exclude" : ["server/node_modules","client/bower_components"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}

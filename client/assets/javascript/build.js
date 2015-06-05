@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 (function() {
   'use strict';
   var selectedImg = "";
@@ -14,23 +16,29 @@
   var targetedDiv;
   var resetTile;
   var skeletonSize;
+  var previousTile;
+  var canSwap;
+  /* TODO: Add API documentation
+     TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+     TODO: Clean up code (remove console.logs and less global variables)
+  */
 
 
   /*
-   this function create skeleton with tiles.
+   This function creates a skeleton with tiles
+   @Author: Daye & Abdellatif
    */
+  function createBackSkeleton(x, y) {
 
-  function createSkeleton(x, y) {
-
-      var i;
-
-      var skeleton = document.getElementById("phone");
+      var i, skeleton;
+      skeleton = document.getElementById("back");
       skeleton.style.height = tileHeight * y;
       skeleton.style.width = tileWidth * x;
       skeletonSize = x * y;
 
       for (i = 0; i < skeletonSize; i++) {
-          var tile = document.createElement("div");
+          var tile, clickContainer, cln;
+          tile = document.createElement("div");
           tile.id = "tile" + i;
           tile.className = 'containerTIle';
           tile.style.width = tileWidth;
@@ -38,82 +46,134 @@
           tile.style.float = "left";
           tile.style.backgroundColor = 'red';
           tile.empty = true;
-          //tile.addEventListener("click", selectTile, false);
 
-          //var imageDiv = document.getElementById("drag1");
-          //var imgResize = imageDiv.getElementsByTagName("img")[0];
-          //imgResize.width = tileWidth;
-          //imgResize.height = tileHeight;
+          tile.ondrop=function(){drop(event);};
+          tile.ondragover=function(){allowDrop(event);};
+          tile.draggable = true;
+          tile.ondragstart=function(){drag(event);};
+          tile.click=function(){selectTile;};
 
-          var clickContainer = document.getElementById("div1");
-          clickContainer.style.width = tileWidth;
-          clickContainer.style.height = tileHeight;
-          //Had to clone it because I couldn't add ondrop and ondragover attributes to the tile
-
-          var cln = clickContainer.cloneNode(true);
-          cln.addEventListener("click", selectTile, false);
-          cln.name = 'selectTile';
-          cln.id = "div" + i;
-          cln.style.zIndex = "2";
-          cln.className = 'selectTile';
-          tile.appendChild(cln);
           skeleton.appendChild(tile);
       }
+      return sketelonSize;
   }
 
+  function createFrontSkeleton(x, y) {
+
+      var frontSkeleton = document.getElementById("front");
+      frontSkeleton.style.height = tileHeight * y;
+      frontSkeleton.style.width = tileWidth * x;
+      skeletonSize = x * y;
+
+      var tile = document.createElement("div");
+      tile.id = "tile1";
+      tile.className = 'containerTIle';
+      tile.style.width = tileWidth*x;
+      tile.style.height = tileHeight*y;
+      tile.style.float = "left";
+      tile.style.backgroundColor = 'hotpink';
+      tile.empty = true;
+
+      tile.ondrop=function(){drop(event)};
+      tile.ondragover=function(){allowDrop(event)};
+      tile.draggable = true;
+      tile.ondragstart=function(){drag(event)};
+      tile.click=function(){selectTile};
+
+      frontSkeleton.appendChild(tile);
+
+  }
+  /*
+   This function hanldes the selection of a tile
+   @Author: Daye & Abdellatif
+   */
   function selectTile(evt) {
-      if(evt.target.parentNode.empty === false) {
-          console.log("opening menu");
-          var menu = document.getElementById("vWrapper");
-          menu.style.visibility = "visible";
-          console.log(menu);
+      //console.log(evt.target.parentNode.empty);
 
-
-          selectedObject = evt.target;
-          console.log(evt.target.parentNode.empty);
-          selectedTile = evt.target.parentNode.id;
-          AddDeletePreview();
-
-          originalColor = document.getElementById(selectedTile).style.backgroundColor;
-          //document.getElementById(selectedTile).style.backgroundColor = "white";
-          document.getElementById(selectedTile).style.borderStyle = "solid";
-          document.getElementById(selectedTile).style.borderWidth = "1px";
+      console.log(selectedTile);
+      if(evt.target.parentNode.parentElement.id == "front") {
+          console.log("dont open");
       }
-      else if(selectedTile !== null){
-          deselectTile();
-          console.log("closing menu");
+      else{
+          selectedTile = evt.target.parentNode.id;
+          if (evt.target.parentNode.empty === false) {
+              if (previousTile !== null) {
+                  deselectTile();
+                  console.log("hey ur deselecting man");
+              } else if (selectedTile != previousTile) {
+
+
+                  selectedObject = evt.target;
+                  console.log(evt.target.parentNode.empty);
+                  AddDeletePreview();
+
+                  originalColor = document.getElementById(selectedTile).style.backgroundColor;
+                  //document.getElementById(selectedTile).style.backgroundColor = "white";
+                  previousTile = selectedTile;
+              }
+          }
+          openLeftMenu();
       }
   }
 
+  /*
+   This function handles the deselection of a tile
+   @Author: Daye & Abdellatif
+   */
   function deselectTile() {
 
-      var x = document.getElementById("tileColor");
-      var res = x.options[x.selectedIndex].value;
+      var x, res, menu;
+      x = document.getElementById("tileColor");
+      res = x.options[x.selectedIndex].value;
 
       if (res != "color") {
-          document.getElementById(selectedTile).style.backgroundColor = res;
+          document.getElementById(previousTile).style.backgroundColor = res;
           document.getElementById("tileColor").value = "color";
       } else {
-          document.getElementById(selectedTile).style.backgroundColor = originalColor;
+          document.getElementById(previousTile).style.backgroundColor = originalColor;
       }
+      closeLeftMenu();
+      previousTile = null;
+  }
 
-      document.getElementById(selectedTile).style.borderStyle = "";
-      document.getElementById(selectedTile).style.borderWidth = "";
+  /*
+   This function opens the menu at the left
+   @Author: Daye & Abdellatif
+   */
+  function openLeftMenu(){
+      console.log("opening menu");
+      var menu = document.getElementById("vWrapper");
+      menu.style.visibility = "visible";
+      console.log(menu);
+  }
+
+  /*
+   This function closes the menu at the left
+   @Author: Daye & Abdellatif
+   */
+  function closeLeftMenu(){
       var menu = document.getElementById("vWrapper");
       menu.style.visibility = "hidden";
   }
 
-  createSkeleton(3, 5);
 
-
+  /*
+   This function changes the color of the tile
+   @Author: Daye & Abdellatif
+   */
   function changeTileColor() {
+      var x, res;
 
-      var x = document.getElementById("tileColor");
-      var res = x.options[x.selectedIndex].value;
+      x = document.getElementById("tileColor");
+      res = x.options[x.selectedIndex].value;
       document.getElementById(selectedTile).style.backgroundColor = res;
 
   }
 
+  /*
+   This function adds text to a tile
+   @Author: Daye & Abdellatif
+   */
   function addText() {
 
       document.getElementById(selectedTile).innerText = document.getElementById("addTxt").value;
@@ -124,14 +184,23 @@
 
   }
 
+  /*
+   This function changes the color of the text
+   @Author: Daye & Abdellatif
+   */
   function changeFontColor() {
+      var x,res;
 
-      var x = document.getElementById("fontColor");
-      var res = x.options[x.selectedIndex].value;
+      x = document.getElementById("fontColor");
+      res = x.options[x.selectedIndex].value;
       document.getElementById(selectedTile).style.color = res;
 
   }
 
+  /*
+   This function changes the size of the font
+   @Author: Daye
+   */
   function changeFontSize() {
 
       var x = document.getElementById("fontSize");
@@ -139,6 +208,10 @@
 
   }
 
+  /*
+   This function changes the style of the font
+   @Author: Daye
+   */
   function changeFontStyle() {
 
       var x = document.getElementById("fontStyle");
@@ -151,15 +224,24 @@
       }
   }
 
+  /*
+   This function changes the type of the font
+   @Author: Daye
+   */
   function changeFontType() {
       var x = document.getElementById("fontType");
       document.getElementById(selectedTile).style.fontFamily = x.options[x.selectedIndex].value;
   }
 
+  /*
+   This function handles the uploading of ta picture
+   @Author: Daye & Abdellatif
+   */
   function previewFile() {
+      var file,reader;
 
-      var file = document.querySelector('input[type=file]').files[0]; //sames as here
-      var reader = new FileReader();
+      file = document.querySelector('input[type=file]').files[0]; //sames as here
+      reader = new FileReader();
 
       reader.onloadend = function () {
           var img = document.createElement("img");
@@ -170,7 +252,7 @@
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
-
+          document.getElementById(selectedTile).innerHTML = "";
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
@@ -179,13 +261,17 @@
       if (file) {
           reader.readAsDataURL(file); //reads the data as a URL
       }
-
   }
 
+  /*
+   This function adds a preview of the selected tile when you are on the delete page
+   @Author: Daye
+   */
   function AddDeletePreview() {
+      var preview, previewClone;
 
-      var preview = document.getElementById("deletePreviewDiv");
-      var previewClone = selectedObject.cloneNode(true);
+      preview = document.getElementById("deletePreviewDiv");
+      previewClone = selectedObject.cloneNode(true);
       previewClone.style.margin = "0 auto";
 
       if (selectedTile !== null) {
@@ -196,23 +282,41 @@
 
   }
 
-  function deleteTile() {
-
+  /*
+   This function handles the deletion of a tile
+   @Author: Daye
+   */
+  function deleteTile(selectedTileObject) {
       originalColor = "red";
-      document.getElementById(selectedTile).style.background = null;
-      document.getElementById(selectedTile).innerText = "";
-      deselectTile();
-
+      selectedTileObject.style.backgroundColor = null;
+      selectedTileObject.innerText = "";
+      //deselectTile();
+      return selectedTileObject;
   }
 
-  function rotateTile() {
-      document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+  /*
+   This function handles the rotation of an image
+   @Author: Daye
+   */
+  function rotateTile(selectedTileObject) {
+      if(selectedTileObject != null) {
+          selectedTileObject.style.webkitTransform += 'rotate(45deg)';
+      }
+      else{
+          //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+          document.getElementById(selectedTile).style.overflow="hidden";
+      }
   }
 
+  /*
+   This function handles the dynamic resizing of a tile
+   @Author: Daye
+   */
   function resizeTile() {
 
-      var x = 0, y = 0;
-      var element = document.getElementById(selectedTile);
+      var x = 0, y = 0, element;
+      element = document.getElementById(selectedTile);
 
       interact(element)
 
@@ -278,33 +382,69 @@
           });
   }
 
-
+  /*
+   This function checks if a tile can be dropped in a spot
+   @Author: Abdellatif
+   */
   function allowDrop(ev) {
-     // console.log(ev.target.parentNode);
+      // console.log(ev.target.parentNode);
       //console.log(hasTile(ev));
-      if(hasTile) {
-          ev.preventDefault();
-      }
-  }
-
-  //
-  function hasTile(element) {
-      if(element.empty === true){
-          return false;
+      ev.preventDefault();
+      if(hasTile(ev)) {
+          console.log("thou may pass");
+          canSwap = false;
       }
       else{
-          return true;
+          console.log("thou shall not pass!");
+          canSwap = true;
+      }
+      return ev;
+  }
+
+  /*
+   This function handles the swapping of two tiles
+   @Author: Abdellatif
+   */
+  function swapTiles(ev){
+      console.log("commence switching procedure");
+      console.log(ev.target.parentNode.id);
+      var dummmy =  ev.target.parentNode.innerHTML;
+      ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+      console.log(currentDraggingTile.id);
+      currentDraggingTile.innerHTML = dummmy;
+  }
+
+  /*
+   This function checks if there is a tile at the location where you want to drop a tile
+   @Author: Abdellatif
+   */
+  function hasTile(element) {
+      if(element.target != null) {
+          if (element.target.empty === true) {
+              return true;
+          }
+          else {
+              return false;
+          }
       }
   }
 
+  /*
+   This function handles the dragging of a tile
+   @Author: Abdellatif
+   */
   function drag(ev) {
      // console.log("dragging");
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
-
-      showAvalaibleTileSpace();
+      closeLeftMenu();
+      //showAvalaibleTileSpace();
   }
 
+  /*
+   This function shows the user where a tile can be placed
+   @Author: Abdellatif
+   */
   function showAvalaibleTileSpace(){
       var i;
       var skeleton = document.getElementById("phone");
@@ -312,10 +452,16 @@
       for (i = 0; i < skeletonSize; i++) {
           var tile = document.getElementById("tile" + i);
           //tile.style.backgroundColor = "#0000FF";
-          tile.style.backgroundColor = "#0000FF";
+          //if(tile.empty == true){
+              tile.style.backgroundColor = "#0000FF";
+          //}
       }
   }
 
+  /*
+   This function resets the color back to the original color
+   @Author: Abdellatif
+   */
   function resetColorOfAvailableTiles(){
       var i;
       for (i = 0; i < skeletonSize; i++) {
@@ -324,22 +470,59 @@
       }
   }
 
+  /*
+   This function handles the dropping of a tile
+   @Author: Abdellatif
+   */
   function drop(ev) {
       //console.log(ev.target);
-      resetColorOfAvailableTiles();
+      //resetColorOfAvailableTiles();
       ev.preventDefault();
      // console.log("dropping");
       //console.log(ev.toElement.id);
 
-      targetedDiv = document.getElementById(ev.toElement.id);
-      //console.log(targetedDiv);
+      if(canSwap == false) {
+          targetedDiv = document.getElementById(ev.toElement.id);
 
+          targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+          //console.log(targetedDiv.style.width);
+          //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
+          //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
 
-      targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
-      targetedDiv.empty = false;
-      currentDraggingTile.innerHTML = "";
+          targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
+          targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
+          targetedDiv.parentNode.empty = false;
+          targetedDiv.empty = false;
+          currentDraggingTile.innerHTML = "";
+          selectTile(ev);
+      }
+      else{
+          swapTiles(ev);
+      }
+  }
 
-      selectTile(ev);
+  function confirmDelete () {
+
+      if (confirm("Are you sure deleting a tile?")===true) {
+          deleteTile(selectedObject);
+      }
 
   }
-}());
+
+  function changePattern () {
+
+
+  }
+
+window.addEventListener("load", createBackSkeleton(3, 5));
+window.addEventListener("load", createFrontSkeleton(3, 5));
+window.addEventListener("load",function(){
+  var btn = document.getElementById('flip_content');
+  var content = document.getElementById('f1_card');
+  var c = 0;
+
+  btn.onclick = function () {
+      content.className = (c++ % 2 === 0) ? content.className + ' flip' : content.className.split(' ')[0];
+  };
+});
+})();

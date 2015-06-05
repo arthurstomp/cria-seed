@@ -43,6 +43,10 @@
     },
   },{collection: "users"});
 
+  userSchema.path('password').validate(function(pass){
+    return pass.lenght >= 8;
+  }, 'Password must have at least 8 characters');
+
   userSchema.plugin(passportLocalMongoose);
 
   userSchema.statics.failedLogin = {

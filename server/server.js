@@ -40,7 +40,7 @@
     mongoose.connection.on('error', function (err) {
         console.error('MongoDB error: %s', err);
     });
-    mongoose.set('debug', config.debug);                                // takes value from config.js
+    mongoose.set('debug', config.debug);
 
     /**
      * Bootstrap models
@@ -54,13 +54,13 @@
     /**
      * Express settings
      */
-    app.set('port', process.env.PORT || config.port);                   // Set the port
+    app.set('port', process.env.PORT || config.port);
 
     /**
      * Express middleware
      */
-    app.use(bodyParser.json());                                         // Configure body-parser with JSON input
-    app.use(bodyParser.urlencoded({extended: true}));                   // Notice because option default will flip in next major; http://goo.gl/bXjyyz
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
 
     /**
      * Middleware to enable logging
@@ -68,7 +68,7 @@
     if (config.debug) {
         app.use(function (req, res, next) {
             console.log('%s %s %s', req.method, req.url, req.path);
-            next();                                                    // Required to continue
+            next();
         });
     }
 
@@ -95,7 +95,7 @@
      */
     route_files = fs.readdirSync(routes_path);
     route_files.forEach(function (file) {
-        var route = require(routes_path + '/' + file);                  // Get the route
+        var route = require(routes_path + '/' + file);
         app.use('/api', route);
     });
 

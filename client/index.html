@@ -10,36 +10,38 @@
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css" media="screen" title="no title" charset="utf-8">
 
     <link rel="stylesheet" href="./assets/css/layout.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./assets/css/login_signup.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="./assets/css/stylesheet.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="./assets/css/tooltip.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="./assets/css/build.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./assets/css/navbar.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="./assets/css/bottomMenu.css" media="screen" title="no title" charset="utf-8">
 
     <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./bower_components/three/three.min.js"></script>
-    <script type="text/javascript" src="./bower_components/three/OrbitControls.js"></script>
-    <script type="text/javascript" src="./bower_components/three/helvetiker_regular.typeface.js"></script>
 
     <script type="text/javascript" src="./assets/javascript/tooltip.js" type="text/javascript"></script>
     <script type="text/javascript" src="./assets/javascript/interact.min.js"></script>
-    <script type="text/javascript" src="./assets/javascript/build.js"></script>
+    <script type="text/javascript" src="./assets/javascript/ready.js"></script>
+    <!-- // <script type="text/javascript" src="./assets/javascript/build.js"></script> -->
 
-    <script type="text/javascript" src="http://mrdoob.github.com/three.js/examples/fonts/helvetiker_regular.typeface.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 
     </script>
 </head>
 <body ng-app="VersatileApp">
 
-<div id="navbar" ui-view='navbar'></div>
+<div ui-view='navbar'></div>
 
-<div id="home-conteiner" ui-view></div>
+<div ui-view></div>
 
-<div id="common-container" ui-view='commonContainer'></div>
+<!-- <div id="common-container" ui-view='commonContainer'></div>
 
-<div id='session-conteiner' ng-controller='SessionCtrl' ui-view='sessionContainer'></div>
+<div id="build-containde" ui-view='buildContainer'></div>
+
+<div id='session-conteiner' ng-controller='SessionCtrl' ui-view='sessionContainer'></div> -->
 
 <!-- Lib -->
 <script src="./bower_components/angular/angular.min.js"></script>
@@ -59,6 +61,9 @@
 <script src="./services/common.js"></script>
 <script src="./services/users.js"></script>
 <script src="./services/products.js"></script>
+<!-- Directives -->
+<script src="./directives/users.js"></script>
+
 
 
 

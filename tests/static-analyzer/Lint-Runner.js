@@ -6,14 +6,14 @@ var config = {
 
         //recursively include JS files in these folders
         filepaths: [
-            '../../client/javascripts/',
+            '../../client/',
             '../../server/'
         ],
 
         //but ignore anything in these folders
         exclusions: [
             '../../server/node_modules/',
-            '../../client/javascripts/lib/'
+            '../../client/bower_components/'
         ],
 
         linters: [

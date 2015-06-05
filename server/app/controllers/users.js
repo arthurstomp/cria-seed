@@ -9,34 +9,42 @@
       User = mongoose.model('User'),
       passport = require('passport');
 
-  exports.create = function(req,res){
-    User.register(new User({ username : req.body.username,
-      password:req.body.password,
-      name: req.body.name || "Little Fucker",
-      admin: req.body.admin || false}),
-      req.body.password,
-      function(err, user) {
-        var retObj = {
-          meta: {"action": "create", "timestamp": new Date(), filename: __filename},
-          err: err
-        };
-        if (err) {
-          retObj.err = err;
-          return res.json(retObj);
-        }
-        passport.authenticate('local')(req, res,next, function () {
-          retObj.user = req.user;
-          return res.json(retObj);
+  exports.create = function(req,res,next){
+    if (req.body.password === req.body.confirmPassword) {
+      User.register(new User({ username : req.body.username,
+        password:req.body.password,
+        name: req.body.name || "Little Fucker",
+        admin: req.body.admin || false}),
+        req.body.password,
+        function(err, user) {
+          var retObj = {
+            meta: {"action": "create", "timestamp": new Date(), filename: __filename},
+            err: err
+          };
+          if (err) {
+            res.status(400);
+            return res.json(retObj);
+          }
+          console.log('*********User created without troubles**********');
+          passport.authenticate('local',function (err,user,info) {
+            console.log('*********User authenticated without troubles**********');
+            retObj.user = user;
+            req.session.passport.user_id = user._id;
+            req.session.passport.cart = {user_id:user._id};
+            return res.json(retObj);
+          })(req,res,next);
         });
-      });
+    }else{
+      res.status(400);
+      console.log('*********Passwords dont match**********');
+      return res.send('Passwords don\'t match');
+    }
     };
 
 
     exports.login = function(req,res){
-      console.log('************LOGIN********');
-      req.session.passport.user_id = req.user._id;
-      console.log(req.session);
       var user = {user: req.user};
+      req.session.passport.user_id = user._id;
       req.session.passport.cart = {user_id:user._id};
       return res.json(user);
     };

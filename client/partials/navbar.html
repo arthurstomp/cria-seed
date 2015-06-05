@@ -1,17 +1,13 @@
-<nav id="top-bar" class="navbar navbar-default" ng-controller="NavbarCtrl">
-  <div class="container-fluid">
-      <div class="header">
-          <ul>
-              <div class="logo">
-                  <li><img src="../assets/images/Final_Logo1.png"></li>
-              </div>
-              <div class="navBar">
-                  <li><a href="build.html">Build</a></li>
-                  <li><a href="cart.html">Cart</a></li>
-                  <li><a href="buildOld.html">Login</a></li>
-              </div>
-          </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+<div class="header">
+
+    <ul>
+        <div class="logo">
+          <a ui-sref="home"><img src="../assets/images/Final_Logo1.png"></a>
+        </div>
+        <div class="navBar">
+          <a ui-sref="build.root">Build</a>
+          <a ui-sref="cart">Cart</a>
+          <a ui-sref="loginSignup">Login</a>
+        </div>
+    </ul>
+</div>
