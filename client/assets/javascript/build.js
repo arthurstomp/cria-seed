@@ -4,6 +4,7 @@
   'use strict';
   var selectedImg = "";
   var selectColor = "#ffffff";
+  var freeSpotColor = "blue";
   var tileWidth = 150;
   var tileHeight = 150;
   var selectedTile;
@@ -30,11 +31,17 @@
    */
   function createBackSkeleton(x, y) {
 
-      var i, skeleton;
+      var i;
+      var skeleton;
       skeleton = document.getElementById("back");
+      if(skeleton == null){
+        skeleton = document.createElement("div");
+          skeleton.id = "back";
+      }
       skeleton.style.height = tileHeight * y;
       skeleton.style.width = tileWidth * x;
       skeletonSize = x * y;
+      skeleton.skeletonSize = skeletonSize;
 
       for (i = 0; i < skeletonSize; i++) {
           var tile, clickContainer, cln;
@@ -55,12 +62,16 @@
 
           skeleton.appendChild(tile);
       }
-      return sketelonSize;
+      return skeleton;
   }
 
   function createFrontSkeleton(x, y) {
 
       var frontSkeleton = document.getElementById("front");
+      if(frontSkeleton == null){
+          frontSkeleton = document.createElement("div");
+          frontSkeleton.id = "front";
+      }
       frontSkeleton.style.height = tileHeight * y;
       frontSkeleton.style.width = tileWidth * x;
       skeletonSize = x * y;
@@ -681,7 +692,7 @@ function AddDeletePreview() {
    */
   function swapTiles(ev){
       console.log("commence switching procedure");
-      console.log(ev.target.parentNode.id);
+      //console.log(ev.target.parentNode.id);
       var dummmy =  ev.target.parentNode.innerHTML;
       ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
       console.log(currentDraggingTile.id);
@@ -692,14 +703,12 @@ function AddDeletePreview() {
    This function checks if there is a tile at the location where you want to drop a tile
    @Author: Abdellatif
    */
-  function hasTile(element) {
-      if(element.target != null) {
-          if (element.target.empty === true) {
-              return true;
-          }
-          else {
-              return false;
-          }
+  function hasTile(event) {
+      if(event.target.empty === true) {
+          return true;
+      }
+      else{
+          return false;
       }
   }
 
@@ -712,22 +721,23 @@ function AddDeletePreview() {
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
       closeLeftMenu();
-      //showAvalaibleTileSpace();
+      showAvalaibleTileSpace(document.getElementById("back"));
+      showAvalaibleTileSpace(document.getElementById("front"));
+      return ev.target;
   }
 
   /*
    This function shows the user where a tile can be placed
    @Author: Abdellatif
    */
-  function showAvalaibleTileSpace(){
+  function showAvalaibleTileSpace(skeleton){
       var i;
-      var skeleton = document.getElementById("phone");
       tempCloneOfSkeleton = skeleton.cloneNode(true);
       for (i = 0; i < skeletonSize; i++) {
-          var tile = document.getElementById("tile" + i);
+          //var tile = document.getElementById("tile" + i);
           //tile.style.backgroundColor = "#0000FF";
           //if(tile.empty == true){
-              tile.style.backgroundColor = "#0000FF";
+          skeleton.children[i].style.backgroundColor = freeSpotColor;
           //}
       }
   }
@@ -736,11 +746,12 @@ function AddDeletePreview() {
    This function resets the color back to the original color
    @Author: Abdellatif
    */
-  function resetColorOfAvailableTiles(){
+  function resetColorOfAvailableTiles(skeleton){
       var i;
-      for (i = 0; i < skeletonSize; i++) {
-          var tile = document.getElementById("tile" + i);
-          tile.style.backgroundColor = tempCloneOfSkeleton.children[i].style.backgroundColor;
+      for (i = 0; i < skeleton.skeletonSize; i++) {
+          //var tile = document.getElementById("tile" + i);
+
+          skeleton.children[i].style.backgroundColor = tempCloneOfSkeleton.children[i].style.backgroundColor;
       }
   }
 
@@ -750,7 +761,8 @@ function AddDeletePreview() {
    */
   function drop(ev) {
       //console.log(ev.target);
-      //resetColorOfAvailableTiles();
+      //resetColorOfAvailableTiles(document.getElementById("back"));
+      //resetColorOfAvailableTiles(document.getElementById("front"));
       ev.preventDefault();
      // console.log("dropping");
       //console.log(ev.toElement.id);
@@ -787,6 +799,7 @@ function AddDeletePreview() {
 
 
   }
+
 
 window.addEventListener("load", createBackSkeleton(3, 5));
 
@@ -1319,3 +1332,18 @@ window.addEventListener("load",function(){
       content.className = (c++ % 2 === 0) ? content.className + ' flip' : content.className.split(' ')[0];
   };
 });
+
+  //TODO: CLean up this button code put it a function
+var btn = document.getElementById('flip_content');
+var content = document.getElementById('f1_card');
+var c = 0;
+  if(btn != null){
+      btn.onclick = function () {
+          closeLeftMenu();
+          content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
+      };
+  }
+
+
+})();
+

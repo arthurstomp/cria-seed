@@ -2,7 +2,10 @@
   'use strict';
 
   $(document).ready(function () {
+      console.log('document ready assign click');
+      console.log($('.right'));
       $('.right').click(function () {
+          console.log("right click");
           var position = $('.container').position(),
               r = position.left-$(window).width();
           $('.container').animate({
@@ -11,6 +14,7 @@
       });
 
       $('.left').click(function () {
+          console.log("left click");
           var position = $('.container').position(),
               l=position.left+$(window).width();
           if(l<=0)
