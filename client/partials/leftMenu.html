@@ -1,38 +1,31 @@
-<div class="main">
+
+<div id="main">
     <div id="vWrapper">
-        <a href="#" onmouseover="tooltip.pop(this, '#sub1', {position:1, offsetX:-30, effect:'slide'})">
+        <a href="#" onclick="mopen('sub1')">
             <img src="../assets/images/text.png">
         </a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub2', {position:1, offsetX:-20, effect:'slide', sticky: true})">
+        <a href="#" onclick="mopen('sub2')">
             <img src="../assets/images/picture.png">
         </a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub3', {position:1, offsetX:-20, effect:'slide'})">
+        <a href="#" onclick="mopen('sub3')">
             <img src="../assets/images/design.png">
         </a>
-        <a href="#" onmouseover="tooltip.pop(this, '#sub4', {position:1, offsetX:-20, effect:'slide'})">
+        <a href="#" onclick="mopen('sub4')">
             <img src="../assets/images/trash.png">
         </a>
     </div>
-</div>
 
-<div id="f1_container">
-    <div id="f1_card" class="shadow">
-        <div id="front" class="front face">
-        </div>
-        <div id="back" class="back face center">
-        </div>
+    <div id="vWrapper2">
+        <a href="#" onclick="mopen('sub5')">
+            <img src="../assets/images/info.png">
+        </a>
     </div>
-</div>
 
+    <div id="sub5" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+    </div>
 
+    <div id="sub1" class="menudiv" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
 
-
-
-
-
-<div id="menu" style="display:none;">
-
-    <div id="sub1">
         <h2>Edit Text</h2>
 
         <form id="addTxtForm" name="addTxtForm">
@@ -82,7 +75,7 @@
     </div>
 
 
-    <div id="sub2">
+    <div id="sub2" class="menudiv" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
         <div class="column">
             <h2>Upload Image</h2> <br>
 
@@ -90,6 +83,10 @@
 
             <h4>Preview: </h4>
 
+            <!--<div id="previewDiv"></div>-->
+            <!--<br>-->
+
+            <!--<h3>Transform</h3>-->
 
             <input align="middle" id="rotateButton" onclick="rotateTile()" type="button" value="Rotate">
             <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
@@ -98,12 +95,8 @@
         </div>
     </div>
 
-    <div id="sub3">
+    <div id="sub3" class="menudiv" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
         <h2>Add Design</h2> <br>
-
-        <select id="border">
-            <option selected>border</option>
-        </select>
 
         <select id="tileColor" onchange="changeTileColor()">
             <option selected value="color">color</option>
@@ -120,21 +113,13 @@
             <option value="black">black</option>
         </select>
 
-        <br><br>
-
-        <select id="shape">
-            <option selected>shape</option>
-        </select>
-
-        <select id="pattern">
-            <option selected>pattern</option>
-        </select>
+        <div id="my-icon-select"></div>
 
         <input align="middle" class="transformButton" onclick="resizeTile()" type="button" value="transform">
 
     </div>
 
-    <div id="sub4">
+    <div id="sub4" class="menudiv" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
         <h2>Remove Tiles</h2> <br>
         <h4>Preview:</h4>
 
@@ -145,6 +130,18 @@
     </div>
 
 </div>
+
+
+<div id="f1_container">
+    <div id="f1_card" class="shadow">
+        <div id="front" class="front face">
+        </div>
+        <div id="back" class="back face center">
+        </div>
+    </div>
+</div>
+
+
 <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
 <div id="drag1"><img src="../assets/images/click.png" draggable="true"
                      ondragstart="drag(event)" width="150" height="150"></div>
@@ -153,5 +150,3 @@
 <button class="btn btn-primary" id="flip_content">
     <img src="../assets/images/rotate.png">
 </button>
-
-<script src="../assets/javascript/build.js"></script>
