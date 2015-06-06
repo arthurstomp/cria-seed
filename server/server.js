@@ -56,6 +56,7 @@
      */
     app.set('port', process.env.PORT || config.port);
 
+    console.log(app.get('port'));
     /**
      * Express middleware
      */

@@ -23,15 +23,29 @@
 
   module.exports = mongoose.model(modelName,productSchema);
 
-  productSchema.pre('save', function(next){
+  productSchema.pre('save',true, function(next,done){
+    console.log("pre save product");
     var product = this;
     if(!product.isModified('subProducts')){
+      console.log("subProduct is not modified");
       return next();
     }
-    product.subProducts.forEach(function(subProdId){
-      var subProd = productSchema.find(subProdId);
-      
-    });
+    product.totalPrice = product.soloPrice;
+    product.combinedPrice = 0;
+    mongoose
+      .model('Product')
+      .find()
+      .where('_id').in(product.subProducts)
+      .exec(function(err,subProducts){
+        subProducts.forEach(function(subProduct){
+          console.log(subProduct);
+          product.combinedPrice += subProduct.totalPrice;
+          product.totalPrice += subProduct.totalPrice;
+        });
+        console.log("total price = "+product.totalPrice);
+        next();
+        done();
+      });
   });
 
 }());

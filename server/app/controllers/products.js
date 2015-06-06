@@ -11,7 +11,9 @@
     .create({name: req.body.name,
       description: req.body.description,
       soloPrice: req.body.soloPrice,
-      categories: req.body.categories,
+      categories: req.body.categories || [],
+      subProducts: req.body.subProducts || [],
+      specification: req.body.specification || {},
     },
     function(err,product){
       var resObj = {
