@@ -7,141 +7,184 @@
   'use strict';
   var mongoose = require('mongoose'),
       User = mongoose.model('User'),
+      Product = mongoose.model('Product'),
       passport = require('passport');
 
-  exports.create = function(req,res,next){
+
+  function getUsersCart(username){
+    var retCart = {};
+    retCart.products = [];
+    User.findOne({username: username},function(err,user){
+      if(err){
+        retCart.err = err;
+        return retCart;
+      }
+      Product
+        .find()
+        .where('_id')
+        .in(user.shoppingCart)
+        .exec(function(err,product){
+          if (err) {
+            retCart.err = err;
+          }
+          retCart.products.push(products);
+        });
+      return retCart;
+    });
+  }
+
+  function userCreation(req,res,next,admin){
+    var retObj = {
+      meta: {"action": "create", "timestamp": new Date(), filename: __filename},
+      err: {},
+    };
     if (req.body.password === req.body.confirmPassword) {
       User.register(new User({ username : req.body.username,
-        password:req.body.password,
         name: req.body.name || "Little Fucker",
-        admin: req.body.admin || false}),
+        admin: admin}),
         req.body.password,
         function(err, user) {
-          var retObj = {
-            meta: {"action": "create", "timestamp": new Date(), filename: __filename},
-            err: err
-          };
           if (err) {
             res.status(400);
+            retObj.err = err;
             return res.json(retObj);
           }
-          console.log('*********User created without troubles**********');
           passport.authenticate('local',function (err,user,info) {
-            console.log('*********User authenticated without troubles**********');
+            var cart = getUsersCart(user.username);
             retObj.user = user;
-            req.session.passport.user_id = user._id;
-            req.session.passport.cart = {user_id:user._id};
+            if (cart.err) {
+              retObj.err = cart.err;
+              return res.json(retObj);
+            }
+            req.session.cart = products;
             return res.json(retObj);
           })(req,res,next);
         });
     }else{
       res.status(400);
-      console.log('*********Passwords dont match**********');
-      return res.send('Passwords don\'t match');
+      retObj.err.message = 'Passwords don\'t match';
+      return res.json(retObj);
     }
+  }
+
+  exports.createUser = function(req,res,next){
+    userCreation(req,res,next,false);
+  };
+
+  exports.createAdminUser = function(req,res,next){
+    userCreation(req,res,next,true);
+  };
+
+
+  exports.login = function(req,res){
+    var cart = getUsersCart(user.username),
+    retObj = {
+      meta: {"action": "login", "timestamp": new Date(), filename: __filename},
+      err: {},
     };
+    if (cart.err) {
+      retObj.err = cart.err;
+      return res.json(retObj);
+    }
+    req.session.cart = cart.products;
+    retObj.user = req.user;
+    return res.json(retObj);
+  };
 
+  exports.detail = function(req,res){
+    var conditions, fields;
 
-    exports.login = function(req,res){
-      var user = {user: req.user};
-      req.session.passport.user_id = user._id;
-      req.session.passport.cart = {user_id:user._id};
-      return res.json(user);
-    };
+    conditions = {_id: req.params._id};
+    fields = {};
 
-    exports.detail = function(req,res){
-      var conditions, fields;
+    console.log("detail called");
 
-      conditions = {_id: req.params._id};
-      fields = {};
+    User
+    .findOne(conditions, fields)
+    .exec(function (err, doc) {
+      var retObj = {
+        meta: {"action": "detail", 'timestamp': new Date(), filename: __filename},
+        doc: doc, // only the first document, not an array when using "findOne"
+        err: err
+      };
+      return res.json(retObj);
+    });
+  };
 
-      console.log("detail called");
+  exports.list = function(req,res){
+    var conditions, fields, sort;
 
-      User
-      .findOne(conditions, fields)
-      .exec(function (err, doc) {
-        var retObj = {
-          meta: {"action": "detail", 'timestamp': new Date(), filename: __filename},
-          doc: doc, // only the first document, not an array when using "findOne"
-          err: err
-        };
-        return res.send(retObj);
-      });
-    };
+    console.log("*******LIST USERS******");
+    conditions = {};
+    fields = {};
+    sort = {'created_at': -1};
 
-    exports.list = function(req,res){
-      var conditions, fields, sort;
+    User
+    .find(conditions, fields)
+    .sort(sort)
+    .exec(function (err, doc) {
 
-      conditions = {};
-      fields = {};
-      sort = {'modificationDate': -1};
-
-      User
-      .find(conditions, fields)
-      .sort(sort)
-      .exec(function (err, doc) {
-
-        var retObj = {
-          meta: {
-            "action": "list",
-            'timestamp': new Date(),
-            filename: __filename
-          },
-          doc: doc, // array
-          err: err
-        };
-
-        return res.send(retObj);
-
-      });
-    };
-
-    exports.update = function(req,res){
-      var conditions =
-      {_id: req.params._id},
-      update = {
-        title: req.body.doc.title || '',
-        author: req.body.doc.author || '',
-        description: req.body.doc.description || ''
-      },
-      options = {multi: false, runValidators: true},
-      callback = function (err, doc) {
-        var retObj = {
-          meta: {
-            "action": "update",
-            'timestamp': new Date(),
-            filename: __filename,
-            'doc': doc,
-            'update': update
-          },
-          doc: update,
-          err: err
-        };
-
-        return res.send(retObj);
+      var retObj = {
+        meta: {
+          "action": "list",
+          'timestamp': new Date(),
+          filename: __filename
+        },
+        doc: doc, // array
+        err: err
       };
 
-      User
-      .findOneAndUpdate(conditions, update, options, callback);
-    };
+      return res.json(retObj);
 
-    exports.delete = function(req,res){
-      var conditions, callback, retObj;
-      req.logout();
-      conditions = {_id: req.params._id};
-      callback = function (err, doc) {
-        retObj = {
-          meta: {
-            "action": "delete",
-            'timestamp': new Date(),
-            filename: __filename
-          },
-          doc: doc,
-          err: err
-        };
-        return res.send(retObj);
+    });
+  };
+
+  exports.update = function(req,res){
+    var conditions =
+    {_id: req.params._id},
+    update = {
+      title: req.body.doc.title || '',
+      author: req.body.doc.author || '',
+      description: req.body.doc.description || ''
+    },
+    options = {multi: false, runValidators: true},
+    callback = function (err, doc) {
+      var retObj = {
+        meta: {
+          "action": "update",
+          'timestamp': new Date(),
+          filename: __filename,
+          'doc': doc,
+          'update': update
+        },
+        doc: update,
+        err: err
       };
 
-      User.remove(conditions, callback);
+      return res.send(retObj);
     };
-  }());
+
+    User
+    .findOneAndUpdate(conditions, update, options, callback);
+  };
+
+  exports.delete = function(req,res){
+    var conditions, callback, retObj;
+    req.logout();
+    conditions = {_id: req.params._id};
+    callback = function (err, doc) {
+      retObj = {
+        meta: {
+          "action": "delete",
+          'timestamp': new Date(),
+          filename: __filename
+        },
+        doc: doc,
+        err: err
+      };
+      return res.send(retObj);
+    };
+
+    User.remove(conditions, callback);
+  };
+}());

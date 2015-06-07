@@ -19,6 +19,12 @@
     return res.redirect('/');
   }
 
+  function ensureAdminAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+      console.log('logged in');
+    }
+  }
+
   router
     .get('/users/:_id',
          ensureAuthenticated,
@@ -36,7 +42,7 @@
     );
 
   router
-    .post('/users',controller.create)
+    .post('/users',controller.createUser)
     .post('/login',
           passport.authenticate('local'),
           controller.login);
@@ -47,7 +53,8 @@
              controller.update);
 
   router.delete('/users/:_id',
-  ensureAuthenticated,
-  controller.delete);
+                ensureAuthenticated,
+                controller.delete);
+
   module.exports = router;
 }());
