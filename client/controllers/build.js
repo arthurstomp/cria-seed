@@ -4,11 +4,10 @@
 (function() {
   'use strict';
 
-  var buildModule = angular.module('BuildModule',['ngResource','ui.router']);
+  var buildModule = angular.module('BuildModule',['ngResource','ui.router','ngCookies','ProductModule']);
 
   buildModule.controller('MainBuildCtrl',function($scope,$state,$rootScope){
     console.log('Main Build Controller');
-    $rootScope.tileHeight = 100;
   });
 
   buildModule.controller('LeftMenuBuildCtrl',function($scope,$state){
@@ -23,7 +22,9 @@
 
   buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,productService){
     console.log('Bottom MenuBuild Controller');
-
+    productService.productsByCategory.get({category:'skeleton'},function(products){
+      console.log(products);
+    });
 
   });
 }());

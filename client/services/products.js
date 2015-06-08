@@ -13,13 +13,11 @@
   * @param {object} $scope
   * @param {object} $location
   */
-  productModule.factory('productService',['$resource',function($scope,$location){
+  productModule.factory('productService',['$resource',function($resource){
     var db, productUserActions, productAdminActions;
 
     productUserActions = {
       'get':{method: 'GET'},
-      'query':{method: 'GET'},
-      'query_categories':{method: 'GET'},
     };
 
     productAdminActions = {
