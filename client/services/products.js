@@ -29,8 +29,9 @@
     };
 
     db = {};
-    db.userActions = $resource('/api/:param',{},productUserActions);
-    db.adminActions = $resource('/api/admin/:id',{},productAdminActions);
+    db.userActions = $resource('/api/products/:param',{},productUserActions);
+    db.productsByCategory = $resource('/api/products/categories/:category',{},{'get':{method:'GET'}});
+    db.adminActions = $resource('/api/products/admin/:id',{},productAdminActions);
     return db;
   }]);
 }());

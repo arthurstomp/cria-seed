@@ -1,9 +1,10 @@
+<script src="../assets/javascript/ready.js"></script>
 <div id="sse1">
     <div id="sses1">
       <!--This eventually needs to be a for loop that displays the products in the database-->
       <div class="iconNav">
         <ul>
-            <div class="navcontainer grey">
+            <div class="navcontainer grey" ng-click='loadSkeletons()'>
                 <img src="../assets/images/icons/SkeletonColor.png">
             </div>
             <div class="navcontainer light-grey">
@@ -34,41 +35,45 @@
 
 
 <div class="scroller">
-  <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
 <div class="wrapper">
   <div class="container">
-    <div class="contentContainer active red col-xs-4"></div>
-    <div class="contentContainer  blue col-xs-4"></div>
-    <div class="contentContainer  orange col-xs-4"></div>
-    <div class="contentContainer  green col-xs-4"></div>
-    <div class="contentContainer  black col-xs-4"></div>
-    <div class="contentContainer  red col-xs-4"></div>
-    <div class="contentContainer  blue"></div>
-    <div class="contentContainer  orange"></div>
-    <div class="contentContainer  green"></div>
-    <div class="contentContainer  black"></div>
-    <div class="contentContainer  red"></div>
-    <div class="contentContainer  blue"></div>
-    <div class="contentContainer  orange"></div>
-    <div class="contentContainer  green"></div>
-    <div class="contentContainer  black"></div>
-    <div class="contentContainer  red"></div>
-    <div class="contentContainer  blue"></div>
-    <div class="contentContainer  orange"></div>
-    <div class="contentContainer  green"></div>
-    <div class="contentContainer  black"></div>
-    <div class="contentContainer  red"></div>
-    <div class="contentContainer  blue"></div>
-    <div class="contentContainer  orange"></div>
-    <div class="contentContainer  green"></div>
-    <div class="contentContainer  black"></div>
-    <div class="contentContainer  red"></div>
-    <div class="contentContainer  blue"></div>
-    <div class="contentContainer  orange"></div>
-    <div class="contentContainer  green"></div>
-    <div class="contentContainer  black"></div>
+    <div class="" ng-repeat='tile in CategoryTiles'>
+
+    </div>
+    <div class="contentContainer red"></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green "></div>
+    <div class="contentContainer black "></div>
+    <div class="contentContainer red "></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green"></div>
+    <div class="contentContainer black"></div>
+    <div class="contentContainer red"></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green"></div>
+    <div class="contentContainer black"></div>
+    <div class="contentContainer red"></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green"></div>
+    <div class="contentContainer black"></div>
+    <div class="contentContainer red"></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green"></div>
+    <div class="contentContainer black"></div>
+    <div class="contentContainer red"></div>
+    <div class="contentContainer blue"></div>
+    <div class="contentContainer orange"></div>
+    <div class="contentContainer green"></div>
+    <div class="contentContainer black"></div>
   </div>
   <div class="left" data-slide='next'><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
+    <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
+
 </div>
 
 </div>

@@ -15,7 +15,8 @@
                                                     'ngResource',
                                                     'CommonModule',
                                                     'UserModule',
-                                                    'ProductModule']);
+                                                    'ProductModule',
+                                                    'BuildModule']);
 
   /**
   * Configuration blocks - get executed during the provider registrations and
