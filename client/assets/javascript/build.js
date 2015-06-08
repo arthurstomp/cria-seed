@@ -181,7 +181,7 @@
    This function changes the color of the tile
    @Author: Daye & Abdellatif
    */
-  function changeTileColor(selectedTile, color) {
+  function changeTileColor(color) {
       var res;
       if(color == null){
            var x = document.getElementById("tileColor");
@@ -190,7 +190,7 @@
       else{
           res = color;
       }
-      selectedTile.style.backgroundColor = res;
+      document.getElementById(selectedTile).style.backgroundColor = res;
       return selectedTile;
   }
 
