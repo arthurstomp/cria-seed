@@ -62,13 +62,13 @@
         //   templateUrl : '/partials/rightMenu.html',
         //   controller : 'RightMenuBuildCtrl',
         // },
-        // 'main':{
-        //   templateUrl : '/partials/main.html',
-        //   controller : 'MainBuildCtrl',
-        // },
+        'main':{
+           templateUrl : '/partials/main.html',
+           controller : 'MainBuildCtrl'
+        },
         'bottomMenu' : {
           templateUrl : '/partials/bottomMenu.html',
-          controller : 'BottomMenuBuildCtrl',
+          controller : 'BottomMenuBuildCtrl'
          }
       }
     });

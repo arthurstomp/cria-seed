@@ -34,8 +34,8 @@ var selectedImg = "";
         skeleton = document.createElement("div");
           skeleton.id = "back";
       }
-      skeleton.style.height = tileHeight * y;
-      skeleton.style.width = tileWidth * x;
+      skeleton.style.height = (tileHeight * y).toString()+"px";
+      skeleton.style.width = (tileWidth * x).toString()+"px";
       skeletonSize = x * y;
       skeleton.skeletonSize = skeletonSize;
 
@@ -557,5 +557,5 @@ var c = 0;
       };
   }
 
-window.addEventListener("load", createBackSkeleton(3, 5));
-window.addEventListener("load", createFrontSkeleton(3, 5));
+//window.addEventListener("load", createBackSkeleton(3, 5));
+//window.addEventListener("load", createFrontSkeleton(3, 5));
