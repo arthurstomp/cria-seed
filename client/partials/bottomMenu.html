@@ -1,32 +1,16 @@
 <script src="../assets/javascript/ready.js"></script>
-<div id="sse1">
+<div id="sse1" ng-init='loadCategory()'>
     <div id="sses1">
       <!--This eventually needs to be a for loop that displays the products in the database-->
       <div class="iconNav">
         <ul>
-            <div class="navcontainer grey" ng-click="loadCategory('skeleton')">
-                <img src="../assets/images/icons/SkeletonColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/ScreenColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/ProcessorColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/BatteryColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/StorageColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/ConnectionColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/CameraColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/SpeakerColor.png">
+            <div class="navcontainer" ng-repeat='category in categories'>
+              <div ng-show='$even'class="grey" ng-click='loadCategory(category.name)'>
+                <img src="{{category.iconImgPath}}" alt="" />
+              </div>
+              <div ng-show='$odd'class="light-grey" ng-click='loadCategory(category.name)'>
+                <img src="{{category.iconImgPath}}" alt="" />
+              </div>
             </div>
         </ul>
       </div>
@@ -44,36 +28,6 @@
         </p>
       </div>
     </div>
-    <!-- <div class="contentContainer red"></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green "></div>
-    <div class="contentContainer black "></div>
-    <div class="contentContainer red "></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div>
-    <div class="contentContainer red"></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div>
-    <div class="contentContainer red"></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div>
-    <div class="contentContainer red"></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div>
-    <div class="contentContainer red"></div>
-    <div class="contentContainer blue"></div>
-    <div class="contentContainer orange"></div>
-    <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div> -->
   </div>
   <div class="left" data-slide='next'><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
     <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
