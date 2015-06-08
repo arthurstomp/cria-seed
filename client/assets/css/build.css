@@ -7,16 +7,17 @@
 
 #mainView{
   background-color: yellow;
-  width: 30px;
-  height: 40px;
-  float: left;
+  width: 50%;
+  height: 40%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #rightMenuView{
   background-color: blue;
   width: 30px;
   height: 40px;
-  float: left;
+  float: right;
 }
 
 #bottomMenuView{
