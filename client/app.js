@@ -58,12 +58,12 @@
         //   templateUrl : '/partials/leftMenu.html',
         //   controller : 'LeftMenuBuildCtrl',
         // },
-        // 'rightMenu' : {
-        //   templateUrl : '/partials/rightMenu.html',
-        //   controller : 'RightMenuBuildCtrl',
-        // },
+        'rightMenu' : {
+          templateUrl : '/partials/rightMenu.html',
+          controller : 'RightMenuBuildCtrl',
+        },
         // 'main':{
-        //   templateUrl : '/partials/main.html',
+        //   templateUrl : '',
         //   controller : 'MainBuildCtrl',
         // },
         'bottomMenu' : {

@@ -23,9 +23,7 @@
   <div class="container">
     <div class="contentContainer" ng-repeat='product in productsFromCurrentCategory'>
       <div class="red" product-id='{{product._id}}'>
-        <p>
-          {{product.description}}
-        </p>
+        <img class="productImage" ng-click="focusProduct(product)" src="{{product.imgPath}}" alt="" />
       </div>
     </div>
   </div>

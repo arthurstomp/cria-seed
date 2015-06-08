@@ -20,6 +20,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: 200px;
 }
 
 .wrapper {
@@ -34,7 +35,7 @@
 .container {
     position: absolute;
     width: 100%;
-    height: 200px;
+    /*height: 200px;*/
     bottom: 0;
     padding-left: 30px;
     padding-right: 30px;
@@ -45,6 +46,7 @@
     min-width: 50px;
     min-height: 50px;
     display: inline-block;
+    border: 5px solid black;
 }
 
 .navcontainer {
@@ -79,6 +81,11 @@
 .grey:hover
 {
     background-color: #fbbc24;
+}
+
+.productImage {
+  height: 100%;
+  width: 100%;
 }
 
 .red {

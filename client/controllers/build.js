@@ -6,8 +6,19 @@
 
   var buildModule = angular.module('BuildModule',['ngResource','ui.router','ngCookies','ProductModule']);
 
-  buildModule.controller('MainBuildCtrl',function($scope,$state){
-    console.log('Main Build Controller');
+  buildModule.controller('MainBuildCtrl',function($scope,$state,$rootScope){
+    $rootScope.phone = {
+      skeleton : {},
+      front : [],
+      back : [],
+    };
+
+    $rootScope.refresh = function(){
+      $rootScope.productOnFocus = null;
+    };
+
+    $rootScope.historic = [$rootScope.phone];
+    $rootScope.hitoricPointer = 0;
   });
 
   buildModule.controller('LeftMenuBuildCtrl',function($scope,$state){
@@ -15,13 +26,35 @@
 
   });
 
-  buildModule.controller('RightMenuBuildCtrl',function($scope,$state){
+  buildModule.controller('RightMenuBuildCtrl',function($scope,$state,$rootScope){
     console.log('Right Menu Build Controller');
 
   });
 
-  buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,productService){
+  buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,$rootScope,productService){
     console.log('Bottom MenuBuild Controller');
+
+    /**
+    *
+    * This part is a copy of the beggining of MainBuildCtrl.
+    * i'm using here because i have to wait for Abdels part.
+    * EREASE IT
+    */
+    $rootScope.phone = {
+      skeleton : {},
+      front : [],
+      back : [],
+    };
+
+    $rootScope.refresh = function(){
+      $rootScope.productOnFocus = null;
+    };
+
+    $rootScope.historic = [$rootScope.phone];
+    $rootScope.hitoricPointer = 0;
+    /**
+    * STOP EREASING.
+    */
 
     $scope.CATEGORIES = {
       SKELETON : 'skeleton',
@@ -33,7 +66,6 @@
       CAMERA : 'camera',
       SPEAKER : 'speaker'
     };
-
 
     $scope.currentCategory = $scope.CATEGORIES.SKELETON;
     $scope.productsFromCurrentCategory = [];
@@ -50,13 +82,16 @@
     $scope.loadCategory = function(category){
       productService.productsByCategory.get({category:category},function(resObj){
         $scope.productsFromCurrentCategory = resObj.products;
+        $rootScope.refresh();
       });
     };
 
+    $scope.focusProduct = function(product){
+      $rootScope.productOnFocus = product;
+    };
+
     $scope.$on('$viewContentLoaded',function(){
-      console.log('Bottom menu view loaded');
-      productService.productsByCategory.get({category:'Battery'},function(resObj){
-        console.log(resObj.products);
+      productService.productsByCategory.get({category:'camera'},function(resObj){
         $scope.productsFromCurrentCategory = resObj.products;
       });
     });

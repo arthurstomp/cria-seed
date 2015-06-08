@@ -1,21 +1,21 @@
 #leftMenuView{
   background-color: red;
-  width: 30px;
-  height: 100px;
+  width: 20%;
+  height: 500px;
   float: left;
 }
 
 #mainView{
   background-color: yellow;
-  width: 30px;
-  height: 40px;
+  width: 46.66%;
+  height: 500px;
   float: left;
 }
 
 #rightMenuView{
   background-color: blue;
-  width: 30px;
-  height: 40px;
+  width: 33.33%;
+  height: 500px;
   float: left;
 }
 
