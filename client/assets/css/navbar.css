@@ -8,7 +8,8 @@
 
 .header li{
   display:inline;
-  font-family: 'Roboto-Medium';
+  font-family: Roboto-Medium;
+    font-size: 10px;
   color: #424242;
   margin: 0;
 }
@@ -29,17 +30,28 @@
 
 .navBar a{
     border-left: solid 1px lightgrey;
-    font-size: 100%;
-    padding-bottom: 1%;
+    font-size: 130%;
+    padding-bottom: .7%;
     padding-top: 1%;
     padding-left: 5%;
     padding-right: 5%;
     z-index: 0;
     text-decoration: none;
     color: #424242;
+    font-family: Roboto-Medium;
 }
 
 .navBar a:hover{
     background-color: #00bcd4;
     color: white;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url(../fonts/Roboto-Medium.ttf);
 }
