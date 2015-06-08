@@ -43,12 +43,14 @@ var selectedImg = "";
           var tile, clickContainer, cln;
           tile = document.createElement("div");
           tile.id = "tile" + i;
-          tile.className = 'containerTIle';
-          tile.style.width = tileWidth;
-          tile.style.height = tileHeight;
+          tile.className = 'containerTile';
+          tile.style.width = tileWidth.toString()+"px";
+          tile.style.height = tileHeight.toString()+"px";
           tile.style.float = "left";
-          tile.style.backgroundColor = 'red';
+          tile.style.backgroundColor = "red";
+          tile.style.zIndex = "2";
           tile.empty = true;
+          console.log(tile.style);
 
           tile.ondrop=function(){drop(event);};
           tile.ondragover=function(){allowDrop(event);};
@@ -68,16 +70,16 @@ var selectedImg = "";
           frontSkeleton = document.createElement("div");
           frontSkeleton.id = "front";
       }
-      frontSkeleton.style.height = tileHeight * y;
-      frontSkeleton.style.width = tileWidth * x;
+      frontSkeleton.style.height = (tileHeight * y).toString()+"px";
+      frontSkeleton.style.width =(tileWidth * x).toString()+"px";
       skeletonSize = x * y;
       frontSkeleton.skeletonSize = skeletonSize;
 
       var tile = document.createElement("div");
       tile.id = "tile1";
       tile.className = 'containerTIle';
-      tile.style.width = tileWidth*x;
-      tile.style.height = tileHeight*y;
+      tile.style.width = frontSkeleton.style.width;
+      tile.style.height = frontSkeleton.style.height;
       tile.style.float = "left";
       tile.style.backgroundColor = 'hotpink';
       tile.empty = true;
@@ -546,16 +548,18 @@ var selectedImg = "";
 
   }
 
-  //TODO: CLean up this button code put it a function
-var btn = document.getElementById('flip_content');
-var content = document.getElementById('f1_card');
-var c = 0;
-  if(btn != null){
-      btn.onclick = function () {
-          closeMenu(document.getElementById("vWrapper"));
-          content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
-      };
-  }
-
+function switchButton() {
+    //TODO: CLean up this button code put it a function
+    var btn = document.getElementById('flip_content');
+    var content = document.getElementById('f1_card');
+    var c = 0;
+    if (btn != null) {
+        btn.onclick = function () {
+            closeMenu(document.getElementById("vWrapper"));
+            console.log(content);
+            content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
+        };
+    }
+}
 //window.addEventListener("load", createBackSkeleton(3, 5));
 //window.addEventListener("load", createFrontSkeleton(3, 5));

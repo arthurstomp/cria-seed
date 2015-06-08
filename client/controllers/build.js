@@ -1,4 +1,4 @@
-/*jslint white: true */
+/*jslint white: true
 /*global angular*/
 
 (function() {
@@ -9,9 +9,8 @@
   buildModule.controller('MainBuildCtrl',function($scope,$state){
     console.log('Main Build Controller');
       $scope.$on("$viewContentLoaded", function(event){
-
-          console.log("test 2");
         createBackSkeleton(3, 5);
+          createFrontSkeleton(3, 5);
       });
   });
 
