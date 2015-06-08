@@ -4,7 +4,7 @@
       <!--This eventually needs to be a for loop that displays the products in the database-->
       <div class="iconNav">
         <ul>
-            <div class="navcontainer grey" ng-click='loadSkeletons()'>
+            <div class="navcontainer grey" ng-click="loadCategory('skeleton')">
                 <img src="../assets/images/icons/SkeletonColor.png">
             </div>
             <div class="navcontainer light-grey">
@@ -37,10 +37,14 @@
 <div class="scroller">
 <div class="wrapper">
   <div class="container">
-    <div class="" ng-repeat='tile in CategoryTiles'>
-
+    <div class="contentContainer" ng-repeat='product in productsFromCurrentCategory'>
+      <div class="red" product-id='{{product._id}}'>
+        <p>
+          {{product.description}}
+        </p>
+      </div>
     </div>
-    <div class="contentContainer red"></div>
+    <!-- <div class="contentContainer red"></div>
     <div class="contentContainer blue"></div>
     <div class="contentContainer orange"></div>
     <div class="contentContainer green "></div>
@@ -69,7 +73,7 @@
     <div class="contentContainer blue"></div>
     <div class="contentContainer orange"></div>
     <div class="contentContainer green"></div>
-    <div class="contentContainer black"></div>
+    <div class="contentContainer black"></div> -->
   </div>
   <div class="left" data-slide='next'><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
     <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>

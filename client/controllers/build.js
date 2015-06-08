@@ -6,7 +6,7 @@
 
   var buildModule = angular.module('BuildModule',['ngResource','ui.router','ngCookies','ProductModule']);
 
-  buildModule.controller('MainBuildCtrl',function($scope,$state,$rootScope){
+  buildModule.controller('MainBuildCtrl',function($scope,$state){
     console.log('Main Build Controller');
   });
 
@@ -22,8 +22,23 @@
 
   buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,productService){
     console.log('Bottom MenuBuild Controller');
-    productService.productsByCategory.get({category:'skeleton'},function(products){
-      console.log(products);
+
+
+
+    $scope.productsFromCurrentCategory = [];
+
+    $scope.loadCategory = function(category){
+      productService.productsByCategory.get({category:category},function(resObj){
+        $scope.productsFromCurrentCategory = resObj.products;
+      });
+    };
+
+    $scope.$on('$viewContentLoaded',function(){
+      console.log('Bottom menu view loaded');
+      productService.productsByCategory.get({category:'Battery'},function(resObj){
+        console.log(resObj.products);
+        $scope.productsFromCurrentCategory = resObj.products;
+      });
     });
 
   });

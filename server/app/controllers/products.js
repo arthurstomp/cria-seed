@@ -149,7 +149,7 @@
             filename: __filename,
           },
           err: err,
-          product: products,
+          products: products,
         };
         return res.json(retObj);
       });
