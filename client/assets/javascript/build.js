@@ -1,8 +1,4 @@
-/*jslint white: true */
-
-(function() {
-  'use strict';
-  var selectedImg = "";
+var selectedImg = "";
   var selectColor = "#ffffff";
   var freeSpotColor = "blue";
   var tileWidth = 150;
@@ -31,7 +27,6 @@
    @Author: Daye & Abdellatif
    */
   function createBackSkeleton(x, y) {
-
       var i;
       var skeleton;
       skeleton = document.getElementById("back");
@@ -562,5 +557,5 @@ var c = 0;
       };
   }
 
-
-})();
+window.addEventListener("load", createBackSkeleton(3, 5));
+window.addEventListener("load", createFrontSkeleton(3, 5));
