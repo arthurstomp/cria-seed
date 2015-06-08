@@ -19,6 +19,7 @@
     totalPrice: {type:Number},
     specification: Schema.Types.Mixed,
     categories: [String],
+    imgPath : {type: String},
   });
 
   module.exports = mongoose.model(modelName,productSchema);

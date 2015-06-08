@@ -14,6 +14,7 @@
       categories: req.body.categories || [],
       subProducts: req.body.subProducts || [],
       specification: req.body.specification || {},
+      imgPath: req.body.imgPath,
     },
     function(err,product){
       var resObj = {
