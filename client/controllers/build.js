@@ -4,7 +4,7 @@
 (function() {
   'use strict';
 
-  var buildModule = angular.module('BuildModule',['ngResource','ui.router','ngCookei','ProductModule']);
+  var buildModule = angular.module('BuildModule',['ngResource','ui.router']);
 
   buildModule.controller('MainBuildCtrl',function($scope,$state,$rootScope){
     console.log('Main Build Controller');
@@ -23,7 +23,7 @@
 
   buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,productService){
     console.log('Bottom MenuBuild Controller');
-    
+
 
   });
 }());
