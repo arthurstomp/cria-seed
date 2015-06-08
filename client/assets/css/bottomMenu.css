@@ -52,7 +52,7 @@
     max-height: 50px;
     display: inline-block;
     float: left;
-    /*margin-bottom: 20px;*/
+    margin-bottom: 20px;
     text-align: center;
 
 }
@@ -63,22 +63,32 @@
 
 .light-grey {
     background-color: #bcbcbc;
+    border-bottom: solid #ffffff 10px;
     /*margin-bottom: 20px;*/
 }
 
-.light-grey:hover
+.light-grey:active
 {
     background-color: #fbbc24;
+}
+
+.light-grey:hover{
+    border-bottom: solid #00bcd4 10px;
 }
 
 .grey{
     background-color: #989898;
+    border-bottom: solid #ffffff 10px;
     /*margin-bottom: 20px;*/
 }
 
-.grey:hover
+.grey:active
 {
     background-color: #fbbc24;
+}
+
+.grey:hover{
+    border-bottom: solid #00bcd4 10px;
 }
 
 .red {
