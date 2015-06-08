@@ -22,6 +22,7 @@
   /* TODO: Add API documentation
      TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
      TODO: Clean up code (remove console.logs and less global variables)
+     TODO: Make it Angular
   */
 
 
@@ -75,6 +76,7 @@
       frontSkeleton.style.height = tileHeight * y;
       frontSkeleton.style.width = tileWidth * x;
       skeletonSize = x * y;
+      frontSkeleton.skeletonSize = skeletonSize;
 
       var tile = document.createElement("div");
       tile.id = "tile1";
@@ -93,6 +95,7 @@
 
       frontSkeleton.appendChild(tile);
 
+      return frontSkeleton;
   }
   /*
    This function hanldes the selection of a tile
@@ -106,9 +109,9 @@
           console.log("dont open");
       }
       else{
-          selectedTile = evt.target.parentNode.id;
-          if (evt.target.parentNode.empty === false) {
-              if (previousTile !== null) {
+          selectedTile = evt.target.id;
+          if (evt.target.parentNode.empty == false) {
+              if (previousTile != null) {
                   deselectTile();
                   console.log("hey ur deselecting man");
               } else if (selectedTile != previousTile) {
@@ -123,8 +126,9 @@
                   previousTile = selectedTile;
               }
           }
-          openLeftMenu();
+          openMenu(document.getElementById("vWrapper"));
       }
+      return selectedTile;
   }
 
   /*
@@ -143,7 +147,7 @@
       } else {
           document.getElementById(previousTile).style.backgroundColor = originalColor;
       }
-      closeLeftMenu();
+      closeMenu(document.getElementById("vWrapper"));
       previousTile = null;
   }
 
@@ -151,20 +155,25 @@
    This function opens the menu at the left
    @Author: Daye & Abdellatif
    */
-  function openLeftMenu(){
-      console.log("opening menu");
-      var menu = document.getElementById("vWrapper");
-      menu.style.visibility = "visible";
-      console.log(menu);
+  function openMenu(target){
+      //console.log("opening menu");
+      //var menu = document.getElementById("vWrapper");
+      //if(menu == null){
+      //    menu = document.createElement("div");
+      //    menu.id = "vWrapper";
+      //}
+      target.style.visibility = "visible";
+      return target;
   }
 
   /*
    This function closes the menu at the left
    @Author: Daye & Abdellatif
    */
-  function closeLeftMenu(){
-      var menu = document.getElementById("vWrapper");
-      menu.style.visibility = "hidden";
+  function closeMenu(target){
+      //var menu = document.getElementById("vWrapper");
+      target.style.visibility = "hidden";
+      return target;
   }
 
 
@@ -172,51 +181,67 @@
    This function changes the color of the tile
    @Author: Daye & Abdellatif
    */
-  function changeTileColor() {
-      var x, res;
-
-      x = document.getElementById("tileColor");
-      res = x.options[x.selectedIndex].value;
-      document.getElementById(selectedTile).style.backgroundColor = res;
-
+  function changeTileColor(selectedTile, color) {
+      var res;
+      if(color == null){
+           var x = document.getElementById("tileColor");
+           res = x.options[x.selectedIndex].value;
+      }
+      else{
+          res = color;
+      }
+      selectedTile.style.backgroundColor = res;
+      return selectedTile;
   }
 
   /*
    This function adds text to a tile
    @Author: Daye & Abdellatif
    */
-  function addText() {
-
-      document.getElementById(selectedTile).innerText = document.getElementById("addTxt").value;
-      //document.getElementById(selectedTile).style.zIndex = "2";
-      document.getElementById(selectedTile).style.textAlign = 'center';
-      document.getElementById(selectedTile).style.lineHeight = document.getElementById(selectedTile).style.height;
-      document.getElementById("addTxtForm").reset();
-
+  function addText(text) {
+      console.log(selectedTile);
+      var tile = document.getElementById(selectedTile);
+      if(text == null){
+          tile.innerText = document.getElementById("addTxt").value;
+          document.getElementById("addTxtForm").reset();
+      }
+      else{
+          tile.innerText = text;
+      }
+      tile.style.textAlign = 'center';
+      tile.style.lineHeight = tile.style.height;
+      return tile;
   }
 
   /*
    This function changes the color of the text
    @Author: Daye & Abdellatif
    */
-  function changeFontColor() {
-      var x,res;
-
-      x = document.getElementById("fontColor");
-      res = x.options[x.selectedIndex].value;
-      document.getElementById(selectedTile).style.color = res;
-
+  function changeFontColor(color) {
+      if(color == null){
+          var x = document.getElementById("fontColor");
+          var res = x.options[x.selectedIndex].value;
+          document.getElementById(selectedTile).style.color = res;
+      }
+      else{
+          document.getElementById(selectedTile).style.color = color;
+      }
+      return document.getElementById(selectedTile);
   }
 
   /*
    This function changes the size of the font
    @Author: Daye
    */
-  function changeFontSize() {
-
-      var x = document.getElementById("fontSize");
-      document.getElementById(selectedTile).style.fontSize = x.options[x.selectedIndex].value;
-
+  function changeFontSize(fontSize) {
+      if(fontSize == null){
+          var x = document.getElementById("fontSize");
+          document.getElementById(selectedTile).style.fontSize = x.options[x.selectedIndex].value
+      }
+      else{
+          document.getElementById(selectedTile).style.fontSize = "13";
+      }
+      return document.getElementById(selectedTile);
   }
 
   /*
@@ -446,9 +471,9 @@
      // console.log("dragging");
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
-      closeLeftMenu();
-      showAvalaibleTileSpace(document.getElementById("back"));
-      showAvalaibleTileSpace(document.getElementById("front"));
+      closeMenu(document.getElementById("vWrapper"));
+      //showAvalaibleTileSpace(document.getElementById("back"));
+      //showAvalaibleTileSpace(document.getElementById("front"));
       return ev.target;
   }
 
@@ -508,7 +533,7 @@
           currentDraggingTile.innerHTML = "";
           selectTile(ev);
       }
-      else{
+      else if(canSwap == true){
           swapTiles(ev);
       }
   }
@@ -532,7 +557,7 @@ var content = document.getElementById('f1_card');
 var c = 0;
   if(btn != null){
       btn.onclick = function () {
-          closeLeftMenu();
+          closeMenu(document.getElementById("vWrapper"));
           content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
       };
   }
