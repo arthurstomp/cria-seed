@@ -103,7 +103,7 @@
           console.log("dont open");
       }
       else{
-          selectedTile = evt.target.parentNode.id;
+          selectedTile = evt.target.id;
           if (evt.target.parentNode.empty == false) {
               if (previousTile != null) {
                   deselectTile();
@@ -193,51 +193,50 @@
    This function adds text to a tile
    @Author: Daye & Abdellatif
    */
-  function addText(selectedTile, text) {
+  function addText(text) {
+      console.log(selectedTile);
+      var tile = document.getElementById(selectedTile);
       if(text == null){
-          selectedTile.innerText = document.getElementById("addTxt").value;
+          tile.innerText = document.getElementById("addTxt").value;
           document.getElementById("addTxtForm").reset();
       }
       else{
-          selectedTile.innerText = text;
+          tile.innerText = text;
       }
-      selectedTile.style.textAlign = 'center';
-      selectedTile.style.lineHeight = selectedTile.style.height;
-      return selectedTile;
+      tile.style.textAlign = 'center';
+      tile.style.lineHeight = tile.style.height;
+      return tile;
   }
 
   /*
    This function changes the color of the text
    @Author: Daye & Abdellatif
    */
-  function changeFontColor(selectedTile, color) {
+  function changeFontColor(color) {
       if(color == null){
           var x = document.getElementById("fontColor");
           var res = x.options[x.selectedIndex].value;
           document.getElementById(selectedTile).style.color = res;
       }
       else{
-          selectedTile.style.color = color;
+          document.getElementById(selectedTile).style.color = color;
       }
-      return selectedTile;
+      return document.getElementById(selectedTile);
   }
 
   /*
    This function changes the size of the font
    @Author: Daye
    */
-  function changeFontSize(selectedTile, fontSize) {
+  function changeFontSize(fontSize) {
       if(fontSize == null){
           var x = document.getElementById("fontSize");
           document.getElementById(selectedTile).style.fontSize = x.options[x.selectedIndex].value
       }
       else{
-          console.log(selectedTile);
-          console.log(selectedTile.style.fontSize);
-          selectedTile.style.fontSize = "13";
-          console.log(selectedTile.style);
+          document.getElementById(selectedTile).style.fontSize = "13";
       }
-      return selectedTile;
+      return document.getElementById(selectedTile);
   }
 
   /*
@@ -466,8 +465,8 @@
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
       closeMenu(document.getElementById("vWrapper"));
-      showAvalaibleTileSpace(document.getElementById("back"));
-      showAvalaibleTileSpace(document.getElementById("front"));
+      //showAvalaibleTileSpace(document.getElementById("back"));
+      //showAvalaibleTileSpace(document.getElementById("front"));
       return ev.target;
   }
 
