@@ -11,25 +11,27 @@
       passport = require('passport');
 
 
-  function getUsersCart(username){
-    var retCart = {};
-    retCart.products = [];
+  function setupUserSession(username){
+    var retSessionSetups = {};
+    retSessionSetups.products = [];
     User.findOne({username: username},function(err,user){
       if(err){
-        retCart.err = err;
-        return retCart;
+        retSessionSetups.err = err;
+        return retSessionSetups;
       }
+      retSessionSetups.admin = user.admin;
       Product
         .find()
         .where('_id')
         .in(user.shoppingCart)
         .exec(function(err,product){
           if (err) {
-            retCart.err = err;
+            retSessionSetups.err = err;
+            return retSessionSetups;
           }
-          retCart.products.push(products);
+          retSessionSetups.products.push(products);
         });
-      return retCart;
+      return retSessionSetups;
     });
   }
 
@@ -50,13 +52,14 @@
             return res.json(retObj);
           }
           passport.authenticate('local',function (err,user,info) {
-            var cart = getUsersCart(user.username);
+            var sessionSetups = setupUserSession(user.username);
             retObj.user = user;
-            if (cart.err) {
-              retObj.err = cart.err;
+            if (sessionSetups.err) {
+              retObj.err = sessionSetups.err;
               return res.json(retObj);
             }
-            req.session.cart = products;
+            req.session.cart = sessionSetups.products;
+            req.session.passport.admin = sessionSetups.admin;
             return res.json(retObj);
           })(req,res,next);
         });
@@ -77,16 +80,18 @@
 
 
   exports.login = function(req,res){
-    var cart = getUsersCart(user.username),
+    var sessionSetups = setupUserSession(req.user.username),
     retObj = {
       meta: {"action": "login", "timestamp": new Date(), filename: __filename},
       err: {},
     };
-    if (cart.err) {
-      retObj.err = cart.err;
+    console.log(sessionSetups);
+    if (sessionSetups.err) {
+      retObj.err = sessionSetups.err;
       return res.json(retObj);
     }
-    req.session.cart = cart.products;
+    req.session.cart = sessionSetups.products;
+    req.session.passport.admin = sessionSetups.admin;
     retObj.user = req.user;
     return res.json(retObj);
   };

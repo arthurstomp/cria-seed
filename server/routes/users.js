@@ -13,6 +13,7 @@
   function ensureAuthenticated(req,res,next){
     if (req.isAuthenticated()){
       console.log('logged in');
+      console.log(req.session);
       return next();
     }
     console.log('not logged in');
@@ -22,7 +23,10 @@
   function ensureAdminAuthenticated(req,res,next){
     if(req.isAuthenticated()){
       console.log('logged in');
+      return next();
     }
+    console.log('not logged in at all');
+    return res.redirect('/');
   }
 
   router
@@ -30,8 +34,8 @@
          ensureAuthenticated,
          controller.detail)
     .get('/users',
-         ensureAuthenticated,
-    controller.list)
+         ensureAdminAuthenticated,
+         controller.list)
     .get('/logout',
          ensureAuthenticated,
          function(req,res){
@@ -43,6 +47,9 @@
 
   router
     .post('/users',controller.createUser)
+    .post('/admin/users',
+          ensureAdminAuthenticated,
+          controller.createAdminUser)
     .post('/login',
           passport.authenticate('local'),
           controller.login);
