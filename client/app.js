@@ -16,7 +16,20 @@
                                                     'CommonModule',
                                                     'UserModule',
                                                     'ProductModule',
-                                                    'BuildModule']);
+                                                    'BuildModule']),
+      buildModule = angular.module('BuildModule',['ngResource',
+                                                  'ui.router',
+                                                  'ngCookies',
+                                                  'ProductModule',
+                                                  'CommonModule']),
+      commonModule = angular.module("CommonModule",['ngResource',
+                                                    'ui.router',
+                                                    'ngCookies']),
+      productModule = angular.module("ProductModule",['ngResource',
+                                                      'ui.router']),
+      userModule = angular.module("UserModule",['ngResource',
+                                                'ui.router']);                
+
 
   /**
   * Configuration blocks - get executed during the provider registrations and

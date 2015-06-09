@@ -14,7 +14,7 @@
   */
 
   /** Create module*/
-  var userModule = angular.module("UserModule",['ngResource','ui.router']);
+  var userModule = angular.module("UserModule");
 
   /**
   * @name LoginSignupCtrl

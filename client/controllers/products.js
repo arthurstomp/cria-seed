@@ -18,6 +18,6 @@
   * @requires ui.router
   * @description Module to deal with product views
   */
-  var productModule = angular.module("ProductModule",['ngResource','ui.router']);
+  var productModule = angular.module("ProductModule");
 
 }());

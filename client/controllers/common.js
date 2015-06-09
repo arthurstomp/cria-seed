@@ -13,7 +13,7 @@
   */
 
   /** Creates CommonModule */
-  var commonModule = angular.module("CommonModule",['ngResource','ui.router','ngCookies']);
+  var commonModule = angular.module("CommonModule");
 
   /**
    * @name HomeCtrl

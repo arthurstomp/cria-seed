@@ -4,7 +4,7 @@
 (function() {
   'use strict';
 
-  var buildModule = angular.module('BuildModule',['ngResource','ui.router','ngCookies','ProductModule','CommonModule']);
+  var buildModule = angular.module('BuildModule');
 
   buildModule.controller('MainBuildCtrl',function($scope,$state,$rootScope,$cookies,$interval,sessionService){
     $rootScope.phone = {
@@ -81,7 +81,7 @@
     };
 
     $scope.$on('$viewContentLoaded',function(){
-      
+
     });
   });
 
@@ -116,6 +116,62 @@
 
     $rootScope.historic = [$rootScope.phone];
     $rootScope.hitoricPointer = 0;
+
+    $rootScope.CATEGORIES = {
+      SKELETON : 'skeleton',
+      SCREEN : 'screen',
+      PROCESSOR : 'processor',
+      BATTERY : 'battery',
+      STORAGE : 'storage',
+      CONNECTION : 'connection',
+      CAMERA : 'camera',
+      SPEAKER : 'speaker'
+    };
+
+    $rootScope.FRONT_OR_BACK = {
+      FRONT : 'front',
+      BACK : 'back',
+    };
+
+    $scope.removeOutdatedHistory = function(){
+      for (var i = $rootScope.history.lenght - 1 - $rootScope.historyPointer ; i > array.length; i--) {
+        $rootScope.history.pop();
+      }
+    };
+
+    $rootScope.saveState = function(){
+      $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
+      $rootScope.historyPointer += 1;
+    };
+
+    $rootScope.addProductToCart = function(product,customization,position){
+      var isSkeleton = false,
+          item = {};
+      product.categories.forEach(function(category){
+        isSkeleton = category === $rootScope.CATEGORIES.SKELETON ? true : false;
+      });
+
+      item.product = product;
+      item.customization = customization;
+
+      if (!isSkeleton) {
+        item.position.frontOrBack = position.frontOrBack;
+        item.position.tilePosition = position.tilePosition;
+
+        if (position.frontOrBack === $rootScope.FRONT_OR_BACK.FRONT) {
+          $rootScope.phone.front.push(item);
+        }
+
+        if (position.frontOrBack === $rootScope.FRONT_OR_BACK.BACK) {
+          $rootScope.phone.back.push(item);
+        }
+      }else{
+        $rootScope.phone.skeleton = item;
+      }
+
+      $scope.removeOutdatedHistory();
+      $rootScope.saveState();
+    };
     /**
     * STOP EREASING.
     */
@@ -143,6 +199,8 @@
     $scope.loadCategory = function(category){
       productService.productsByCategory.get({category:category},function(resObj){
         if (resObj.err) {
+          console.log("load category has an error");
+          console.log(resObj.err);
           $scope.productsFromCurrentCategoryError = resObj.err;
         }else{
           $scope.productsFromCurrentCategory = resObj.products;
