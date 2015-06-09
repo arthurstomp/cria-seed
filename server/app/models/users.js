@@ -24,7 +24,9 @@
     shoppingCart: {
       created_at: {type: Date, default: Date.now},
       updated_at: {type: Date, default: Date.now},
-      products: [Schema.Types.ObjectId],
+      skeleton : Schema.Types.ObjectId,
+      front : [Schema.Types.ObjectId],
+      back : [Schema.Types.ObjectId],
       totalPrice: {type: Number, default: 0}
     },
     address: {

@@ -11,29 +11,49 @@
       passport = require('passport');
 
 
-  function setupUserSession(username){
-    var retSessionSetups = {};
-    retSessionSetups.products = [];
-    User.findOne({username: username},function(err,user){
-      if(err){
-        retSessionSetups.err = err;
-        return retSessionSetups;
-      }
-      retSessionSetups.admin = user.admin;
-      Product
-        .find()
-        .where('_id')
-        .in(user.shoppingCart)
-        .exec(function(err,product){
-          if (err) {
-            retSessionSetups.err = err;
-            return retSessionSetups;
+  exports.setupUserSession = function(req,res,next){
+    if (!req.user) {
+      return next();
+    }
+    req.session.passport.admin = req.user.admin;
+    req.session.passport.userId = req.user._id;
+    if (!req.session.cart) {
+      req.session.cart = {
+        skeleton : {},
+        front : [],
+        back : [],
+      };
+    }
+    mongoose
+      .model('Transaction')
+      .find()
+      .where('_id')
+      .in(req.user.shoppingCart.skeleton)
+      .in(req.user.shoppingCart.front)
+      .in(req.user.shoppingCart.back)
+      .exec(function(err,transactions){
+        transactions.forEach(function(transaction){
+          if(!req.session.cart){
+            req.session = {};
           }
-          retSessionSetups.products.push(products);
+          if(transaction.position.skeleton){
+            req.session.cart.skeleton = transaction;
+          }else if (transaction.position.isFront) {
+            if (!req.session.cart.front) {
+              req.session.cart.front = [];
+            }
+            req.session.cart.front.push(transaction);
+          }else{
+            if (!req.session.cart.back) {
+              req.session.cart.back = [];
+            }
+            req.session.cart.back.push(transaction);
+          }
         });
-      return retSessionSetups;
-    });
-  }
+        console.log(req.session);
+        next();
+      });
+  };
 
   function userCreation(req,res,next,admin){
     var retObj = {
@@ -52,14 +72,7 @@
             return res.json(retObj);
           }
           passport.authenticate('local',function (err,user,info) {
-            var sessionSetups = setupUserSession(user.username);
             retObj.user = user;
-            if (sessionSetups.err) {
-              retObj.err = sessionSetups.err;
-              return res.json(retObj);
-            }
-            req.session.cart = sessionSetups.products;
-            req.session.passport.admin = sessionSetups.admin;
             return res.json(retObj);
           })(req,res,next);
         });
@@ -76,24 +89,6 @@
 
   exports.createAdminUser = function(req,res,next){
     userCreation(req,res,next,true);
-  };
-
-
-  exports.login = function(req,res){
-    var sessionSetups = setupUserSession(req.user.username),
-    retObj = {
-      meta: {"action": "login", "timestamp": new Date(), filename: __filename},
-      err: {},
-    };
-    console.log(sessionSetups);
-    if (sessionSetups.err) {
-      retObj.err = sessionSetups.err;
-      return res.json(retObj);
-    }
-    req.session.cart = sessionSetups.products;
-    req.session.passport.admin = sessionSetups.admin;
-    retObj.user = req.user;
-    return res.json(retObj);
   };
 
   exports.detail = function(req,res){

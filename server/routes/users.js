@@ -23,7 +23,10 @@
   function ensureAdminAuthenticated(req,res,next){
     if(req.isAuthenticated()){
       console.log('logged in');
-      return next();
+      if (req.session.passport.admin) {
+        console.log('logged as admin');
+        return next();
+      }
     }
     console.log('not logged in at all');
     return res.redirect('/');
@@ -46,13 +49,18 @@
     );
 
   router
-    .post('/users',controller.createUser)
+    .post('/users',
+          controller.createUser,
+          controller.setupUserSession)
     .post('/admin/users',
           ensureAdminAuthenticated,
           controller.createAdminUser)
     .post('/login',
           passport.authenticate('local'),
-          controller.login);
+          controller.setupUserSession,
+          function(req,res){
+            res.json(req.user);
+          });
 
 
   router.put('/users/:_id',

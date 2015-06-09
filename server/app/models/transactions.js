@@ -11,6 +11,12 @@
     productId : {type: Schema.Types.ObjectId, ref : 'Product', required : true},
     ownerId : {type: Schema.Types.ObjectId, ref : 'User', required : true},
     customization : Schema.Types.Mixed,
+    position : {
+      skeleton : {type : Boolean, default : false},
+      isFront : {type : Boolean, default : true},
+      x : {type : Number},
+      y : {type : Number},
+    },
     amount : {type : Number, required : true},
     soloPrice : {type : Number, required : true},
     totalPrice : {type : Number},
