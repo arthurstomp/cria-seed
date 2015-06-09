@@ -20,6 +20,7 @@
     specification: Schema.Types.Mixed,
     categories: [String],
     imgPath : {type: String},
+    transactions : [{type : Schema.Types.ObjectId, ref : 'Transaction'}],
   });
 
   module.exports = mongoose.model(modelName,productSchema);
