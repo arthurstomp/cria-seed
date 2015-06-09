@@ -24,48 +24,58 @@
     currentStock : {type : Number},
   });
 
-  productSchema.methods.calculateCurrentStock = function(transactions){
+  productSchema.methods.calculateCurrentStock = function(transactions,next,done){
     var transactionModel = mongoose.model('Transaction');
+    if (this.transactions.length === 0) {
+      next();
+      done();
+    }
     this.currentStock = 0;
     transactionModel
       .find()
       .where('_id')
       .in(transactions)
-      .exec(function(err,transaction){
-        this.currentStock += transaction.amount;
+      .exec(function(err,transactions){
+        transactions.forEach(function(transaction){
+          this.currentStock += transaction.amount;
+        });
+        next();
+        done();
       });
   };
 
-  module.exports = mongoose.model(modelName,productSchema);
-
-
-  productSchema.pre('save',true, function(next,done){
+  productSchema.methods.calculateTotalPrice = function(subProductsIds,next,done){
     console.log("pre save product");
-    var product = this;
-    if (!product.isModified('subProducts')) { return next();}
-    if(!product.isModified('transactions')){
-      console.log("************transactions were not modified");
-      return next();
-    }
     product.totalPrice = product.soloPrice;
     product.sumSubProductsPrice = 0;
     product.updatedAt = Date.now();
-    product.currentStock = product.calculateCurrentStock(product.transactions);
-    console.log("*******product.currentStock = "+product.currentStock);
     mongoose
       .model('Product')
       .find()
       .where('_id').in(product.subProducts)
       .exec(function(err,subProducts){
         subProducts.forEach(function(subProduct){
-          console.log(subProduct);
           product.sumSubProductsPrice += subProduct.totalPrice;
           product.totalPrice += subProduct.totalPrice;
         });
-        console.log("total price = "+product.totalPrice);
         next();
         done();
       });
+  };
+
+  module.exports = mongoose.model(modelName,productSchema);
+
+  productSchema.pre('save',true, function(next,done){
+    var product = this;
+    if (product.isModified('subProducts')) {
+      product.calculateTotalPrice(product.subProducts,next,done);
+    }
+    if (product.isModified('transactions')) {
+      product.calculateCurrentStock(product.transactions,next,done);
+      console.log("*******product.currentStock = "+product.currentStock);
+    }
+    next();
+    done();
   });
 
   productSchema.pre('update',function(next){
