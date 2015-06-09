@@ -17,6 +17,7 @@ var previousTile;
 var canSwap;
 var ddmenuitem;
 var closetimer;
+var timeout = 500;
 
 /* TODO: Add API documentation
  TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
@@ -49,7 +50,7 @@ function createBackSkeleton(x, y) {
           tile.style.height = tileHeight.toString()+"px";
           tile.style.float = "left";
           tile.style.backgroundColor = "red";
-          tile.style.zIndex = "2";
+          //tile.style.zIndex = "2";
           tile.empty = true;
           //console.log(tile.style);
 
@@ -57,7 +58,8 @@ function createBackSkeleton(x, y) {
           tile.ondragover=function(){allowDrop(event);};
           tile.draggable = true;
           tile.ondragstart=function(){drag(event);};
-          tile.click=function(){selectTile;};
+
+          tile.click=function(){selectTile(event);};
 
           skeleton.appendChild(tile);
       }
@@ -89,7 +91,7 @@ function createBackSkeleton(x, y) {
       tile.ondragover=function(){allowDrop(event)};
       tile.draggable = true;
       tile.ondragstart=function(){drag(event)};
-      tile.click=function(){selectTile};
+      tile.click=function(){selectTile(event)};
 
       frontSkeleton.appendChild(tile);
 
@@ -100,9 +102,8 @@ function createBackSkeleton(x, y) {
    @Author: Daye & Abdellatif
    */
   function selectTile(evt) {
-      //console.log(evt.target.parentNode.empty);
+      console.log("pew pew");
 
-      console.log(selectedTile);
       if(evt.target.parentNode.parentElement.id == "front") {
           console.log("dont open");
       }
@@ -197,7 +198,6 @@ function createBackSkeleton(x, y) {
    @Author: Daye & Abdellatif
    */
   function addText(text) {
-      console.log(selectedTile);
       var tile = document.getElementById(selectedTile);
       if(text == null){
           tile.innerText = document.getElementById("addTxt").value;
@@ -234,7 +234,7 @@ function createBackSkeleton(x, y) {
   function changeFontSize(fontSize) {
       if(fontSize == null){
           var x = document.getElementById("fontSize");
-          document.getElementById(selectedTile).style.fontSize = x.options[x.selectedIndex].value
+          document.getElementById(selectedTile).style.fontSize = (x.options[x.selectedIndex].value).toString()+"px";
       }
       else{
           document.getElementById(selectedTile).style.fontSize = "13";
@@ -286,7 +286,7 @@ function createBackSkeleton(x, y) {
           //preview
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
-          document.getElementById(selectedTile).innerHTML = "";
+          //document.getElementById(selectedTile).innerHTML = "";
           document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
           document.getElementById(selectedTile).style.backgroundSize = 'cover';
 
@@ -544,11 +544,6 @@ function createBackSkeleton(x, y) {
 
   }
 
-  function changePattern () {
-
-
-  }
-
 function switchButton() {
     //TODO: CLean up this button code put it a function
     var btn = document.getElementById('flip_content');
@@ -563,7 +558,7 @@ function switchButton() {
     }
 }
 
-var iconSelect = new IconSelect("my-icon-select",
+var iconSelect = new changePattern("my-icon-select",
     {
         'selectedIconWidth': 60,
         'selectedIconHeight': 60,
@@ -589,31 +584,31 @@ icons.push({'iconFilePath': '../assets/images/p9.png', 'iconValue': '9'});
 iconSelect.refresh(icons);
 
 
-IconSelect.DEFAULT = {};
-IconSelect.DEFAULT.SELECTED_ICON_WIDTH = 48;
-IconSelect.DEFAULT.SELECTED_ICON_HEIGHT = 48;
-IconSelect.DEFAULT.SELECTED_BOX_PADDING = 1;
-IconSelect.DEFAULT.SELECTED_BOX_PADDING_RIGHT = 12;
-IconSelect.DEFAULT.ICONS_WIDTH = 32;
-IconSelect.DEFAULT.ICONS_HEIGHT = 32;
-IconSelect.DEFAULT.BOX_ICON_SPACE = 1;
-IconSelect.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
-IconSelect.DEFAULT.VECTORAL_ICON_NUMBER = 3;
+changePattern.DEFAULT = {};
+changePattern.DEFAULT.SELECTED_ICON_WIDTH = 48;
+changePattern.DEFAULT.SELECTED_ICON_HEIGHT = 48;
+changePattern.DEFAULT.SELECTED_BOX_PADDING = 1;
+changePattern.DEFAULT.SELECTED_BOX_PADDING_RIGHT = 12;
+changePattern.DEFAULT.ICONS_WIDTH = 32;
+changePattern.DEFAULT.ICONS_HEIGHT = 32;
+changePattern.DEFAULT.BOX_ICON_SPACE = 1;
+changePattern.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
+changePattern.DEFAULT.VECTORAL_ICON_NUMBER = 3;
 
-IconSelect.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
+changePattern.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
 
 /*
  This function making a selection list about pattern and allows to change pattern.
  @Author: Daye
  */
 
-function IconSelect($$elementID, $$parameters) {
+function changePattern($$elementID, $$parameters) {
 
     var _icons = [];
     var _selectedIndex = -1;
     var _boxScroll;
 
-    var _default = IconSelect.DEFAULT;
+    var _default = changePattern.DEFAULT;
 
     function _init() {
         if (!$$parameters) $$parameters = {};
@@ -741,7 +736,7 @@ function IconSelect($$elementID, $$parameters) {
         componentIconElement.setAttribute('class', 'component-icon');
 
         var componentIconImgElement = document.createElement('img');
-        componentIconImgElement.setAttribute('src', IconSelect.COMPONENT_ICON_FILE_PATH);
+        componentIconImgElement.setAttribute('src', changePattern.COMPONENT_ICON_FILE_PATH);
         componentIconElement.appendChild(componentIconImgElement);
 
         _View.boxScrollElement = document.createElement('div');
