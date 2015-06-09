@@ -92,7 +92,11 @@
 
     $scope.$on('$viewContentLoaded',function(){
       productService.productsByCategory.get({category:'camera'},function(resObj){
-        $scope.productsFromCurrentCategory = resObj.products;
+        if (resObj.err) {
+          $scope.productsFromCurrentCategoryError = resObj.err;
+        }else{
+          $scope.productsFromCurrentCategory = resObj.products;
+        }
       });
     });
 

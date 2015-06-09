@@ -49,6 +49,18 @@
     border: 5px solid black;
 }
 
+.noProduct {
+  width: auto;
+  height: 200px;
+  background-color: #E0E0E0;
+}
+
+.noProduct div{
+  padding-top: 4.5%;
+  padding-right: 40%;
+  text-align: center;
+}
+
 .navcontainer {
     width: 12.5%;
     max-height: 50px;
