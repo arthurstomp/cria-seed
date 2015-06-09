@@ -10,50 +10,33 @@
       controller = require('../app/controllers/users.js'),
       passport = require('passport');
 
-  function ensureAuthenticated(req,res,next){
-    if (req.isAuthenticated()){
-      console.log('logged in');
-      console.log(req.session);
-      return next();
-    }
-    console.log('not logged in');
-    return res.redirect('/');
-  }
-
-  function ensureAdminAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
-      console.log('logged in');
-      if (req.session.passport.admin) {
-        console.log('logged as admin');
-        return next();
-      }
-    }
-    console.log('not logged in at all');
-    return res.redirect('/');
-  }
-
   router
     .get('/users/:_id',
-         ensureAuthenticated,
+         controller.ensureAuthenticated,
          controller.detail)
     .get('/users',
-         ensureAdminAuthenticated,
+         controller.ensureAdminAuthenticated,
          controller.list)
     .get('/logout',
-         ensureAuthenticated,
+         controller.ensureAuthenticated,
          function(req,res){
            req.session.cookie.expire = false;
            req.logout();
-           res.send();
+           req.session.passport = {};
+           res.redirect('/');
          }
     );
 
   router
     .post('/users',
           controller.createUser,
-          controller.setupUserSession)
+          passport.authenticate('local'),
+          controller.setupUserSession,
+          function(req,res){
+            res.json(req.user);
+          })
     .post('/admin/users',
-          ensureAdminAuthenticated,
+          controller.ensureAdminAuthenticated,
           controller.createAdminUser)
     .post('/login',
           passport.authenticate('local'),
@@ -64,11 +47,11 @@
 
 
   router.put('/users/:_id',
-             ensureAuthenticated,
+             controller.ensureAuthenticated,
              controller.update);
 
   router.delete('/users/:_id',
-                ensureAuthenticated,
+                controller.ensureAuthenticated,
                 controller.delete);
 
   module.exports = router;

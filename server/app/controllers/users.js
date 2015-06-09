@@ -10,6 +10,27 @@
       Product = mongoose.model('Product'),
       passport = require('passport');
 
+  exports.ensureAuthenticated = function(req,res,next){
+    if (req.isAuthenticated()){
+      console.log('logged in');
+      console.log(req.session);
+      return next();
+    }
+    console.log('not logged in');
+    return res.redirect('/');
+  };
+
+  exports.ensureAdminAuthenticated = function(req,res,next){
+    if(req.isAuthenticated()){
+      console.log('logged in');
+      if (req.session.passport.admin) {
+        console.log('logged as admin');
+        return next();
+      }
+    }
+    console.log('not logged in at all');
+    return res.redirect('/');
+  };
 
   exports.setupUserSession = function(req,res,next){
     if (!req.user) {
@@ -71,10 +92,11 @@
             retObj.err = err;
             return res.json(retObj);
           }
-          passport.authenticate('local',function (err,user,info) {
-            retObj.user = user;
-            return res.json(retObj);
-          })(req,res,next);
+          return next();
+          // passport.authenticate('local',function (err,user,info) {
+          //   retObj.user = user;
+          //   return res.json(retObj);
+          // })(req,res,next);
         });
     }else{
       res.status(400);
