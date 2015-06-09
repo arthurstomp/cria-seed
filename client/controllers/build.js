@@ -43,8 +43,9 @@
     };
 
     $rootScope.saveState = function(){
-      $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
       $rootScope.historyPointer += 1;
+
+      $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
     };
 
     $rootScope.addProductToCart = function(product,customization,position){
