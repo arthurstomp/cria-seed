@@ -3,6 +3,7 @@
  */
 var tooltipOptions=
 {
+
   showDelay: 20,
   hideDelay: 300,
   effect: "fade",

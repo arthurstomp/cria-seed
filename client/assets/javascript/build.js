@@ -1,36 +1,37 @@
 var selectedImg = "";
-  var selectColor = "#ffffff";
-  var freeSpotColor = "blue";
-  var tileWidth = 150;
-  var tileHeight = 150;
-  var selectedTile;
-  var originalColor = "red";
-  var textColor;
-  var selectedObject;
-  var tempCloneOfSkeleton;
-  var draggingTilePosition;
-  var currentDraggingTile;
-  var targetedDiv;
-  var resetTile;
-  var skeletonSize;
-  var previousTile;
-  var canSwap;
-  /* TODO: Add API documentation
-     TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
-     TODO: Clean up code (remove console.logs and less global variables)
-     TODO: Make it Angular
-  */
+var selectColor = "#ffffff";
+var freeSpotColor = "blue";
+var tileWidth = 150;
+var tileHeight = 150;
+var selectedTile;
+var originalColor = "red";
+var textColor;
+var selectedObject;
+var tempCloneOfSkeleton;
+var draggingTilePosition;
+var currentDraggingTile;
+var targetedDiv;
+var resetTile;
+var skeletonSize;
+var previousTile;
+var canSwap;
+var ddmenuitem;
+var closetimer;
 
-
-  /*
-   This function creates a skeleton with tiles
-   @Author: Daye & Abdellatif
-   */
-  function createBackSkeleton(x, y) {
-      var i;
-      var skeleton;
-      skeleton = document.getElementById("back");
-      if(skeleton == null){
+/* TODO: Add API documentation
+ TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
+ TODO: Clean up code (remove console.logs and less global variables)
+ TODO: Make it Angular
+ */
+/*
+ This function creates a skeleton with tiles
+ @Author: Daye & Abdellatif
+ */
+function createBackSkeleton(x, y) {
+    var i;
+    var skeleton;
+    skeleton = document.getElementById("back");
+    if (skeleton == null) {
         skeleton = document.createElement("div");
           skeleton.id = "back";
       }
@@ -50,7 +51,7 @@ var selectedImg = "";
           tile.style.backgroundColor = "red";
           tile.style.zIndex = "2";
           tile.empty = true;
-          console.log(tile.style);
+          //console.log(tile.style);
 
           tile.ondrop=function(){drop(event);};
           tile.ondragover=function(){allowDrop(event);};
@@ -561,5 +562,298 @@ function switchButton() {
         };
     }
 }
-//window.addEventListener("load", createBackSkeleton(3, 5));
-//window.addEventListener("load", createFrontSkeleton(3, 5));
+
+var iconSelect = new IconSelect("my-icon-select",
+    {
+        'selectedIconWidth': 60,
+        'selectedIconHeight': 60,
+        'selectedBoxPadding': 1,
+        'iconsWidth': 70,
+        'iconsHeight': 70,
+        'boxIconSpace': 1,
+        'vectoralIconNumber': 2,
+        'horizontalIconNumber': 5
+    });
+
+var icons = [];
+icons.push({'iconFilePath': '../assets/images/p0.png', 'iconValue': '0'});
+icons.push({'iconFilePath': '../assets/images/p1.png', 'iconValue': '1'});
+icons.push({'iconFilePath': '../assets/images/p2.png', 'iconValue': '2'});
+icons.push({'iconFilePath': '../assets/images/p3.png', 'iconValue': '3'});
+icons.push({'iconFilePath': '../assets/images/p4.png', 'iconValue': '4'});
+icons.push({'iconFilePath': '../assets/images/p5.png', 'iconValue': '5'});
+icons.push({'iconFilePath': '../assets/images/p6.png', 'iconValue': '6'});
+icons.push({'iconFilePath': '../assets/images/p7.png', 'iconValue': '7'});
+icons.push({'iconFilePath': '../assets/images/p8.png', 'iconValue': '8'});
+icons.push({'iconFilePath': '../assets/images/p9.png', 'iconValue': '9'});
+iconSelect.refresh(icons);
+
+
+IconSelect.DEFAULT = {};
+IconSelect.DEFAULT.SELECTED_ICON_WIDTH = 48;
+IconSelect.DEFAULT.SELECTED_ICON_HEIGHT = 48;
+IconSelect.DEFAULT.SELECTED_BOX_PADDING = 1;
+IconSelect.DEFAULT.SELECTED_BOX_PADDING_RIGHT = 12;
+IconSelect.DEFAULT.ICONS_WIDTH = 32;
+IconSelect.DEFAULT.ICONS_HEIGHT = 32;
+IconSelect.DEFAULT.BOX_ICON_SPACE = 1;
+IconSelect.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
+IconSelect.DEFAULT.VECTORAL_ICON_NUMBER = 3;
+
+IconSelect.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
+
+/*
+ This function making a selection list about pattern and allows to change pattern.
+ @Author: Daye
+ */
+
+function IconSelect($$elementID, $$parameters) {
+
+    var _icons = [];
+    var _selectedIndex = -1;
+    var _boxScroll;
+
+    var _default = IconSelect.DEFAULT;
+
+    function _init() {
+        if (!$$parameters) $$parameters = {};
+
+        if (_View.setIconSelectElement($$elementID)) {
+            $$parameters = _Model.checkParameters($$parameters);
+
+            var ui = _View.createUI($$parameters, $$elementID);
+            _View.iconSelectElement.onclick = function () {
+                _View.showBox();
+            };
+
+            _View.showBox(false);
+
+            _View.iconSelectElement.addEventListener('click', function ($event) {
+                $event.stopPropagation();
+            });
+
+            window.addEventListener('click', function () {
+                _View.showBox(false);
+            });
+
+        }
+    }
+
+    this.refresh = function ($icons) {
+
+        _icons = [];
+
+        var setSelectedIndex = this.setSelectedIndex;
+
+        for (var i = 0; i < $icons.length; i++) {
+            $icons[i].element = _View.createIcon($icons[i].iconFilePath, $icons[i].iconValue, i, $$parameters);
+            $icons[i].element.onclick = function () {
+                setSelectedIndex(this.childNodes[0].getAttribute('icon-index'));
+
+            };
+            _icons.push($icons[i]);
+
+        }
+
+    };
+
+    this.getIcons = function () {
+        return _icons;
+    };
+
+    this.setSelectedIndex = function ($index) {
+        var icon;
+
+        if (_icons.length > $index)
+            icon = _icons[$index];
+
+        if (icon) {
+            if (_selectedIndex != -1) _icons[_selectedIndex].element.setAttribute('class', 'icon');
+            _selectedIndex = $index;
+            _View.selectedIconImgElement.setAttribute('src', icon.iconFilePath);
+            if (_selectedIndex != -1) _icons[_selectedIndex].element.setAttribute('class', 'icon selected');
+            document.getElementById(selectedTile).style.backgroundImage = "url(" + _icons[_selectedIndex].iconFilePath + ")";
+            console.log(_icons[_selectedIndex].iconFilePath);
+
+        }
+    };
+
+    function _View() {
+    }
+
+    _View.iconSelectElement;
+    _View.boxElement;
+    _View.boxScrollElement;
+    _View.selectedIconImgElement;
+    _View.selectedIconElement;
+
+    _View.showBox = function ($isShown) {
+
+        if ($isShown == null) {
+            $isShown = (_View.boxElement.style.display == "none") ? true : false;
+        }
+
+        if ($isShown) {
+            _View.boxElement.style.display = "block";
+            _View.boxScrollElement.style.display = "block";
+
+        } else {
+            _View.boxElement.style.display = "none";
+            _View.boxScrollElement.style.display = "none";
+        }
+
+        _View.boxElement.style.display = ($isShown) ? "block" : "none";
+
+
+    };
+
+    _View.setIconSelectElement = function ($elementID) {
+        _View.iconSelectElement = document.getElementById($elementID);
+        return _View.iconSelectElement;
+    };
+
+    _View.clearUI = function () {
+        _View.iconSelectElement.innerHTML = "";
+    };
+
+    _View.clearIcons = function () {
+        _View.boxElement.innerHTML = "";
+    };
+
+    _View.createUI = function ($parameters) {
+
+
+        _View.clearUI();
+
+        _View.iconSelectElement.setAttribute('class', 'icon-select');
+
+        var selectedBoxElement = document.createElement('div');
+        selectedBoxElement.setAttribute('class', 'selected-box');
+
+        var selectedIconElement = document.createElement('div');
+        selectedIconElement.setAttribute('class', 'selected-icon');
+
+        _View.selectedIconImgElement = document.createElement('img');
+        _View.selectedIconImgElement.setAttribute('src', '');
+        selectedIconElement.appendChild(_View.selectedIconImgElement);
+
+        var componentIconElement = document.createElement('div');
+        componentIconElement.setAttribute('class', 'component-icon');
+
+        var componentIconImgElement = document.createElement('img');
+        componentIconImgElement.setAttribute('src', IconSelect.COMPONENT_ICON_FILE_PATH);
+        componentIconElement.appendChild(componentIconImgElement);
+
+        _View.boxScrollElement = document.createElement('div');
+        _View.boxScrollElement.setAttribute('id', $$elementID + "-box-scroll");
+        _View.boxScrollElement.setAttribute('class', 'box');
+
+        _View.boxElement = document.createElement('div');
+        _View.boxScrollElement.appendChild(_View.boxElement);
+
+        _View.selectedIconImgElement.setAttribute('width', $parameters.selectedIconWidth);
+        _View.selectedIconImgElement.setAttribute('height', $parameters.selectedIconHeight);
+        selectedIconElement.style.width = $parameters.selectedIconWidth;
+        selectedIconElement.style.height = $parameters.selectedIconHeight;
+        selectedBoxElement.style.width = $parameters.selectedIconWidth + $parameters.selectedBoxPadding + $parameters.selectedBoxPaddingRight;
+        selectedBoxElement.style.height = $parameters.selectedIconHeight + ($parameters.selectedBoxPadding * 2);
+        selectedIconElement.style.top = $parameters.selectedBoxPadding;
+        selectedIconElement.style.left = $parameters.selectedBoxPadding;
+        componentIconElement.style.bottom = 4 + $parameters.selectedBoxPadding;
+
+        _View.boxScrollElement.style.left = parseInt(selectedBoxElement.style.width) + 1;
+
+        _View.boxScrollElement.style.width = (($parameters.iconsWidth + 2) * $parameters.vectoralIconNumber) +
+        (($parameters.vectoralIconNumber + 1) * $parameters.boxIconSpace);
+        _View.boxScrollElement.style.height = (($parameters.iconsHeight + 2) * $parameters.horizontalIconNumber) +
+        (($parameters.horizontalIconNumber + 1) * $parameters.boxIconSpace);
+
+        _View.boxElement.style.left = _View.boxScrollElement.style.left;
+        _View.boxElement.style.width = _View.boxScrollElement.style.width;
+
+        _View.iconSelectElement.appendChild(selectedBoxElement);
+        selectedBoxElement.appendChild(selectedIconElement);
+        selectedBoxElement.appendChild(componentIconElement);
+        selectedBoxElement.appendChild(_View.boxScrollElement);
+
+
+        var results = {};
+        results['iconSelectElement'] = _View.iconSelectElement;
+        results['selectedBoxElement'] = selectedBoxElement;
+        results['selectedIconElement'] = selectedIconElement;
+        results['selectedIconImgElement'] = _View.selectedIconImgElement;
+        results['componentIconElement'] = componentIconElement;
+        results['componentIconImgElement'] = componentIconImgElement;
+
+        return results;
+
+    };
+
+    _View.createIcon = function ($iconFilePath, $iconValue, $index, $parameters) {
+
+        var iconElement = document.createElement('div');
+        iconElement.setAttribute('class', 'icon');
+        iconElement.style.width = $parameters.iconsWidth;
+        iconElement.style.height = $parameters.iconsHeight;
+        iconElement.style.marginLeft = $parameters.boxIconSpace;
+        iconElement.style.marginTop = $parameters.boxIconSpace;
+
+        var iconImgElement = document.createElement('img');
+        iconImgElement.setAttribute('src', $iconFilePath);
+        iconImgElement.setAttribute('icon-value', $iconValue);
+        iconImgElement.setAttribute('icon-index', $index);
+        iconImgElement.setAttribute('width', $parameters.iconsWidth);
+        iconImgElement.setAttribute('height', $parameters.iconsHeight);
+
+        iconElement.appendChild(iconImgElement);
+        _View.boxElement.appendChild(iconElement);
+
+        return iconElement;
+
+    };
+
+
+    function _Model() {
+    }
+
+    _Model.checkParameters = function ($parameters) {
+
+        $parameters.selectedIconWidth = ($parameters.selectedIconWidth) ? $parameters.selectedIconWidth : _default.SELECTED_ICON_WIDTH;
+        $parameters.selectedIconHeight = ($parameters.selectedIconHeight) ? $parameters.selectedIconHeight : _default.SELECTED_ICON_HEIGHT;
+        $parameters.selectedBoxPadding = ($parameters.selectedBoxPadding) ? $parameters.selectedBoxPadding : _default.SELECTED_BOX_PADDING;
+        $parameters.iconsWidth = ($parameters.iconsWidth) ? $parameters.iconsWidth : _default.ICONS_WIDTH;
+        $parameters.iconsHeight = ($parameters.iconsHeight) ? $parameters.iconsHeight : _default.ICONS_HEIGHT;
+        $parameters.boxIconSpace = ($parameters.boxIconSpace) ? $parameters.boxIconSpace : _default.BOX_ICON_SPACE;
+        $parameters.vectoralIconNumber = ($parameters.vectoralIconNumber) ? $parameters.vectoralIconNumber : _default.VECTORAL_ICON_NUMBER;
+        $parameters.horizontalIconNumber = ($parameters.horizontalIconNumber) ? $parameters.horizontalIconNumber : _default.HORIZONTAL_ICON_NUMBER;
+
+        return $parameters;
+
+    };
+
+    _init();
+
+}
+
+function mopen(id) {
+    mcancelclosetime();
+    if (ddmenuitem) ddmenuitem.style.display = 'none';
+    ddmenuitem = document.getElementById(id);
+    ddmenuitem.style.display = 'block';
+}
+
+function mclose() {
+    if (ddmenuitem) ddmenuitem.style.display = 'none';
+}
+
+function mclosetime() {
+    closetimer = window.setTimeout(mclose, timeout);
+}
+
+function mcancelclosetime() {
+    if (closetimer) {
+        window.clearTimeout(closetimer);
+        closetimer = null;
+    }
+}
+
