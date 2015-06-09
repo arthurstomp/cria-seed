@@ -37,15 +37,28 @@
     };
 
     $scope.removeOutdatedHistory = function(){
-      for (var i = $rootScope.history.lenght - 1 - $rootScope.historyPointer ; i > array.length; i--) {
+      for (var i = $rootScope.history.length - 1 - $rootScope.historyPointer ; i > array.length; i--) {
         $rootScope.history.pop();
       }
     };
 
     $rootScope.saveState = function(){
       $rootScope.historyPointer += 1;
-
       $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
+    };
+
+    $rootScope.rewindHistory = function(){
+      if ($rootScope.historyPointer - 1 > 0) {
+        $rootScope.historyPointer -= 1;
+        $rootScope.phone = $rootScope.history[$rootScope.historyPointer];
+      }
+    };
+
+    $rootScope.fastForwardHistory = function (){
+      if ($rootScope.historyPointer + 1 < $rootScope.history.length) {
+        $rootScope.historyPointer += 1;
+        $rootScope.phone = $rootScope.history[$rootScope.historyPointer];
+      }
     };
 
     $rootScope.addProductToCart = function(product,customization,position){
@@ -135,14 +148,14 @@
     };
 
     $scope.removeOutdatedHistory = function(){
-      for (var i = $rootScope.history.lenght - 1 - $rootScope.historyPointer ; i > array.length; i--) {
+      for (var i = $rootScope.history.length - 1 - $rootScope.historyPointer ; i > array.length; i--) {
         $rootScope.history.pop();
       }
     };
 
     $rootScope.saveState = function(){
-      $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
       $rootScope.historyPointer += 1;
+      $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
     };
 
     $rootScope.addProductToCart = function(product,customization,position){
