@@ -12,17 +12,25 @@
     ownerId : {type: Schema.Types.ObjectId, ref : 'User', required : true},
     customization : Schema.Types.Mixed,
     amount : {type : Number, required : true},
+    soloPrice : {type : Number, required : true},
+    totalPrice : {type : Number},
     createdAt : {type: Date, default : Date.now()},
     updatedAt : {type : Date, default : Date.now()},
   });
 
   module.exports = mongoose.model(modelName,transactionSchema);
 
+  transactionSchema.method.updateTotalPrice = function(){
+    var transaction = this;
+    transaction.totalPrice = transaction.soloPrice * transaction.amount;
+  };
+
   transactionSchema.pre('save',function(next){
     var transaction = this;
     transaction.updatedAt = Date.now();
+    transaction.updateTotalPrice();
   });
-  
+
   transactionSchema.pre('update',function(next){
     var transaction = this;
     transaction.updatedAt = Date.now();

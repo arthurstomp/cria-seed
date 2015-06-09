@@ -15,6 +15,8 @@
       subProducts: req.body.subProducts || [],
       specification: req.body.specification || {},
       imgPath: req.body.imgPath,
+      transactions : req.body.transactions || [],
+      currentStock : req.body.currentStock,
     },
     function(err,product){
       var resObj = {
@@ -96,12 +98,14 @@
     if(req.body.subProducts){ update.subProducts = req.body.subProducts;}
     if(req.body.specification){ update.specification = req.body.specification;}
     if(req.body.categories){ update.categories = req.body.categories;}
+    if(req.body.imgPath){ update.imgPath = req.body.imgPath;}
+    if (req.body.transactions) { update.transactions = req.body.transactions;}
 
     conditions={
       _id: req.params._id
     };
 
-    options = {multi:false, runValidators:true};
+    options = {multi:false, runValidators:true, new:true};
 
     Product.findOneAndUpdate(conditions,update,options,function(err,product){
       var retObj = {

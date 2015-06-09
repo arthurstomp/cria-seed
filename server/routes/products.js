@@ -3,8 +3,7 @@
 
 (function() {
   'use strict';
-  /** @module Routes for products*/
-  /** @class */
+  
   var express = require('express'),
       router = express.Router(),
       controller = require('../app/controllers/products.js');
