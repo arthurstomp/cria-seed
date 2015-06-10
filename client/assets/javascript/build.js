@@ -3,6 +3,7 @@ var selectColor = "#ffffff";
 var freeSpotColor = "blue";
 var tileWidth = 130;
 var tileHeight = 130;
+var tileBorderWidth = 5;
 var selectedTile;
 var originalColor = "red";
 var textColor;
@@ -19,10 +20,9 @@ var ddmenuitem;
 var closetimer;
 var timeout = 500;
 
-/* TODO: Add API documentation
+/*
  TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
  TODO: Clean up code (remove console.logs and less global variables)
- TODO: Make it Angular
  */
 /*
  This function creates a skeleton with tiles
@@ -151,9 +151,14 @@ function selectTile(evt) {
  */
 function deselectTile() {
 
-    var x, res, menu;
+    var x, res, menu, pt;
     x = document.getElementById("tileColor");
     res = x.options[x.selectedIndex].value;
+    console.log("deselecting!");
+    document.getElementById(previousTile).style.borderWidth = "0px";
+    console.log(previousTile);
+    console.log(document.getElementById(previousTile).style);
+
 
     if (res != "color") {
         document.getElementById(previousTile).style.backgroundColor = res;
@@ -440,11 +445,11 @@ function allowDrop(ev) {
     //console.log(hasTile(ev));
     ev.preventDefault();
     if (hasTile(ev)) {
-        console.log("thou may pass");
+        //console.log("thou may pass");
         canSwap = false;
     }
     else {
-        console.log("thou shall not pass!");
+        ///console.log("thou shall not pass!");
         canSwap = true;
     }
     return ev;
@@ -457,10 +462,22 @@ function allowDrop(ev) {
 function swapTiles(ev) {
     console.log("commence switching procedure");
     //console.log(ev.target.parentNode.id);
-    var dummmy = ev.target.parentNode.innerHTML;
-    ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
-    console.log(currentDraggingTile.id);
-    currentDraggingTile.innerHTML = dummmy;
+    var tempDragClone, tempTargetClone;
+
+
+    tempDragClone = currentDraggingTile.cloneNode(true);
+    tempTargetClone = ev.target.cloneNode(true);
+
+    ev.target.innerHTML = "";
+    currentDraggingTile.innerHTML = "";
+
+    ev.target.appendChild(tempDragClone);
+    currentDraggingTile.appendChild(tempTargetClone);
+
+    //var dummmy = ev.target.parentNode.innerHTML;
+    //ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+    //console.log(currentDraggingTile.id);
+    //currentDraggingTile.innerHTML = dummmy;
 }
 
 /*
@@ -481,9 +498,10 @@ function hasTile(event) {
  @Author: Abdellatif
  */
 function drag(ev) {
-    //console.log("dragging");
+    console.log("dragging");
     // console.log(ev.toElement.parentNode);
-    currentDraggingTile = ev.toElement.parentNode;
+    console.log(ev.target);
+    currentDraggingTile = ev.target;
     closeMenu(document.getElementById("vWrapper"));
     //showAvalaibleTileSpace(document.getElementById("back"));
     //showAvalaibleTileSpace(document.getElementById("front"));
@@ -527,6 +545,7 @@ function drop(ev) {
     //console.log(ev.target);
     //resetColorOfAvailableTiles(document.getElementById("back"));
     //resetColorOfAvailableTiles(document.getElementById("front"));
+    var tempClone;
     ev.preventDefault();
     // console.log("dropping");
     //console.log(ev.toElement.id);
@@ -534,13 +553,24 @@ function drop(ev) {
     if (canSwap == false) {
         targetedDiv = document.getElementById(ev.toElement.id);
 
-        targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+        console.log(currentDraggingTile);
+
+        //currentDraggingTile.style.width = tileWidth - tileBorderWidth-4 + "px";
+        //currentDraggingTile.style.height = tileHeight - tileBorderWidth-4 + "px";
+
+        tempClone = currentDraggingTile.cloneNode(true);
+        tempClone.style.width = tileWidth - tileBorderWidth-4 + "px";
+        tempClone.style.height = tileHeight - tileBorderWidth-4 + "px";
+        targetedDiv.appendChild(tempClone);
+        targetedDiv.style.borderWidth = "5px";
+
+        //targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
         //console.log(targetedDiv.style.width);
         //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
         //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
 
-        targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
-        targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
+        //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
+        //targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
         targetedDiv.parentNode.empty = false;
         targetedDiv.empty = false;
         currentDraggingTile.innerHTML = "";
