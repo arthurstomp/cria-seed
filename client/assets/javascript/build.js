@@ -58,7 +58,6 @@ function createBackSkeleton(x, y) {
           tile.ondragover=function(){allowDrop(event);};
           tile.draggable = true;
           tile.ondragstart=function(){drag(event);};
-
           tile.click=function(){selectTile(event);};
 
           skeleton.appendChild(tile);
@@ -466,7 +465,7 @@ function createBackSkeleton(x, y) {
    @Author: Abdellatif
    */
   function drag(ev) {
-     // console.log("dragging");
+      //console.log("dragging");
      // console.log(ev.toElement.parentNode);
       currentDraggingTile = ev.toElement.parentNode;
       closeMenu(document.getElementById("vWrapper"));
@@ -570,17 +569,18 @@ var iconSelect = new changePattern("my-icon-select",
         'horizontalIconNumber': 5
     });
 
+
 var icons = [];
-icons.push({'iconFilePath': '../assets/images/p0.png', 'iconValue': '0'});
-icons.push({'iconFilePath': '../assets/images/p1.png', 'iconValue': '1'});
-icons.push({'iconFilePath': '../assets/images/p2.png', 'iconValue': '2'});
-icons.push({'iconFilePath': '../assets/images/p3.png', 'iconValue': '3'});
-icons.push({'iconFilePath': '../assets/images/p4.png', 'iconValue': '4'});
-icons.push({'iconFilePath': '../assets/images/p5.png', 'iconValue': '5'});
-icons.push({'iconFilePath': '../assets/images/p6.png', 'iconValue': '6'});
-icons.push({'iconFilePath': '../assets/images/p7.png', 'iconValue': '7'});
-icons.push({'iconFilePath': '../assets/images/p8.png', 'iconValue': '8'});
-icons.push({'iconFilePath': '../assets/images/p9.png', 'iconValue': '9'});
+icons.push({'iconFilePath': '../images/p0.png', 'iconValue': '0'});
+icons.push({'iconFilePath': '../images/p1.png', 'iconValue': '1'});
+icons.push({'iconFilePath': '../images/p2.png', 'iconValue': '2'});
+icons.push({'iconFilePath': '../images/p3.png', 'iconValue': '3'});
+icons.push({'iconFilePath': '../images/p4.png', 'iconValue': '4'});
+icons.push({'iconFilePath': '../images/p5.png', 'iconValue': '5'});
+icons.push({'iconFilePath': '../images/p6.png', 'iconValue': '6'});
+icons.push({'iconFilePath': '../images/p7.png', 'iconValue': '7'});
+icons.push({'iconFilePath': '../images/p8.png', 'iconValue': '8'});
+icons.push({'iconFilePath': '../images/p9.png', 'iconValue': '9'});
 iconSelect.refresh(icons);
 
 
@@ -595,7 +595,7 @@ changePattern.DEFAULT.BOX_ICON_SPACE = 1;
 changePattern.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
 changePattern.DEFAULT.VECTORAL_ICON_NUMBER = 3;
 
-changePattern.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
+changePattern.COMPONENT_ICON_FILE_PATH = "../images/arrow.png";
 
 /*
  This function making a selection list about pattern and allows to change pattern.
