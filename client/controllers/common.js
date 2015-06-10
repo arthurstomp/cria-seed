@@ -12,7 +12,7 @@
   * @description Module responsible for populate and handle common views as navbar, home and handle the session.
   */
 
-  /** Creates CommonModule */
+  /** Requires CommonModule */
   var commonModule = angular.module("CommonModule");
 
   /**
@@ -67,6 +67,15 @@
     }
   });
 
+  commonModule.controller('CartCtrl',function($scope,$cookies,productService){
+    var cart = $cookies.getObject('cart');
+    if (!cart.skeleton.product) {
+      productService.userActions.get({param : cart.skeleton.productId},function(err,product){
+        cart.skeleton.product = product;
+      });
+    }
+  });
+
   /**
    * @name SessionCtrl
    * @description Request the session information.
@@ -78,6 +87,7 @@
    */
   commonModule.controller('SessionCtrl',['$scope','$state','$cookies','sessionService',function($scope,$state,$cookies,sessionService){
     if ($state.current.name !== "home" && $state.current.name !== '') {
+      console.log($cookies);
       if (!$cookies.getObject('cart')) {
         sessionService.get(function(session){
           var now = new Date(),

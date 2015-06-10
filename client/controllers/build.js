@@ -109,9 +109,8 @@
 
   });
 
-  buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,$rootScope,productService){
+  buildModule.controller('BottomMenuBuildCtrl',function($scope,$state,$rootScope,$cookies,productService){
     console.log('Bottom MenuBuild Controller');
-
     /**
     *
     * This part is a copy of the beggining of MainBuildCtrl.
@@ -153,6 +152,20 @@
       }
     };
 
+    $rootScope.rewindHistory = function(){
+      if ($rootScope.historyPointer - 1 > 0) {
+        $rootScope.historyPointer -= 1;
+        $rootScope.phone = $rootScope.history[$rootScope.historyPointer];
+      }
+    };
+
+    $rootScope.fastForwardHistory = function (){
+      if ($rootScope.historyPointer + 1 < $rootScope.history.length) {
+        $rootScope.historyPointer += 1;
+        $rootScope.phone = $rootScope.history[$rootScope.historyPointer];
+      }
+    };
+
     $rootScope.saveState = function(){
       $rootScope.historyPointer += 1;
       $rootScope.history[$rootScope.historyPointer] = $rootScope.phone;
@@ -185,6 +198,10 @@
 
       $scope.removeOutdatedHistory();
       $rootScope.saveState();
+    };
+
+    $rootScope.incompleteTransaction = {
+
     };
     /**
     * STOP EREASING.

@@ -35,10 +35,12 @@
     var transaction = this;
     transaction.updatedAt = Date.now();
     transaction.updateTotalPrice();
+    return next();
   });
 
   transactionSchema.pre('update',function(next){
     var transaction = this;
     transaction.updatedAt = Date.now();
+    return next();
   });
 }());
