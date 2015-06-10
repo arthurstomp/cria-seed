@@ -14,7 +14,6 @@
             <img src="../assets/images/trash.png">
         </a>
     </div>
-
     <div id="vWrapper2">
         <a href="#" onclick="mopen('sub5')">
             <img src="../assets/images/info.png">
@@ -132,21 +131,13 @@
 </div>
 
 
-<div id="f1_container">
-    <div id="f1_card" class="shadow">
-        <div id="front" class="front face">
-        </div>
-        <div id="back" class="back face center">
-        </div>
-    </div>
-</div>
-
-
 <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
 <div id="drag1"><img src="../assets/images/click.png" draggable="true"
                      ondragstart="drag(event)" width="150" height="150"></div>
 <div id="drag2"><img src="../assets/images/cat.jpg" draggable="true"
                      ondragstart="drag(event)" width="150" height="150"></div>
-<button class="btn btn-primary" id="flip_content">
+<button class="btn btn-primary" id="flip_content" onclick="switchButton()">
     <img src="../assets/images/rotate.png">
 </button>
+
+<script src="../assets/javascript/build.js"></script>

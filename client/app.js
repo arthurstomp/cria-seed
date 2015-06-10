@@ -54,10 +54,10 @@
     }).state('build.root',{
       url: '/build',
       views: {
-        // 'leftMenu' : {
-        //   templateUrl : '/partials/leftMenu.html',
-        //   controller : 'LeftMenuBuildCtrl',
-        // },
+        'leftMenu' : {
+           templateUrl : '/partials/leftMenu.html',
+           controller : 'LeftMenuBuildCtrl'
+        },
         // 'rightMenu' : {
         //   templateUrl : '/partials/rightMenu.html',
         //   controller : 'RightMenuBuildCtrl',

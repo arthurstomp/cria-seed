@@ -1,14 +1,13 @@
 #leftMenuView{
   background-color: red;
-  width: 30px;
+  width: 400px;
   height: 100px;
   float: left;
 }
 
 #mainView{
-  background-color: yellow;
-  width: 50%;
-  height: 40%;
+  width: 450px;
+  height: 750px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -126,7 +125,7 @@ canvas {
     height: 50px;
 }
 
-/* fliped css*/
+ /*fliped css*/
 
 #f1_container {
     position: relative;
@@ -138,6 +137,13 @@ canvas {
 
 #f1_container {
     perspective: 1000;
+}
+
+.containerTile{
+    border-style: solid;
+    border-width: 5px;
+    float: left;
+    background-color: red;
 }
 
 #f1_card {
