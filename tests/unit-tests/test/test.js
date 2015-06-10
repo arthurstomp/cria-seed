@@ -176,7 +176,7 @@ describe("build.js", function () {
     });
     it("Should verify that the application shows which spots are available", function () {
         var skeleton = createBackSkeleton(3, 5);
-        showAvalaibleTileSpace(skeleton);
+        showAvailableTileSpace(skeleton);
         var i;
         var numberOfCorrectTiles = 0;
         for(i=0; i < skeletonSize; i++){
@@ -191,7 +191,7 @@ describe("build.js", function () {
     });
     it("Should verify that the application resets the tiles colors correctly to the original state", function () {
         var skeleton = createBackSkeleton(3, 5);
-        showAvalaibleTileSpace(skeleton);
+        showAvailableTileSpace(skeleton);
         resetColorOfAvailableTiles(skeleton);
 
         var i;
