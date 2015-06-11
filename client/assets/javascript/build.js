@@ -679,35 +679,22 @@ icons.push({'iconFilePath': '../assets/images/p7.png', 'iconValue': '7'});
 icons.push({'iconFilePath': '../assets/images/p8.png', 'iconValue': '8'});
 icons.push({'iconFilePath': '../assets/images/p9.png', 'iconValue': '9'});
 iconSelect.refresh(icons);
-
-
-changePattern.DEFAULT = {};
-changePattern.DEFAULT.SELECTED_ICON_WIDTH = 48;
-changePattern.DEFAULT.SELECTED_ICON_HEIGHT = 48;
-changePattern.DEFAULT.SELECTED_BOX_PADDING = 1;
-changePattern.DEFAULT.SELECTED_BOX_PADDING_RIGHT = 12;
-changePattern.DEFAULT.ICONS_WIDTH = 32;
-changePattern.DEFAULT.ICONS_HEIGHT = 32;
-changePattern.DEFAULT.BOX_ICON_SPACE = 1;
-changePattern.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
-changePattern.DEFAULT.VECTORAL_ICON_NUMBER = 3;
-
-changePattern.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
-
-/**
- * this function makes selection list for patterns and change pattern for tiles.
- * @function
- * @author Daye
- * @param {string} $$elementID
- * @param {string} $$parameters
- */
-function changePattern($$elementID, $$parameters) {
-
+IconSelect.DEFAULT = {};
+IconSelect.DEFAULT.SELECTED_ICON_WIDTH = 48;
+IconSelect.DEFAULT.SELECTED_ICON_HEIGHT = 48;
+IconSelect.DEFAULT.SELECTED_BOX_PADDING = 1;
+IconSelect.DEFAULT.SELECTED_BOX_PADDING_RIGHT = 12;
+IconSelect.DEFAULT.ICONS_WIDTH = 32;
+IconSelect.DEFAULT.ICONS_HEIGHT = 32;
+IconSelect.DEFAULT.BOX_ICON_SPACE = 1;
+IconSelect.DEFAULT.HORIZONTAL_ICON_NUMBER = 3;
+IconSelect.DEFAULT.VECTORAL_ICON_NUMBER = 3;
+IconSelect.COMPONENT_ICON_FILE_PATH = "images/arrow.png";
+function IconSelect($$elementID, $$parameters) {
     var _icons = [];
     var _selectedIndex = -1;
     var _boxScroll;
     var _default = IconSelect.DEFAULT;
-
     function _init() {
         if (!$$parameters) $$parameters = {};
         if (_View.setIconSelectElement($$elementID)) {
@@ -727,7 +714,6 @@ function changePattern($$elementID, $$parameters) {
             });
         }
     }
-
     this.refresh = function ($icons) {
         _icons = [];
         var setSelectedIndex = this.setSelectedIndex;
