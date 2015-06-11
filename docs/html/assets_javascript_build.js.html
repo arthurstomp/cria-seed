@@ -1,9 +1,36 @@
-var selectedImg = "";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: assets/javascript/build.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: assets/javascript/build.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var selectedImg = "";
 var selectColor = "#ffffff";
 var freeSpotColor = "blue";
-var tileWidth = 130;
-var tileHeight = 130;
-var tileBorderWidth = 5;
+var tileWidth = 150;
+var tileHeight = 150;
 var selectedTile;
 var originalColor = "red";
 var textColor;
@@ -16,9 +43,12 @@ var resetTile;
 var skeletonSize;
 var previousTile;
 var canSwap;
-var ddmenuitem;
-var closetimer;
-var timeout = 500;
+
+/* TODO: Add API documentation
+ TODO: Fix drag &amp; drop bugs (leftMenu popup, previousTile color, available space reset)
+ TODO: Clean up code (remove console.logs and less global variables)
+ TODO: Make it Angular
+ */
 
 /**
  * @module buildJS
@@ -27,11 +57,10 @@ var timeout = 500;
 /**
  * this function create backside of skeleton.
  * @function
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param {number} x numbers of rows
  * @param {number} y numbers of columns
  * @return {object} skeleton completed skeleton
- >>>>>>> 110ddfc54945f91cb41ccaf98a55a110260f7193
  */
 function createBackSkeleton(x, y) {
     var i;
@@ -45,18 +74,16 @@ function createBackSkeleton(x, y) {
     skeleton.style.width = (tileWidth * x).toString() + "px";
     skeletonSize = x * y;
     skeleton.skeletonSize = skeletonSize;
-
-    for (i = 0; i < skeletonSize; i++) {
+    for (i = 0; i &lt; skeletonSize; i++) {
         var tile, clickContainer, cln;
         tile = document.createElement("div");
         tile.id = "tile" + i;
-        tile.className = 'containerTile';
-        tile.style.width = tileWidth.toString() + "px";
-        tile.style.height = tileHeight.toString() + "px";
+        tile.className = 'containerTIle';
+        tile.style.width = tileWidth;
+        tile.style.height = tileHeight;
         tile.style.float = "left";
-        tile.style.backgroundColor = "red";
+        tile.style.backgroundColor = 'red';
         tile.empty = true;
-
         tile.ondrop = function () {
             drop(event);
         };
@@ -67,10 +94,9 @@ function createBackSkeleton(x, y) {
         tile.ondragstart = function () {
             drag(event);
         };
-        tile.onclick = function () {
-            selectTile(event);
+        tile.click = function () {
+            selectTile;
         };
-
         skeleton.appendChild(tile);
     }
     return skeleton;
@@ -79,34 +105,30 @@ function createBackSkeleton(x, y) {
 /**
  * this function frontside of skeleton(for screen).
  * @function
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param {number} x numbers of rows
  * @param {number} y numbers of columns
  * @variable frontSkeleton
  * @return {object} frontSkeleton completed frontside skeleton
  */
-
 function createFrontSkeleton(x, y) {
-
     var frontSkeleton = document.getElementById("front");
     if (frontSkeleton == null) {
         frontSkeleton = document.createElement("div");
         frontSkeleton.id = "front";
     }
-    frontSkeleton.style.height = (tileHeight * y).toString() + "px";
-    frontSkeleton.style.width = (tileWidth * x).toString() + "px";
+    frontSkeleton.style.height = tileHeight * y;
+    frontSkeleton.style.width = tileWidth * x;
     skeletonSize = x * y;
     frontSkeleton.skeletonSize = skeletonSize;
-
     var tile = document.createElement("div");
     tile.id = "tile1";
     tile.className = 'containerTIle';
-    tile.style.width = frontSkeleton.style.width;
-    tile.style.height = frontSkeleton.style.height;
+    tile.style.width = tileWidth * x;
+    tile.style.height = tileHeight * y;
     tile.style.float = "left";
     tile.style.backgroundColor = 'hotpink';
     tile.empty = true;
-
     tile.ondrop = function () {
         drop(event)
     };
@@ -117,71 +139,62 @@ function createFrontSkeleton(x, y) {
     tile.ondragstart = function () {
         drag(event)
     };
-    tile.onclick = function () {
-        selectTile(event)
+    tile.click = function () {
+        selectTile
     };
-
     frontSkeleton.appendChild(tile);
-
     return frontSkeleton;
 }
 
 /**
  * this function handles the selection of a tile
  * @function selectTile
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param {object} evt the object where the event occurs.
  * @return {object} selectedTile It will return selected Tile.
  */
 function selectTile(evt) {
-
-    if (evt.target.parentNode.id == "front") {
+    //console.log(evt.target.parentNode.empty);
+    console.log(selectedTile);
+    if (evt.target.parentNode.parentElement.id == "front") {
+        console.log("dont open");
     }
     else {
-        if (evt.target.parentNode.id == "back") {
-            selectedTile = evt.target.id;
-            if (evt.target.parentNode.empty == false) {
-                if (previousTile != null) {
-                    closeMenu(document.getElementById("vWrapper"));
-                    closeMenu(document.getElementById("vWrapper2"));
-                    deselectTile();
-                } else if (selectedTile != previousTile) {
-
-
-                    selectedObject = evt.target;
-                    AddDeletePreview();
-
-                    originalColor = getRightSelectedTile().style.backgroundColor;
-                    previousTile = getRightSelectedTile().id;
-                }
-                openMenu(document.getElementById("vWrapper"));
-                openMenu(document.getElementById("vWrapper2"));
+        selectedTile = evt.target.id;
+        if (evt.target.parentNode.empty == false) {
+            if (previousTile != null) {
+                deselectTile();
+                console.log("hey ur deselecting man");
+            } else if (selectedTile != previousTile) {
+                selectedObject = evt.target;
+                console.log(evt.target.parentNode.empty);
+                AddDeletePreview();
+                originalColor = document.getElementById(selectedTile).style.backgroundColor;
+                //document.getElementById(selectedTile).style.backgroundColor = "white";
+                previousTile = selectedTile;
             }
         }
+        openMenu(document.getElementById("vWrapper"));
     }
     return selectedTile;
 }
 
-
 /**
  *  This function handles the deselection of a tile
  * @function deselectTile()
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  */
 function deselectTile() {
-
-    var x = document.getElementById("tileColor");
-    var res = x.options[x.selectedIndex].value;
-
+    var x, res, menu;
+    x = document.getElementById("tileColor");
+    res = x.options[x.selectedIndex].value;
     if (res != "color") {
         document.getElementById(previousTile).style.backgroundColor = res;
         document.getElementById("tileColor").value = "color";
     } else {
-        document.getElementById(previousTile).removeChild(document.getElementById(previousTile).childNodes[0]);
         document.getElementById(previousTile).style.backgroundColor = originalColor;
     }
     closeMenu(document.getElementById("vWrapper"));
-    closeMenu(document.getElementById("vWrapper2"));
     previousTile = null;
 }
 
@@ -192,6 +205,12 @@ function deselectTile() {
  * @param target id which one occurs event
  */
 function openMenu(target) {
+    //console.log("opening menu");
+    //var menu = document.getElementById("vWrapper");
+    //if(menu == null){
+    //    menu = document.createElement("div");
+    //    menu.id = "vWrapper";
+    //}
     target.style.visibility = "visible";
     return target;
 }
@@ -204,6 +223,7 @@ function openMenu(target) {
  * @return {object} target which occurs event (menu icon)
  */
 function closeMenu(target) {
+    //var menu = document.getElementById("vWrapper");
     target.style.visibility = "hidden";
     return target;
 }
@@ -211,7 +231,7 @@ function closeMenu(target) {
 /**
  *  This function changes color of tiles.
  * @function changeTileColor
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param color color name which users choose.
  * @return {object} selectedTile a tile which one is changing color.
  */
@@ -231,15 +251,13 @@ function changeTileColor(color) {
 /**
  *  This function add text on the tile.
  * @function addText
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param text text string which users want to add
  * @return {object} tile a tile that text is added.
  */
 function addText(text) {
-    deleteTile(selectedObject);
-    var i, tile;
-
-    tile = getRightSelectedTile();
+    console.log(selectedTile);
+    var tile = document.getElementById(selectedTile);
     if (text == null) {
         tile.innerText = document.getElementById("addTxt").value;
         document.getElementById("addTxtForm").reset();
@@ -252,40 +270,23 @@ function addText(text) {
     return tile;
 }
 
-function getRightSelectedTile() {
-    var i, tile;
-    for (i = 0; i < skeletonSize; i++) {
-        if (document.getElementById(selectedTile).id == document.getElementById("back").children[i].id) {
-            tile = document.getElementById("back").children[i];
-        }
-    }
-    return tile;
-}
-
-/*
- This function changes the color of the text
- @Author: Daye & Abdellatif
- =======
- /**
+/**
  *  This function change font color on the tile.
  * @function changeFontColor
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  * @param color color name string that user wants to change.
  * @return {object} tile that will be changed.
- >>>>>>> 110ddfc54945f91cb41ccaf98a55a110260f7193
  */
 function changeFontColor(color) {
-    var tile = getRightSelectedTile();
     if (color == null) {
         var x = document.getElementById("fontColor");
         var res = x.options[x.selectedIndex].value;
-        tile.style.color = res;
-        tile.style.borderColor = "black";
+        document.getElementById(selectedTile).style.color = res;
     }
     else {
-        tile.style.color = color;
+        document.getElementById(selectedTile).style.color = color;
     }
-    return tile;
+    return document.getElementById(selectedTile);
 }
 
 /**
@@ -296,15 +297,14 @@ function changeFontColor(color) {
  * @return {object} tile that will be changed.
  */
 function changeFontSize(fontSize) {
-    var tile = getRightSelectedTile();
     if (fontSize == null) {
         var x = document.getElementById("fontSize");
-        tile.style.fontSize = (x.options[x.selectedIndex].value).toString() + "px";
+        document.getElementById(selectedTile).style.fontSize = x.options[x.selectedIndex].value
     }
     else {
-        tile.style.fontSize = "13";
+        document.getElementById(selectedTile).style.fontSize = "13";
     }
-    return tile;
+    return document.getElementById(selectedTile);
 }
 
 /**
@@ -313,14 +313,13 @@ function changeFontSize(fontSize) {
  * @author Daye
  */
 function changeFontStyle() {
-    var tile = getRightSelectedTile();
     var x = document.getElementById("fontStyle");
     if (x.options[x.selectedIndex].value == "italic") {
-        tile.style.fontStyle = x.options[x.selectedIndex].value;
+        document.getElementById(selectedTile).style.fontStyle = x.options[x.selectedIndex].value;
     } else if (x.options[x.selectedIndex].value == "underline") {
-        tile.style.textDecoration = x.options[x.selectedIndex].value;
+        document.getElementById(selectedTile).style.textDecoration = x.options[x.selectedIndex].value;
     } else {
-        tile.style.fontWeight = x.options[x.selectedIndex].value;
+        document.getElementById(selectedTile).style.fontWeight = x.options[x.selectedIndex].value;
     }
 }
 
@@ -330,37 +329,33 @@ function changeFontStyle() {
  * @author Daye
  */
 function changeFontType() {
-    var tile = getRightSelectedTile();
     var x = document.getElementById("fontType");
-    tile.style.fontFamily = x.options[x.selectedIndex].value;
+    document.getElementById(selectedTile).style.fontFamily = x.options[x.selectedIndex].value;
 }
 
 /**
  *   This function handles the uploading of ta picture
  * @function previewFile
- * @author Daye & Abdellatif
+ * @author Daye &amp; Abdellatif
  */
 function previewFile() {
     var file, reader;
-    var tile = getRightSelectedTile();
-
-    file = document.querySelector('input[type=file]').files[0];
+    file = document.querySelector('input[type=file]').files[0]; //sames as here
     reader = new FileReader();
-
     reader.onloadend = function () {
         var img = document.createElement("img");
         img.src = reader.result;
         img.style.height = tileWidth;
         img.style.width = tileHeight;
-
+        //preview
+        //            document.getElementById("previewDiv").appendChild(img);
+        //            console.log(img.src);
         document.getElementById(selectedTile).innerHTML = "";
-        tile.style.backgroundImage = "url(" + img.src + ")";
-        tile.style.backgroundSize = 'cover';
-
+        document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
+        document.getElementById(selectedTile).style.backgroundSize = 'cover';
     };
-
     if (file) {
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); //reads the data as a URL
     }
 }
 
@@ -371,17 +366,13 @@ function previewFile() {
  */
 function AddDeletePreview() {
     var preview, previewClone;
-
     preview = document.getElementById("deletePreviewDiv");
     previewClone = selectedObject.cloneNode(true);
     previewClone.style.margin = "0 auto";
-
     if (selectedTile !== null) {
-
         preview.innerHTML = "";
         preview.appendChild(previewClone);
     }
-
 }
 
 /**
@@ -394,9 +385,8 @@ function AddDeletePreview() {
 function deleteTile(selectedTileObject) {
     originalColor = "red";
     selectedTileObject.style.backgroundColor = null;
-    selectedTileObject.style.backgroundImage = null;
     selectedTileObject.innerText = "";
-    deselectTile();
+    //deselectTile();
     return selectedTileObject;
 }
 
@@ -407,12 +397,11 @@ function deleteTile(selectedTileObject) {
  * @param selectedTileObject tile that will be rotated.
  */
 function rotateTile(selectedTileObject) {
-    var tile = getRightSelectedTile();
-    if (selectedTileObject == null) {
-        tile.style.webkitTransform += 'rotate(45deg)';
-        tile.style.overflow = "hidden";
+    if (selectedTileObject != null) {
+        selectedTileObject.style.webkitTransform += 'rotate(45deg)';
     }
     else {
+        //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
         document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
         document.getElementById(selectedTile).style.overflow = "hidden";
     }
@@ -424,12 +413,9 @@ function rotateTile(selectedTileObject) {
  * @author Daye
  */
 function resizeTile() {
-
     var x = 0, y = 0, element;
     element = document.getElementById(selectedTile);
-
     interact(element)
-
         .draggable({
             snap: {
                 targets: [
@@ -438,52 +424,40 @@ function resizeTile() {
                 range: Infinity,
                 relativePoints: [{x: 0, y: 0}]
             },
-
             inertia: true,
-
             restrict: {
                 restriction: element.parentNode,
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1},
                 endOnly: true
             }
-
         })
-
         .on('dragmove', function (event) {
             x += event.dx;
             y += event.dy;
-
             event.target.style.webkitTransform =
                 event.target.style.transform =
                     'translate(' + x + 'px, ' + y + 'px)';
         })
-
         .resizable({
             edges: {left: true, right: true, bottom: true, top: true}
         })
-
         .on('resizemove', function (event) {
-
             var target = event.target,
                 x = (parseFloat(target.getAttribute('data-x')) || 0),
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-            if (target.style.width <= '150px' && target.style.height <= '150px') {
-
+            if (target.style.width &lt;= '150px' &amp;&amp; target.style.height &lt;= '150px') {
+                // update the element's style
                 target.style.width = event.rect.width + 'px';
                 target.style.height = event.rect.height + 'px';
-
+                // translate when resizing from top or left edges
                 x += event.deltaRect.left;
                 y += event.deltaRect.top;
-
                 target.style.webkitTransform = target.style.transform =
                     'translate(' + x + 'px,' + y + 'px)';
-
                 target.setAttribute('data-x', x);
                 target.setAttribute('data-y', y);
-
+                //target.textContent = event.rect.width + 'x' + event.rect.height;
             }
-
         });
 }
 
@@ -495,11 +469,15 @@ function resizeTile() {
  * @return {object} ev the tile which is allowed to drop
  */
 function allowDrop(ev) {
+    // console.log(ev.target.parentNode);
+    //console.log(hasTile(ev));
     ev.preventDefault();
     if (hasTile(ev)) {
+        console.log("thou may pass");
         canSwap = false;
     }
     else {
+        console.log("thou shall not pass!");
         canSwap = true;
     }
     return ev;
@@ -512,17 +490,12 @@ function allowDrop(ev) {
  * @param ev the tile which will be swapped
  */
 function swapTiles(ev) {
-    var tempDragClone, tempTargetClone;
-
-
-    tempDragClone = currentDraggingTile.cloneNode(true);
-    tempTargetClone = ev.target.cloneNode(true);
-
-    ev.target.innerHTML = "";
-    currentDraggingTile.innerHTML = "";
-
-    ev.target.appendChild(tempDragClone);
-    currentDraggingTile.appendChild(tempTargetClone);
+    console.log("commence switching procedure");
+    //console.log(ev.target.parentNode.id);
+    var dummmy = ev.target.parentNode.innerHTML;
+    ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
+    console.log(currentDraggingTile.id);
+    currentDraggingTile.innerHTML = dummmy;
 }
 
 /**
@@ -548,9 +521,12 @@ function hasTile(event) {
  * @return object ev.target which one is dragged
  */
 function drag(ev) {
-    currentDraggingTile = ev.target;
+    // console.log("dragging");
+    // console.log(ev.toElement.parentNode);
+    currentDraggingTile = ev.toElement.parentNode;
     closeMenu(document.getElementById("vWrapper"));
-    closeMenu(document.getElementById("vWrapper2"));
+    //showAvailableTileSpace(document.getElementById("back"));
+    //showAvailableTileSpace(document.getElementById("front"));
     return ev.target;
 }
 
@@ -563,8 +539,12 @@ function drag(ev) {
 function showAvailableTileSpace(skeleton) {
     var i;
     tempCloneOfSkeleton = skeleton.cloneNode(true);
-    for (i = 0; i < skeletonSize; i++) {
+    for (i = 0; i &lt; skeletonSize; i++) {
+        //var tile = document.getElementById("tile" + i);
+        //tile.style.backgroundColor = "#0000FF";
+        //if(tile.empty == true){
         skeleton.children[i].style.backgroundColor = freeSpotColor;
+        //}
     }
 }
 
@@ -574,10 +554,11 @@ function showAvailableTileSpace(skeleton) {
  * @author Abdellatif
  * @param skeleton the skeleton
  */
+
 function resetColorOfAvailableTiles(skeleton) {
     var i;
-    for (i = 0; i < skeleton.skeletonSize; i++) {
-
+    for (i = 0; i &lt; skeleton.skeletonSize; i++) {
+        //var tile = document.getElementById("tile" + i);
         skeleton.children[i].style.backgroundColor = tempCloneOfSkeleton.children[i].style.backgroundColor;
     }
 }
@@ -589,25 +570,22 @@ function resetColorOfAvailableTiles(skeleton) {
  * @param ev which tile will be dropped.
  */
 function drop(ev) {
-    var tempClone;
+    //console.log(ev.target);
+    //resetColorOfAvailableTiles(document.getElementById("back"));
+    //resetColorOfAvailableTiles(document.getElementById("front"));
     ev.preventDefault();
-
+    // console.log("dropping");
+    //console.log(ev.toElement.id);
     if (canSwap == false) {
         targetedDiv = document.getElementById(ev.toElement.id);
-
-        tempClone = currentDraggingTile.cloneNode(true);
-        if (targetedDiv.parentNode.id == "front") {
-            tempClone.style.width = tileWidth * 3 + "px";
-            tempClone.style.height = tileHeight * 5 + "px";
-        }
-        else {
-            tempClone.style.width = tileWidth - tileBorderWidth - 4 + "px";
-            tempClone.style.height = tileHeight - tileBorderWidth - 4 + "px";
-        }
-        targetedDiv.appendChild(tempClone);
-        targetedDiv.style.borderWidth = "5px";
-
+        targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
+        //console.log(targetedDiv.style.width);
+        //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
+        //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
+        targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
+        targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
         targetedDiv.parentNode.empty = false;
+        targetedDiv.empty = false;
         currentDraggingTile.innerHTML = "";
         selectTile(ev);
     }
@@ -622,9 +600,8 @@ function drop(ev) {
  * @author Daye
  */
 function confirmDelete() {
-
     if (confirm("Are you sure deleting a tile?") === true) {
-        deleteTile(getRightSelectedTile());
+        deleteTile(selectedObject);
     }
 }
 
@@ -633,6 +610,9 @@ function confirmDelete() {
  * @function changePattern
  * @author Daye
  */
+function changePattern() {
+}
+//TODO: CLean up this button code put it a function
 var btn = document.getElementById('flip_content');
 var content = document.getElementById('f1_card');
 var c = 0;
@@ -643,29 +623,17 @@ if (btn != null) {
     };
 }
 
-
-function switchButton() {
-    var btn = document.getElementById('flip_content');
-    var content = document.getElementById('f1_card');
-    var c = 0;
-    if (btn != null) {
-        btn.onclick = function () {
-            closeMenu(document.getElementById("vWrapper"));
-            closeMenu(document.getElementById("vWrapper2"));
-            content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
-        };
-    }
-}
-var iconSelect = new IconSelect("my-icon-select", {
-    'selectedIconWidth': 60,
-    'selectedIconHeight': 60,
-    'selectedBoxPadding': 1,
-    'iconsWidth': 70,
-    'iconsHeight': 70,
-    'boxIconSpace': 1,
-    'vectoralIconNumber': 2,
-    'horizontalIconNumber': 5
-});
+var iconSelect = new changePattern("my-icon-select",
+    {
+        'selectedIconWidth': 60,
+        'selectedIconHeight': 60,
+        'selectedBoxPadding': 1,
+        'iconsWidth': 70,
+        'iconsHeight': 70,
+        'boxIconSpace': 1,
+        'vectoralIconNumber': 2,
+        'horizontalIconNumber': 5
+    });
 
 var icons = [];
 icons.push({'iconFilePath': '../assets/images/p0.png', 'iconValue': '0'});
@@ -706,55 +674,72 @@ function changePattern($$elementID, $$parameters) {
     var _icons = [];
     var _selectedIndex = -1;
     var _boxScroll;
-    var _default = IconSelect.DEFAULT;
+
+    var _default = changePattern.DEFAULT;
 
     function _init() {
         if (!$$parameters) $$parameters = {};
+
         if (_View.setIconSelectElement($$elementID)) {
             $$parameters = _Model.checkParameters($$parameters);
 
             var ui = _View.createUI($$parameters, $$elementID);
-
             _View.iconSelectElement.onclick = function () {
                 _View.showBox();
             };
+
             _View.showBox(false);
+
             _View.iconSelectElement.addEventListener('click', function ($event) {
                 $event.stopPropagation();
             });
+
             window.addEventListener('click', function () {
                 _View.showBox(false);
             });
+
         }
     }
 
     this.refresh = function ($icons) {
+
         _icons = [];
+
         var setSelectedIndex = this.setSelectedIndex;
-        for (var i = 0; i < $icons.length; i++) {
+
+        for (var i = 0; i &lt; $icons.length; i++) {
             $icons[i].element = _View.createIcon($icons[i].iconFilePath, $icons[i].iconValue, i, $$parameters);
             $icons[i].element.onclick = function () {
                 setSelectedIndex(this.childNodes[0].getAttribute('icon-index'));
+
             };
             _icons.push($icons[i]);
+
         }
+
     };
+
     this.getIcons = function () {
         return _icons;
     };
+
     this.setSelectedIndex = function ($index) {
         var icon;
+
         if (_icons.length > $index)
             icon = _icons[$index];
+
         if (icon) {
             if (_selectedIndex != -1) _icons[_selectedIndex].element.setAttribute('class', 'icon');
             _selectedIndex = $index;
             _View.selectedIconImgElement.setAttribute('src', icon.iconFilePath);
             if (_selectedIndex != -1) _icons[_selectedIndex].element.setAttribute('class', 'icon selected');
-            getRightSelectedTile().innerHTML = " ";
-            getRightSelectedTile().style.backgroundImage = "url(" + _icons[_selectedIndex].iconFilePath + ")";
+            document.getElementById(selectedTile).style.backgroundImage = "url(" + _icons[_selectedIndex].iconFilePath + ")";
+            console.log(_icons[_selectedIndex].iconFilePath);
+
         }
     };
+
     function _View() {
     }
 
@@ -763,49 +748,71 @@ function changePattern($$elementID, $$parameters) {
     _View.boxScrollElement;
     _View.selectedIconImgElement;
     _View.selectedIconElement;
+
     _View.showBox = function ($isShown) {
+
         if ($isShown == null) {
             $isShown = (_View.boxElement.style.display == "none") ? true : false;
         }
+
         if ($isShown) {
             _View.boxElement.style.display = "block";
             _View.boxScrollElement.style.display = "block";
+
         } else {
             _View.boxElement.style.display = "none";
             _View.boxScrollElement.style.display = "none";
         }
+
         _View.boxElement.style.display = ($isShown) ? "block" : "none";
+
+
     };
+
     _View.setIconSelectElement = function ($elementID) {
         _View.iconSelectElement = document.getElementById($elementID);
         return _View.iconSelectElement;
     };
+
     _View.clearUI = function () {
         _View.iconSelectElement.innerHTML = "";
     };
+
     _View.clearIcons = function () {
         _View.boxElement.innerHTML = "";
     };
+
     _View.createUI = function ($parameters) {
+
+
         _View.clearUI();
+
         _View.iconSelectElement.setAttribute('class', 'icon-select');
+
         var selectedBoxElement = document.createElement('div');
         selectedBoxElement.setAttribute('class', 'selected-box');
+
         var selectedIconElement = document.createElement('div');
         selectedIconElement.setAttribute('class', 'selected-icon');
+
         _View.selectedIconImgElement = document.createElement('img');
         _View.selectedIconImgElement.setAttribute('src', '');
         selectedIconElement.appendChild(_View.selectedIconImgElement);
+
         var componentIconElement = document.createElement('div');
         componentIconElement.setAttribute('class', 'component-icon');
+
         var componentIconImgElement = document.createElement('img');
-        componentIconImgElement.setAttribute('src', IconSelect.COMPONENT_ICON_FILE_PATH);
+        componentIconImgElement.setAttribute('src', changePattern.COMPONENT_ICON_FILE_PATH);
         componentIconElement.appendChild(componentIconImgElement);
+
         _View.boxScrollElement = document.createElement('div');
         _View.boxScrollElement.setAttribute('id', $$elementID + "-box-scroll");
         _View.boxScrollElement.setAttribute('class', 'box');
+
         _View.boxElement = document.createElement('div');
         _View.boxScrollElement.appendChild(_View.boxElement);
+
         _View.selectedIconImgElement.setAttribute('width', $parameters.selectedIconWidth);
         _View.selectedIconImgElement.setAttribute('height', $parameters.selectedIconHeight);
         selectedIconElement.style.width = $parameters.selectedIconWidth;
@@ -815,17 +822,23 @@ function changePattern($$elementID, $$parameters) {
         selectedIconElement.style.top = $parameters.selectedBoxPadding;
         selectedIconElement.style.left = $parameters.selectedBoxPadding;
         componentIconElement.style.bottom = 4 + $parameters.selectedBoxPadding;
+
         _View.boxScrollElement.style.left = parseInt(selectedBoxElement.style.width) + 1;
+
         _View.boxScrollElement.style.width = (($parameters.iconsWidth + 2) * $parameters.vectoralIconNumber) +
         (($parameters.vectoralIconNumber + 1) * $parameters.boxIconSpace);
         _View.boxScrollElement.style.height = (($parameters.iconsHeight + 2) * $parameters.horizontalIconNumber) +
         (($parameters.horizontalIconNumber + 1) * $parameters.boxIconSpace);
+
         _View.boxElement.style.left = _View.boxScrollElement.style.left;
         _View.boxElement.style.width = _View.boxScrollElement.style.width;
+
         _View.iconSelectElement.appendChild(selectedBoxElement);
         selectedBoxElement.appendChild(selectedIconElement);
         selectedBoxElement.appendChild(componentIconElement);
         selectedBoxElement.appendChild(_View.boxScrollElement);
+
+
         var results = {};
         results['iconSelectElement'] = _View.iconSelectElement;
         results['selectedBoxElement'] = selectedBoxElement;
@@ -833,42 +846,56 @@ function changePattern($$elementID, $$parameters) {
         results['selectedIconImgElement'] = _View.selectedIconImgElement;
         results['componentIconElement'] = componentIconElement;
         results['componentIconImgElement'] = componentIconImgElement;
+
         return results;
+
     };
+
     _View.createIcon = function ($iconFilePath, $iconValue, $index, $parameters) {
+
         var iconElement = document.createElement('div');
         iconElement.setAttribute('class', 'icon');
         iconElement.style.width = $parameters.iconsWidth;
         iconElement.style.height = $parameters.iconsHeight;
         iconElement.style.marginLeft = $parameters.boxIconSpace;
         iconElement.style.marginTop = $parameters.boxIconSpace;
+
         var iconImgElement = document.createElement('img');
         iconImgElement.setAttribute('src', $iconFilePath);
         iconImgElement.setAttribute('icon-value', $iconValue);
         iconImgElement.setAttribute('icon-index', $index);
         iconImgElement.setAttribute('width', $parameters.iconsWidth);
         iconImgElement.setAttribute('height', $parameters.iconsHeight);
+
         iconElement.appendChild(iconImgElement);
         _View.boxElement.appendChild(iconElement);
 
         return iconElement;
-    };
-    function _Model() {
-        _Model.checkParameters = function ($parameters) {
-            $parameters.selectedIconWidth = ($parameters.selectedIconWidth) ? $parameters.selectedIconWidth : _default.SELECTED_ICON_WIDTH;
-            $parameters.selectedIconHeight = ($parameters.selectedIconHeight) ? $parameters.selectedIconHeight : _default.SELECTED_ICON_HEIGHT;
-            $parameters.selectedBoxPadding = ($parameters.selectedBoxPadding) ? $parameters.selectedBoxPadding : _default.SELECTED_BOX_PADDING;
-            $parameters.iconsWidth = ($parameters.iconsWidth) ? $parameters.iconsWidth : _default.ICONS_WIDTH;
-            $parameters.iconsHeight = ($parameters.iconsHeight) ? $parameters.iconsHeight : _default.ICONS_HEIGHT;
-            $parameters.boxIconSpace = ($parameters.boxIconSpace) ? $parameters.boxIconSpace : _default.BOX_ICON_SPACE;
-            $parameters.vectoralIconNumber = ($parameters.vectoralIconNumber) ? $parameters.vectoralIconNumber : _default.VECTORAL_ICON_NUMBER;
-            $parameters.horizontalIconNumber = ($parameters.horizontalIconNumber) ? $parameters.horizontalIconNumber : _default.HORIZONTAL_ICON_NUMBER;
-            return $parameters;
-        };
-        _init();
-    }
-}
 
+    };
+
+
+    function _Model() {
+    }
+
+    _Model.checkParameters = function ($parameters) {
+
+        $parameters.selectedIconWidth = ($parameters.selectedIconWidth) ? $parameters.selectedIconWidth : _default.SELECTED_ICON_WIDTH;
+        $parameters.selectedIconHeight = ($parameters.selectedIconHeight) ? $parameters.selectedIconHeight : _default.SELECTED_ICON_HEIGHT;
+        $parameters.selectedBoxPadding = ($parameters.selectedBoxPadding) ? $parameters.selectedBoxPadding : _default.SELECTED_BOX_PADDING;
+        $parameters.iconsWidth = ($parameters.iconsWidth) ? $parameters.iconsWidth : _default.ICONS_WIDTH;
+        $parameters.iconsHeight = ($parameters.iconsHeight) ? $parameters.iconsHeight : _default.ICONS_HEIGHT;
+        $parameters.boxIconSpace = ($parameters.boxIconSpace) ? $parameters.boxIconSpace : _default.BOX_ICON_SPACE;
+        $parameters.vectoralIconNumber = ($parameters.vectoralIconNumber) ? $parameters.vectoralIconNumber : _default.VECTORAL_ICON_NUMBER;
+        $parameters.horizontalIconNumber = ($parameters.horizontalIconNumber) ? $parameters.horizontalIconNumber : _default.HORIZONTAL_ICON_NUMBER;
+
+        return $parameters;
+
+    };
+
+    _init();
+
+}
 /**
  *  This function open the menu if user clicks the left or right menu items.
  * @function mopen
@@ -912,4 +939,36 @@ function mcancelclosetime() {
     }
 }
 
+//window.addEventListener("load", createBackSkeleton(3, 5));
+//window.addEventListener("load", createFrontSkeleton(3, 5));
+//window.addEventListener("load", function () {
+//    var btn = document.getElementById('flip_content');
+//    var content = document.getElementById('f1_card');
+//    var c = 0;
+//
+//    btn.onclick = function () {
+//        content.className = (c++ % 2 === 0) ? content.className + ' flip' : content.className.split(' ')[0];
+//    };
+//});</code></pre>
+        </article>
+    </section>
 
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-buildJS.html">buildJS</a></li><li><a href="module-CommonModule.html">CommonModule</a></li><li><a href="module-ProductModule.html">ProductModule</a></li><li><a href="module-UserModule.html">UserModule</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.1</a> on Tue Jun 09 2015 17:19:22 GMT+0200 (서유럽 일광 절약 시간)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
