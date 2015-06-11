@@ -21,10 +21,6 @@ var closetimer;
 var timeout = 500;
 
 /*
- TODO: Fix drag & drop bugs (leftMenu popup, previousTile color, available space reset)
- TODO: Clean up code (remove console.logs and less global variables)
- */
-/*
  This function creates a skeleton with tiles
  @Author: Daye & Abdellatif
  */
@@ -50,9 +46,7 @@ function createBackSkeleton(x, y) {
         tile.style.height = tileHeight.toString() + "px";
         tile.style.float = "left";
         tile.style.backgroundColor = "red";
-        //tile.style.zIndex = "2";
         tile.empty = true;
-        //console.log(tile.style);
 
         tile.ondrop = function () {
             drop(event);
@@ -117,35 +111,25 @@ function createFrontSkeleton(x, y) {
  @Author: Daye & Abdellatif
  */
 function selectTile(evt) {
-    console.log("pew pew");
 
     if (evt.target.parentNode.id == "front") {
-        console.log("dont open");
     }
     else {
-        //console.log(evt.target.parentNode.empty);
         if(evt.target.parentNode.id == "back") {
             selectedTile = evt.target.id;
             if (evt.target.parentNode.empty == false) {
-
-
-                console.log(evt.target.parentNode);
                 if (previousTile != null) {
                     closeMenu(document.getElementById("vWrapper"));
                     closeMenu(document.getElementById("vWrapper2"));
-                    previousTile = null;
                     deselectTile();
-                    console.log("hey ur deselecting man");
                 } else if (selectedTile != previousTile) {
 
 
                     selectedObject = evt.target;
-                    console.log(evt.target.parentNode.empty);
                     AddDeletePreview();
 
-                    originalColor = document.getElementById(selectedTile).style.backgroundColor;
-                    //document.getElementById(selectedTile).style.backgroundColor = "white";
-                    previousTile = selectedTile;
+                    originalColor = getRightSelectedTile().style.backgroundColor;
+                    previousTile = getRightSelectedTile().id;
                 }
                 openMenu(document.getElementById("vWrapper"));
                 openMenu(document.getElementById("vWrapper2"));
@@ -161,20 +145,14 @@ function selectTile(evt) {
  */
 function deselectTile() {
 
-    console.log("miauw");
-    var x, res, menu, pt;
-    x = document.getElementById("tileColor");
-    res = x.options[x.selectedIndex].value;
-    console.log("deselecting!");
-    document.getElementById(previousTile).style.borderWidth = "0px";
-    console.log(previousTile);
-    console.log(document.getElementById(previousTile).style);
-
+    var x = document.getElementById("tileColor");
+    var res = x.options[x.selectedIndex].value;
 
     if (res != "color") {
         document.getElementById(previousTile).style.backgroundColor = res;
         document.getElementById("tileColor").value = "color";
     } else {
+        document.getElementById(previousTile).removeChild(document.getElementById(previousTile).childNodes[0]);
         document.getElementById(previousTile).style.backgroundColor = originalColor;
     }
     closeMenu(document.getElementById("vWrapper"));
@@ -187,12 +165,6 @@ function deselectTile() {
  @Author: Daye & Abdellatif
  */
 function openMenu(target) {
-    //console.log("opening menu");
-    //var menu = document.getElementById("vWrapper");
-    //if(menu == null){
-    //    menu = document.createElement("div");
-    //    menu.id = "vWrapper";
-    //}
     target.style.visibility = "visible";
     return target;
 }
@@ -202,7 +174,6 @@ function openMenu(target) {
  @Author: Daye & Abdellatif
  */
 function closeMenu(target) {
-    //var menu = document.getElementById("vWrapper");
     target.style.visibility = "hidden";
     return target;
 }
@@ -230,24 +201,17 @@ function changeTileColor(color) {
  @Author: Daye & Abdellatif
  */
 function addText(text) {
-    console.log(selectedTile);
     deleteTile(selectedObject);
-    //var tile = document.getElementById("back");
     var i, tile;
 
     tile = getRightSelectedTile();
     if(text == null){
-        console.log("good");
-        console.log(document.getElementById("addTxt").value);
         tile.innerText = document.getElementById("addTxt").value;
         document.getElementById("addTxtForm").reset();
-        //console.log(tile.parentNode);
     }
     else{
-        console.log("wrong");
         tile.innerText = text;
     }
-    console.log(tile);
     tile.style.textAlign = 'center';
     tile.style.lineHeight = tile.style.height;
     return tile;
@@ -272,7 +236,6 @@ function changeFontColor(color) {
     if (color == null) {
         var x = document.getElementById("fontColor");
         var res = x.options[x.selectedIndex].value;
-        //tile.style.color = res;
         tile.style.color = res;
         tile.style.borderColor = "black";
     }
@@ -332,7 +295,7 @@ function previewFile() {
     var file, reader;
     var tile = getRightSelectedTile();
 
-    file = document.querySelector('input[type=file]').files[0]; //sames as here
+    file = document.querySelector('input[type=file]').files[0];
     reader = new FileReader();
 
     reader.onloadend = function () {
@@ -341,17 +304,14 @@ function previewFile() {
         img.style.height = tileWidth;
         img.style.width = tileHeight;
 
-        //preview
-//            document.getElementById("previewDiv").appendChild(img);
-//            console.log(img.src);
-        //document.getElementById(selectedTile).innerHTML = "";
+        document.getElementById(selectedTile).innerHTML = "";
         tile.style.backgroundImage = "url(" + img.src + ")";
         tile.style.backgroundSize = 'cover';
 
     };
 
     if (file) {
-        reader.readAsDataURL(file); //reads the data as a URL
+        reader.readAsDataURL(file);
     }
 }
 
@@ -381,8 +341,9 @@ function AddDeletePreview() {
 function deleteTile(selectedTileObject) {
     originalColor = "red";
     selectedTileObject.style.backgroundColor = null;
+    selectedTileObject.style.backgroundImage = null;
     selectedTileObject.innerText = "";
-    //deselectTile();
+    deselectTile();
     return selectedTileObject;
 }
 
@@ -393,11 +354,10 @@ function deleteTile(selectedTileObject) {
 function rotateTile(selectedTileObject) {
     var tile = getRightSelectedTile();
     if (selectedTileObject == null) {
-        tile.getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+        tile.style.webkitTransform += 'rotate(45deg)';
         tile.style.overflow = "hidden";
     }
     else {
-        //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
         document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
         document.getElementById(selectedTile).style.overflow = "hidden";
     }
@@ -454,12 +414,9 @@ function resizeTile() {
 
             if (target.style.width <= '150px' && target.style.height <= '150px') {
 
-                // update the element's style
-
                 target.style.width = event.rect.width + 'px';
                 target.style.height = event.rect.height + 'px';
 
-                // translate when resizing from top or left edges
                 x += event.deltaRect.left;
                 y += event.deltaRect.top;
 
@@ -468,8 +425,6 @@ function resizeTile() {
 
                 target.setAttribute('data-x', x);
                 target.setAttribute('data-y', y);
-
-                //target.textContent = event.rect.width + 'x' + event.rect.height;
 
             }
 
@@ -481,15 +436,11 @@ function resizeTile() {
  @Author: Abdellatif
  */
 function allowDrop(ev) {
-    // console.log(ev.target.parentNode);
-    //console.log(hasTile(ev));
     ev.preventDefault();
     if (hasTile(ev)) {
-        //console.log("thou may pass");
         canSwap = false;
     }
     else {
-        ///console.log("thou shall not pass!");
         canSwap = true;
     }
     return ev;
@@ -500,8 +451,6 @@ function allowDrop(ev) {
  @Author: Abdellatif
  */
 function swapTiles(ev) {
-    console.log("commence switching procedure");
-    //console.log(ev.target.parentNode.id);
     var tempDragClone, tempTargetClone;
 
 
@@ -513,11 +462,6 @@ function swapTiles(ev) {
 
     ev.target.appendChild(tempDragClone);
     currentDraggingTile.appendChild(tempTargetClone);
-
-    //var dummmy = ev.target.parentNode.innerHTML;
-    //ev.target.parentNode.innerHTML = currentDraggingTile.innerHTML;
-    //console.log(currentDraggingTile.id);
-    //currentDraggingTile.innerHTML = dummmy;
 }
 
 /*
@@ -538,14 +482,9 @@ function hasTile(event) {
  @Author: Abdellatif
  */
 function drag(ev) {
-    console.log("dragging");
-    // console.log(ev.toElement.parentNode);
-    console.log(ev.target);
     currentDraggingTile = ev.target;
     closeMenu(document.getElementById("vWrapper"));
     closeMenu(document.getElementById("vWrapper2"));
-    //showAvalaibleTileSpace(document.getElementById("back"));
-    //showAvalaibleTileSpace(document.getElementById("front"));
     return ev.target;
 }
 
@@ -557,11 +496,7 @@ function showAvalaibleTileSpace(skeleton) {
     var i;
     tempCloneOfSkeleton = skeleton.cloneNode(true);
     for (i = 0; i < skeletonSize; i++) {
-        //var tile = document.getElementById("tile" + i);
-        //tile.style.backgroundColor = "#0000FF";
-        //if(tile.empty == true){
         skeleton.children[i].style.backgroundColor = freeSpotColor;
-        //}
     }
 }
 
@@ -572,7 +507,6 @@ function showAvalaibleTileSpace(skeleton) {
 function resetColorOfAvailableTiles(skeleton) {
     var i;
     for (i = 0; i < skeleton.skeletonSize; i++) {
-        //var tile = document.getElementById("tile" + i);
 
         skeleton.children[i].style.backgroundColor = tempCloneOfSkeleton.children[i].style.backgroundColor;
     }
@@ -583,21 +517,11 @@ function resetColorOfAvailableTiles(skeleton) {
  @Author: Abdellatif
  */
 function drop(ev) {
-    //console.log(ev.target);
-    //resetColorOfAvailableTiles(document.getElementById("back"));
-    //resetColorOfAvailableTiles(document.getElementById("front"));
     var tempClone;
     ev.preventDefault();
-    // console.log("dropping");
-    //console.log(ev.toElement.id);
 
     if (canSwap == false) {
         targetedDiv = document.getElementById(ev.toElement.id);
-
-        console.log(currentDraggingTile);
-
-        //currentDraggingTile.style.width = tileWidth - tileBorderWidth-4 + "px";
-        //currentDraggingTile.style.height = tileHeight - tileBorderWidth-4 + "px";
 
         tempClone = currentDraggingTile.cloneNode(true);
         if(targetedDiv.parentNode.id == "front"){
@@ -611,15 +535,7 @@ function drop(ev) {
         targetedDiv.appendChild(tempClone);
         targetedDiv.style.borderWidth = "5px";
 
-        //targetedDiv.innerHTML = targetedDiv.innerHTML + currentDraggingTile.innerHTML;
-        //console.log(targetedDiv.style.width);
-        //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.getElementsByTagName("img")[0].width;
-        //console.log(targetedDiv.getElementsByTagName("img")[0].style.width);
-
-        //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
-        //targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
         targetedDiv.parentNode.empty = false;
-        //targetedDiv.empty = false;
         currentDraggingTile.innerHTML = "";
         selectTile(ev);
     }
@@ -631,13 +547,12 @@ function drop(ev) {
 function confirmDelete() {
 
     if (confirm("Are you sure deleting a tile?") === true) {
-        deleteTile(selectedObject);
+        deleteTile(getRightSelectedTile());
     }
 
 }
 
 function switchButton() {
-    //TODO: CLean up this button code put it a function
     var btn = document.getElementById('flip_content');
     var content = document.getElementById('f1_card');
     var c = 0;
@@ -645,7 +560,6 @@ function switchButton() {
         btn.onclick = function () {
             closeMenu(document.getElementById("vWrapper"));
             closeMenu(document.getElementById("vWrapper2"));
-            console.log(content);
             content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
         };
     }
@@ -691,14 +605,8 @@ function IconSelect($$elementID, $$parameters) {
     var _boxScroll;
     var _default = IconSelect.DEFAULT;
     function _init() {
-        console.log("kalimpo");
         if (!$$parameters) $$parameters = {};
-        console.log("boemba");
-        console.log($$elementID);
-        console.log(document.getElementById($$elementID));
-        console.log(_View.setIconSelectElement($$elementID));
         if (_View.setIconSelectElement($$elementID)) {
-            console.log("rakon");
             $$parameters = _Model.checkParameters($$parameters);
 
             var ui = _View.createUI($$parameters, $$elementID);
@@ -716,7 +624,6 @@ function IconSelect($$elementID, $$parameters) {
         }
     }
     this.refresh = function ($icons) {
-        console.log("pew pew miauw");
         _icons = [];
         var setSelectedIndex = this.setSelectedIndex;
         for (var i = 0; i < $icons.length; i++) {
@@ -739,13 +646,12 @@ function IconSelect($$elementID, $$parameters) {
             _selectedIndex = $index;
             _View.selectedIconImgElement.setAttribute('src', icon.iconFilePath);
             if (_selectedIndex != -1) _icons[_selectedIndex].element.setAttribute('class', 'icon selected');
-            document.getElementById(selectedTile).style.backgroundImage = "url(" + _icons[_selectedIndex].iconFilePath + ")";
-            console.log(_icons[_selectedIndex].iconFilePath);
+            getRightSelectedTile().innerHTML = " ";
+            getRightSelectedTile().style.backgroundImage = "url(" + _icons[_selectedIndex].iconFilePath + ")";
         }
     };
     function _View() {
     }
-    console.log("pew pew woef");
     _View.iconSelectElement;
     _View.boxElement;
     _View.boxScrollElement;
@@ -766,7 +672,6 @@ function IconSelect($$elementID, $$parameters) {
     };
     _View.setIconSelectElement = function ($elementID) {
         _View.iconSelectElement = document.getElementById($elementID);
-        console.log(document.getElementById($elementID));
         return _View.iconSelectElement;
     };
     _View.clearUI = function () {
@@ -794,8 +699,6 @@ function IconSelect($$elementID, $$parameters) {
         _View.boxScrollElement.setAttribute('id', $$elementID + "-box-scroll");
         _View.boxScrollElement.setAttribute('class', 'box');
         _View.boxElement = document.createElement('div');
-        console.log("pew pew blub");
-        console.log(_View.boxElement);
         _View.boxScrollElement.appendChild(_View.boxElement);
         _View.selectedIconImgElement.setAttribute('width', $parameters.selectedIconWidth);
         _View.selectedIconImgElement.setAttribute('height', $parameters.selectedIconHeight);

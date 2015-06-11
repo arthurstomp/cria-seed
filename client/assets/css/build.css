@@ -316,6 +316,7 @@ canvas {
     background-color: lightgray;
     float: right;
     display:none;
-    position:relative;
+    position:fixed;
+    right: 50px;
     padding: 20px 20px 20px 20px;
 }
