@@ -393,7 +393,8 @@ function deleteTile(selectedTileObject) {
 function rotateTile(selectedTileObject) {
     var tile = getRightSelectedTile();
     if (selectedTileObject == null) {
-        tile.style.webkitTransform += 'rotate(45deg)';
+        tile.getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+        tile.style.overflow = "hidden";
     }
     else {
         //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';
