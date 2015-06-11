@@ -656,16 +656,17 @@ function switchButton() {
         };
     }
 }
-var iconSelect = new IconSelect("my-icon-select", {
-    'selectedIconWidth': 60,
-    'selectedIconHeight': 60,
-    'selectedBoxPadding': 1,
-    'iconsWidth': 70,
-    'iconsHeight': 70,
-    'boxIconSpace': 1,
-    'vectoralIconNumber': 2,
-    'horizontalIconNumber': 5
-});
+var iconSelect = new IconSelect("my-icon-select",
+    {
+        'selectedIconWidth': 60,
+        'selectedIconHeight': 60,
+        'selectedBoxPadding': 1,
+        'iconsWidth': 70,
+        'iconsHeight': 70,
+        'boxIconSpace': 1,
+        'vectoralIconNumber': 2,
+        'horizontalIconNumber': 5
+    });
 
 var icons = [];
 icons.push({'iconFilePath': '../assets/images/p0.png', 'iconValue': '0'});
@@ -743,7 +744,6 @@ function IconSelect($$elementID, $$parameters) {
     };
     function _View() {
     }
-
     _View.iconSelectElement;
     _View.boxElement;
     _View.boxScrollElement;
@@ -840,27 +840,21 @@ function IconSelect($$elementID, $$parameters) {
         return iconElement;
     };
     function _Model() {
-        _Model.checkParameters = function ($parameters) {
-            $parameters.selectedIconWidth = ($parameters.selectedIconWidth) ? $parameters.selectedIconWidth : _default.SELECTED_ICON_WIDTH;
-            $parameters.selectedIconHeight = ($parameters.selectedIconHeight) ? $parameters.selectedIconHeight : _default.SELECTED_ICON_HEIGHT;
-            $parameters.selectedBoxPadding = ($parameters.selectedBoxPadding) ? $parameters.selectedBoxPadding : _default.SELECTED_BOX_PADDING;
-            $parameters.iconsWidth = ($parameters.iconsWidth) ? $parameters.iconsWidth : _default.ICONS_WIDTH;
-            $parameters.iconsHeight = ($parameters.iconsHeight) ? $parameters.iconsHeight : _default.ICONS_HEIGHT;
-            $parameters.boxIconSpace = ($parameters.boxIconSpace) ? $parameters.boxIconSpace : _default.BOX_ICON_SPACE;
-            $parameters.vectoralIconNumber = ($parameters.vectoralIconNumber) ? $parameters.vectoralIconNumber : _default.VECTORAL_ICON_NUMBER;
-            $parameters.horizontalIconNumber = ($parameters.horizontalIconNumber) ? $parameters.horizontalIconNumber : _default.HORIZONTAL_ICON_NUMBER;
-            return $parameters;
-        };
-        _init();
     }
+    _Model.checkParameters = function ($parameters) {
+        $parameters.selectedIconWidth = ($parameters.selectedIconWidth) ? $parameters.selectedIconWidth : _default.SELECTED_ICON_WIDTH;
+        $parameters.selectedIconHeight = ($parameters.selectedIconHeight) ? $parameters.selectedIconHeight : _default.SELECTED_ICON_HEIGHT;
+        $parameters.selectedBoxPadding = ($parameters.selectedBoxPadding) ? $parameters.selectedBoxPadding : _default.SELECTED_BOX_PADDING;
+        $parameters.iconsWidth = ($parameters.iconsWidth) ? $parameters.iconsWidth : _default.ICONS_WIDTH;
+        $parameters.iconsHeight = ($parameters.iconsHeight) ? $parameters.iconsHeight : _default.ICONS_HEIGHT;
+        $parameters.boxIconSpace = ($parameters.boxIconSpace) ? $parameters.boxIconSpace : _default.BOX_ICON_SPACE;
+        $parameters.vectoralIconNumber = ($parameters.vectoralIconNumber) ? $parameters.vectoralIconNumber : _default.VECTORAL_ICON_NUMBER;
+        $parameters.horizontalIconNumber = ($parameters.horizontalIconNumber) ? $parameters.horizontalIconNumber : _default.HORIZONTAL_ICON_NUMBER;
+        return $parameters;
+    };
+    _init();
 }
 
-/**
- *  This function open the menu if user clicks the left or right menu items.
- * @function mopen
- * @author Daye
- * @param id id of menu items which one is clicked.
- */
 function mopen(id) {
     mcancelclosetime();
     if (ddmenuitem) ddmenuitem.style.display = 'none';
@@ -868,34 +862,17 @@ function mopen(id) {
     ddmenuitem.style.display = 'block';
 }
 
-/**
- *  This function close the menu if user clicks the left or right menu items.
- * @function mclose
- * @author Daye
- */
 function mclose() {
     if (ddmenuitem) ddmenuitem.style.display = 'none';
 }
 
-/**
- *  This function set Timeout to close the menu popup.
- * @function mclosetime
- * @author Daye
- */
 function mclosetime() {
     closetimer = window.setTimeout(mclose, timeout);
 }
 
-/**
- *  This function cancel Timeout for closing menu popup.
- * @function mcancelclosetime
- * @author Daye
- */
 function mcancelclosetime() {
     if (closetimer) {
         window.clearTimeout(closetimer);
         closetimer = null;
     }
 }
-
-
