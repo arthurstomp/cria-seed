@@ -230,19 +230,36 @@ function changeTileColor(color) {
  @Author: Daye & Abdellatif
  */
 function addText(text) {
-    var tile = document.getElementById(selectedTile);
-    if (text == null) {
-        console.log("adding text");
-        tile.innerHTML = tile.innerHTML + document.getElementById("addTxt").value;
-        console.log(tile.innerText);
+    console.log(selectedTile);
+    deleteTile(selectedObject);
+    //var tile = document.getElementById("back");
+    var i, tile;
+
+    tile = getRightSelectedTile();
+    if(text == null){
+        console.log("good");
+        console.log(document.getElementById("addTxt").value);
+        tile.innerText = document.getElementById("addTxt").value;
         document.getElementById("addTxtForm").reset();
+        //console.log(tile.parentNode);
     }
-    else {
+    else{
+        console.log("wrong");
         tile.innerText = text;
     }
+    console.log(tile);
     tile.style.textAlign = 'center';
     tile.style.lineHeight = tile.style.height;
-    tile.style.zIndex = 5;
+    return tile;
+}
+
+function getRightSelectedTile(){
+    var i, tile;
+    for(i=0; i < skeletonSize; i++){
+        if(document.getElementById(selectedTile).id == document.getElementById("back").children[i].id){
+            tile = document.getElementById("back").children[i];
+        }
+    }
     return tile;
 }
 
@@ -251,15 +268,18 @@ function addText(text) {
  @Author: Daye & Abdellatif
  */
 function changeFontColor(color) {
+    var tile = getRightSelectedTile();
     if (color == null) {
         var x = document.getElementById("fontColor");
         var res = x.options[x.selectedIndex].value;
-        document.getElementById(selectedTile).style.color = res;
+        //tile.style.color = res;
+        tile.style.color = res;
+        tile.style.borderColor = "black";
     }
     else {
-        document.getElementById(selectedTile).style.color = color;
+        tile.style.color = color;
     }
-    return document.getElementById(selectedTile);
+    return tile;
 }
 
 /*
@@ -267,14 +287,15 @@ function changeFontColor(color) {
  @Author: Daye
  */
 function changeFontSize(fontSize) {
+    var tile = getRightSelectedTile();
     if (fontSize == null) {
         var x = document.getElementById("fontSize");
-        document.getElementById(selectedTile).style.fontSize = (x.options[x.selectedIndex].value).toString() + "px";
+        tile.style.fontSize = (x.options[x.selectedIndex].value).toString() + "px";
     }
     else {
-        document.getElementById(selectedTile).style.fontSize = "13";
+        tile.style.fontSize = "13";
     }
-    return document.getElementById(selectedTile);
+    return tile;
 }
 
 /*
@@ -282,14 +303,14 @@ function changeFontSize(fontSize) {
  @Author: Daye
  */
 function changeFontStyle() {
-
+    var tile = getRightSelectedTile();
     var x = document.getElementById("fontStyle");
     if (x.options[x.selectedIndex].value == "italic") {
-        document.getElementById(selectedTile).style.fontStyle = x.options[x.selectedIndex].value;
+        tile.style.fontStyle = x.options[x.selectedIndex].value;
     } else if (x.options[x.selectedIndex].value == "underline") {
-        document.getElementById(selectedTile).style.textDecoration = x.options[x.selectedIndex].value;
+        tile.style.textDecoration = x.options[x.selectedIndex].value;
     } else {
-        document.getElementById(selectedTile).style.fontWeight = x.options[x.selectedIndex].value;
+        tile.style.fontWeight = x.options[x.selectedIndex].value;
     }
 }
 
@@ -298,8 +319,9 @@ function changeFontStyle() {
  @Author: Daye
  */
 function changeFontType() {
+    var tile = getRightSelectedTile();
     var x = document.getElementById("fontType");
-    document.getElementById(selectedTile).style.fontFamily = x.options[x.selectedIndex].value;
+    tile.style.fontFamily = x.options[x.selectedIndex].value;
 }
 
 /*
@@ -308,6 +330,7 @@ function changeFontType() {
  */
 function previewFile() {
     var file, reader;
+    var tile = getRightSelectedTile();
 
     file = document.querySelector('input[type=file]').files[0]; //sames as here
     reader = new FileReader();
@@ -322,8 +345,8 @@ function previewFile() {
 //            document.getElementById("previewDiv").appendChild(img);
 //            console.log(img.src);
         //document.getElementById(selectedTile).innerHTML = "";
-        document.getElementById(selectedTile).style.backgroundImage = "url(" + img.src + ")";
-        document.getElementById(selectedTile).style.backgroundSize = 'cover';
+        tile.style.backgroundImage = "url(" + img.src + ")";
+        tile.style.backgroundSize = 'cover';
 
     };
 
@@ -368,8 +391,9 @@ function deleteTile(selectedTileObject) {
  @Author: Daye
  */
 function rotateTile(selectedTileObject) {
-    if (selectedTileObject != null) {
-        selectedTileObject.style.webkitTransform += 'rotate(45deg)';
+    var tile = getRightSelectedTile();
+    if (selectedTileObject == null) {
+        tile.style.webkitTransform += 'rotate(45deg)';
     }
     else {
         //document.getElementById(selectedTile).style.webkitTransform += 'rotate(45deg)';

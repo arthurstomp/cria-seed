@@ -139,7 +139,7 @@ canvas {
     margin: 10px auto;
     width: 450px;
     height: 281px;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 #f1_container {
@@ -148,6 +148,7 @@ canvas {
 
 .containerTile{
     border-style: solid;
+    border-color: black;
     border-width: 5px;
     float: left;
     background-color: red;
