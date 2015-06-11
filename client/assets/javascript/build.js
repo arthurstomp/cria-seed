@@ -64,7 +64,7 @@ function createBackSkeleton(x, y) {
         tile.ondragstart = function () {
             drag(event);
         };
-        tile.click = function () {
+        tile.onclick = function () {
             selectTile(event);
         };
 
@@ -104,7 +104,7 @@ function createFrontSkeleton(x, y) {
     tile.ondragstart = function () {
         drag(event)
     };
-    tile.click = function () {
+    tile.onclick = function () {
         selectTile(event)
     };
 
@@ -119,28 +119,38 @@ function createFrontSkeleton(x, y) {
 function selectTile(evt) {
     console.log("pew pew");
 
-    if (evt.target.parentNode.parentElement.id == "front") {
+    if (evt.target.parentNode.id == "front") {
         console.log("dont open");
     }
     else {
-        selectedTile = evt.target.id;
-        if (evt.target.parentNode.empty == false) {
-            if (previousTile != null) {
-                deselectTile();
-                console.log("hey ur deselecting man");
-            } else if (selectedTile != previousTile) {
+        //console.log(evt.target.parentNode.empty);
+        if(evt.target.parentNode.id == "back") {
+            selectedTile = evt.target.id;
+            if (evt.target.parentNode.empty == false) {
 
 
-                selectedObject = evt.target;
-                console.log(evt.target.parentNode.empty);
-                AddDeletePreview();
+                console.log(evt.target.parentNode);
+                if (previousTile != null) {
+                    closeMenu(document.getElementById("vWrapper"));
+                    closeMenu(document.getElementById("vWrapper2"));
+                    previousTile = null;
+                    deselectTile();
+                    console.log("hey ur deselecting man");
+                } else if (selectedTile != previousTile) {
 
-                originalColor = document.getElementById(selectedTile).style.backgroundColor;
-                //document.getElementById(selectedTile).style.backgroundColor = "white";
-                previousTile = selectedTile;
+
+                    selectedObject = evt.target;
+                    console.log(evt.target.parentNode.empty);
+                    AddDeletePreview();
+
+                    originalColor = document.getElementById(selectedTile).style.backgroundColor;
+                    //document.getElementById(selectedTile).style.backgroundColor = "white";
+                    previousTile = selectedTile;
+                }
+                openMenu(document.getElementById("vWrapper"));
+                openMenu(document.getElementById("vWrapper2"));
             }
         }
-        openMenu(document.getElementById("vWrapper"));
     }
     return selectedTile;
 }
@@ -151,6 +161,7 @@ function selectTile(evt) {
  */
 function deselectTile() {
 
+    console.log("miauw");
     var x, res, menu, pt;
     x = document.getElementById("tileColor");
     res = x.options[x.selectedIndex].value;
@@ -167,6 +178,7 @@ function deselectTile() {
         document.getElementById(previousTile).style.backgroundColor = originalColor;
     }
     closeMenu(document.getElementById("vWrapper"));
+    closeMenu(document.getElementById("vWrapper2"));
     previousTile = null;
 }
 
@@ -220,7 +232,9 @@ function changeTileColor(color) {
 function addText(text) {
     var tile = document.getElementById(selectedTile);
     if (text == null) {
-        tile.innerText = document.getElementById("addTxt").value;
+        console.log("adding text");
+        tile.innerHTML = tile.innerHTML + document.getElementById("addTxt").value;
+        console.log(tile.innerText);
         document.getElementById("addTxtForm").reset();
     }
     else {
@@ -228,6 +242,7 @@ function addText(text) {
     }
     tile.style.textAlign = 'center';
     tile.style.lineHeight = tile.style.height;
+    tile.style.zIndex = 5;
     return tile;
 }
 
@@ -503,6 +518,7 @@ function drag(ev) {
     console.log(ev.target);
     currentDraggingTile = ev.target;
     closeMenu(document.getElementById("vWrapper"));
+    closeMenu(document.getElementById("vWrapper2"));
     //showAvalaibleTileSpace(document.getElementById("back"));
     //showAvalaibleTileSpace(document.getElementById("front"));
     return ev.target;
@@ -559,8 +575,14 @@ function drop(ev) {
         //currentDraggingTile.style.height = tileHeight - tileBorderWidth-4 + "px";
 
         tempClone = currentDraggingTile.cloneNode(true);
-        tempClone.style.width = tileWidth - tileBorderWidth-4 + "px";
-        tempClone.style.height = tileHeight - tileBorderWidth-4 + "px";
+        if(targetedDiv.parentNode.id == "front"){
+            tempClone.style.width = tileWidth * 3 + "px";
+            tempClone.style.height = tileHeight * 5 + "px";
+        }
+        else {
+            tempClone.style.width = tileWidth - tileBorderWidth - 4 + "px";
+            tempClone.style.height = tileHeight - tileBorderWidth - 4 + "px";
+        }
         targetedDiv.appendChild(tempClone);
         targetedDiv.style.borderWidth = "5px";
 
@@ -572,7 +594,7 @@ function drop(ev) {
         //targetedDiv.getElementsByTagName("img")[0].style.width = targetedDiv.style.width;
         //targetedDiv.getElementsByTagName("img")[0].style.height = targetedDiv.style.height;
         targetedDiv.parentNode.empty = false;
-        targetedDiv.empty = false;
+        //targetedDiv.empty = false;
         currentDraggingTile.innerHTML = "";
         selectTile(ev);
     }
@@ -597,6 +619,7 @@ function switchButton() {
     if (btn != null) {
         btn.onclick = function () {
             closeMenu(document.getElementById("vWrapper"));
+            closeMenu(document.getElementById("vWrapper2"));
             console.log(content);
             content.className = (c++ % 2 == 0) ? content.className + ' flip' : content.className.split(' ')[0];
         };

@@ -1,5 +1,5 @@
 #leftMenuView{
-  background-color: red;
+  /*background-color: red;*/
   width: 400px;
   height: 100px;
   float: left;
@@ -13,10 +13,13 @@
 }
 
 #rightMenuView{
-  background-color: blue;
-  width: 30px;
-  height: 40px;
+  /*background-color: blue;*/
+  width: 400px;
+  height: 100px;
   float: right;
+    position: fixed;
+    top: 50px;
+    right: -90px;
 }
 
 #bottomMenuView{
@@ -55,6 +58,7 @@ canvas {
     width: 50px;
     background: #3abff0;
     float: left;
+    visibility: hidden;
 }
 
 #vWrapper a {
@@ -63,7 +67,6 @@ canvas {
     padding: 10px 10px 10px 10px;
     background: #3abff0;
     float: left;
-
 }
 
 #vWrapper a:hover {
@@ -78,6 +81,7 @@ canvas {
     background: #3abff0;
     float: right;
     margin-right: 100px;
+    visibility: hidden;
 }
 
 #vWrapper2 a {
@@ -121,8 +125,11 @@ canvas {
 
 #flip_content {
     background-color: #3abff0;
+    position: fixed;
+    top: 720px;
     width: 50px;
     height: 50px;
+    left: 47%;
 }
 
  /*fliped css*/
