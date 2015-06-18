@@ -54,7 +54,7 @@ function createBackSkeleton(x, y) {
         tile.style.width = tileWidth.toString() + "px";
         tile.style.height = tileHeight.toString() + "px";
         tile.style.float = "left";
-        tile.style.backgroundColor = "red";
+        tile.style.backgroundColor = "#3abff0";
         tile.empty = true;
 
         tile.ondrop = function () {
@@ -104,7 +104,7 @@ function createFrontSkeleton(x, y) {
     tile.style.width = frontSkeleton.style.width;
     tile.style.height = frontSkeleton.style.height;
     tile.style.float = "left";
-    tile.style.backgroundColor = 'hotpink';
+    tile.style.backgroundColor = '#3abff0';
     tile.empty = true;
 
     tile.ondrop = function () {
@@ -125,6 +125,39 @@ function createFrontSkeleton(x, y) {
 
     return frontSkeleton;
 }
+
+function checkPlacedTiles(){
+
+    var i;
+    if(document.getElementById("skeletonCheck") != null && document.getElementById("screenCheck") != null) {
+        document.getElementById("skeletonCheck").style.backgroundColor = "blue";
+        document.getElementById("screenCheck").style.backgroundColor = "blue";
+    }
+    for(i=0; i < skeletonSize; i++) {
+        if(document.getElementById("back").children[i].children[0] != null) {
+            if (document.getElementById("back").children[i].children[0].id == "processorTile") {
+                document.getElementById("processorCheck").style.backgroundColor = "blue";
+            }
+            if (document.getElementById("back").children[i].children[0].id == "batteryTile") {
+                document.getElementById("batteryCheck").style.backgroundColor = "blue";
+            }
+            if (document.getElementById("back").children[i].children[0].id == "storageTile") {
+                document.getElementById("storageCheck").style.backgroundColor = "blue";
+            }
+            if (document.getElementById("back").children[i].children[0].id == "connectionTile") {
+                document.getElementById("connectionCheck").style.backgroundColor = "blue";
+            }
+            if (document.getElementById("back").children[i].children[0].id == "cameraTile") {
+                document.getElementById("cameraCheck").style.backgroundColor = "blue";
+            }
+            if (document.getElementById("back").children[i].children[0].id == "speakerTile") {
+                document.getElementById("speakerCheck").style.backgroundColor = "blue";
+            }
+       }
+    }
+    window.setTimeout(checkPlacedTiles, 500);
+}
+checkPlacedTiles();
 
 /**
  * this function handles the selection of a tile
@@ -219,13 +252,14 @@ function changeTileColor(color) {
     var res;
     if (color == null) {
         var x = document.getElementById("tileColor");
-        res = x.options[x.selectedIndex].value;
+        res = x.value;
+        console.log(res);
     }
     else {
         res = color;
     }
-    document.getElementById(selectedTile).style.backgroundColor = res;
-    return selectedTile;
+    getRightSelectedTile().style.backgroundColor = res;
+    return getRightSelectedTile();
 }
 
 /**
@@ -409,11 +443,11 @@ function deleteTile(selectedTileObject) {
 function rotateTile(selectedTileObject) {
     var tile = getRightSelectedTile();
     if (selectedTileObject == null) {
-        tile.style.webkitTransform += 'rotate(45deg)';
+        tile.style.webkitTransform += 'rotate(90deg)';
         tile.style.overflow = "hidden";
     }
     else {
-        document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(45deg)';
+        document.getElementById(selectedTile).getElementsByTagName("img")[0].style.webkitTransform += 'rotate(90deg)';
         document.getElementById(selectedTile).style.overflow = "hidden";
     }
 }
@@ -604,11 +638,12 @@ function drop(ev) {
             tempClone.style.width = tileWidth - tileBorderWidth - 4 + "px";
             tempClone.style.height = tileHeight - tileBorderWidth - 4 + "px";
         }
+        console.log(tempClone);
         targetedDiv.appendChild(tempClone);
         targetedDiv.style.borderWidth = "5px";
 
         targetedDiv.parentNode.empty = false;
-        currentDraggingTile.innerHTML = "";
+        currentDraggingTile = "";
         selectTile(ev);
     }
     else if (canSwap == true) {

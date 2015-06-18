@@ -3,106 +3,106 @@
 <script src="../assets/javascript/ready.js"></script>
 <div id="sse1">
     <div id="sses1">
-      <!--This eventually needs to be a for loop that displays the products in the database-->
-      <div class="iconNav">
-        <ul>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/SkeletonColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/ScreenColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/ProcessorColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/BatteryColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/StorageColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/ConnectionColor.png">
-            </div>
-            <div class="navcontainer grey">
-                <img src="../assets/images/icons/CameraColor.png">
-            </div>
-            <div class="navcontainer light-grey">
-                <img src="../assets/images/icons/SpeakerColor.png">
-            </div>
-        </ul>
-      </div>
+        <!--This eventually needs to be a for loop that displays the products in the database-->
+        <div class="iconNav">
+            <ul>
+                <div class="navcontainer grey" id="skeletonCheck">
+                    <img src="../assets/images/icons/SkeletonColor.png">
+                </div>
+                <div class="navcontainer light-grey" id="screenCheck">
+                    <img src="../assets/images/icons/ScreenColor.png">
+                </div>
+                <div class="navcontainer grey" id="processorCheck">
+                    <img src="../assets/images/icons/ProcessorColor.png">
+                </div>
+                <div class="navcontainer light-grey" id="batteryCheck">
+                    <img src="../assets/images/icons/BatteryColor.png">
+                </div>
+                <div class="navcontainer grey" id="storageCheck">
+                    <img src="../assets/images/icons/StorageColor.png">
+                </div>
+                <div class="navcontainer light-grey" id="connectionCheck">
+                    <img src="../assets/images/icons/ConnectionColor.png">
+                </div>
+                <div class="navcontainer grey" id="cameraCheck">
+                    <img src="../assets/images/icons/CameraColor.png">
+                </div>
+                <div class="navcontainer light-grey" id="speakerCheck">
+                    <img src="../assets/images/icons/SpeakerColor.png">
+                </div>
+            </ul>
+        </div>
     </div>
 </div>
 
 
 <div class="scroller">
-<div class="wrapper">
-  <div class="container">
-    <div class="contentContainer active red col-xs-4" draggable="true"
-         ondragstart="drag(event)"> </div>
-    <div class="contentContainer  blue" draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange" draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green " draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black " draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  red "draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  blue" draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange" draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green" draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  red"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  blue"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  red"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  blue"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  red"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  blue"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  red"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  blue"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  orange"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  green"draggable="true"
-         ondragstart="drag(event)"></div>
-    <div class="contentContainer  black"draggable="true"
-         ondragstart="drag(event)"></div>
-  </div>
-  <div class="left" data-slide='next'><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
-    <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
+    <div class="wrapper">
+        <div class="container">
+            <div class="contentContainer active red col-xs-4" id="processorTile" draggable="true"
+                 ondragstart="drag(event)"> </div>
+            <div class="contentContainer  blue" id="batteryTile" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange" id="storageTile" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green " id="connectionTile" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black " id="cameraTile" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  red " id="speakerTile" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  blue" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green" draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  red"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  blue"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  red"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  blue"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  red"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  blue"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  red"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  blue"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  orange"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  green"draggable="true"
+                 ondragstart="drag(event)"></div>
+            <div class="contentContainer  black"draggable="true"
+                 ondragstart="drag(event)"></div>
+        </div>
+        <div class="left" data-slide='next'><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
+        <div class="right" data-slide="prev"><img src="../assets/images/ArrowIndicatorRight.png" width='30px' height='20px'/></div>
 
-</div>
+    </div>
 
 </div>
